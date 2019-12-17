@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-access-manager PUBLIC "-//Service Access Manager//DTD Service Access Manager Configuration//EN" "sam-config.dtd">
+
+<service-access-manager name="EsqueletoSpringBootSAM">
+
+	<context-manager classname="ar.com.itrsa.sam.impl.ContextManagerImpl">
+         <context-factory classname="com.bbva.sam.bbvaPaq.impl.BbvaPaqContextFactoryImpl">
+               <set-property property="aplicacion" value="${aplicacion}" />
+               <set-property property="modulo" value="${modulo}" />
+         </context-factory>
+	</context-manager>
+
+	<datasource-factory-manager classname="ar.com.itrsa.sam.ds.DataSourceFactoryManagerImpl" >
+		<global-factory>
+		</global-factory>
+		<user-specific-factory>
+		</user-specific-factory>
+	</datasource-factory-manager>
+
+   <transaction-manager name="TM_SERVICIO_INICIAL" url="classpath:/sam/tm_servicio_inicial.xml" classnameTMCF="com.bbva.sam.bbvaPaq.factory.TransactionManagerCreationFactory"/>
+
+</service-access-manager>

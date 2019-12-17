@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE bbvaPaq-transaction-manager PUBLIC
+       "-//Service Access Manager//DTD Transaction Manager BbvaPaq Configuration//EN"
+       "tm-config.dtd">
+
+<bbvaPaq-transaction-manager timeout="${servicioInicial.timeout}" endpoint="${servicioInicial.endpoint}"  soapEndpoint="false" logErrors="true" />
+ 
