@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -9,19 +9,22 @@
 	<div class="row">
 		<div class="col-md-12">
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				 
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="navbar-toggler-icon"></span>
-				</button> <a class="navbar-brand" href="#">Brand</a>
+			
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<form class="form-inline">
-						<input class="form-control mr-sm-2" type="text" />
-						<input class="form-control mr-sm-2" type="text" />
-						<input class="form-control mr-sm-2" type="text" /> 
+					<form class="form-inline" th:action="@{/renaper/datosPersona/${gender}/${documentNumber}/${order}}">
+						<input class="form-control mr-sm-2" type="text"  th:name="gender"/>
+						<input class="form-control mr-sm-2" type="text" th:name="documentNumber" />
+						<input class="form-control mr-sm-2" type="text" th:name="order"/> 
 						<button class="btn btn-primary my-2 my-sm-0" type="submit">
-							Search
+							Consultar
 						</button>
 					</form>
+					
+								
+				
+				<p th:text=${mensaje}></p>
+				
+				
 					
 				</div>
 			</nav>
