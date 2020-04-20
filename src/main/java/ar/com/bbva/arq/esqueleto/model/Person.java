@@ -1,5 +1,7 @@
 package ar.com.bbva.arq.esqueleto.model;
 
+import ar.com.bbva.arq.esqueleto.utils.FormatUtils;
+
 public class Person {
 
 	private String number;
@@ -23,6 +25,8 @@ public class Person {
 	private String messageOfDeath;
 	private String nationality;
 	private String countryBirth;
+	private String order;
+	private String documentNumber;
 
 	public String getNumber() {
 		return number;
@@ -190,6 +194,30 @@ public class Person {
 
 	public void setCountryBirth(String countryBirth) {
 		this.countryBirth = countryBirth;
+	}
+
+	public String getOrder() {
+		return order;
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
+	}
+
+	public String getDocumentNumber() {
+		return documentNumber;
+	}
+
+	public void setDocumentNumber(String documentNumber) {
+		this.documentNumber = documentNumber;
+	}
+	
+	public Person buildSearch(String gender,String documentNumber,String order)
+	{
+		this.gender=gender;
+		this.documentNumber=documentNumber;
+		this.order=FormatUtils.completaCerosIzq(11,order.length(),order);
+		return this;
 	}
 
 }
