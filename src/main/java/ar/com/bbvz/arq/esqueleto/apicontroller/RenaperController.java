@@ -1,4 +1,4 @@
-package ar.com.bbva.arq.esqueleto.controller;
+package ar.com.bbvz.arq.esqueleto.apicontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;

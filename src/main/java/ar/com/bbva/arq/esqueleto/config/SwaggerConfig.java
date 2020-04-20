@@ -16,7 +16,7 @@ public class SwaggerConfig {
     public Docket buildDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("ar.com.bbva.arq.esqueleto.controller"))
+                .apis(RequestHandlerSelectors.basePackage("ar.com.bbva.arq.esqueleto.apicontroller"))
                 .paths(PathSelectors.any())
                 .build();
     }
