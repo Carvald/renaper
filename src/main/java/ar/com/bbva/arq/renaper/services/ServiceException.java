@@ -1,4 +1,4 @@
-package ar.com.bbva.arq.esqueleto.service;
+package ar.com.bbva.arq.renaper.services;
 
 public class ServiceException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

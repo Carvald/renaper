@@ -1,4 +1,4 @@
-package ar.com.bbva.arq.esqueleto.config;
+package ar.com.bbva.arq.renaper.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ public class SwaggerConfig {
     public Docket buildDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("ar.com.bbva.arq.esqueleto.apicontroller"))
+                .apis(RequestHandlerSelectors.basePackage("ar.com.bbva.arq.renaper.apicontroller"))
                 .paths(PathSelectors.any())
                 .build();
     }

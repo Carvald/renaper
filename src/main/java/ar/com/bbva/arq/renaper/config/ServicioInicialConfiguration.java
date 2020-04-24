@@ -1,4 +1,4 @@
-package ar.com.bbva.arq.esqueleto.config;
+package ar.com.bbva.arq.renaper.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;

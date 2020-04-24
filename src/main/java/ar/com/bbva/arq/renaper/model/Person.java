@@ -1,6 +1,8 @@
-package ar.com.bbva.arq.esqueleto.model;
+package ar.com.bbva.arq.renaper.model;
 
-import ar.com.bbva.arq.esqueleto.utils.FormatUtils;
+import com.google.gson.Gson;
+
+import ar.com.bbva.arq.renaper.utils.FormatUtils;
 
 public class Person {
 
@@ -211,13 +213,17 @@ public class Person {
 	public void setDocumentNumber(String documentNumber) {
 		this.documentNumber = documentNumber;
 	}
-	
-	public Person buildSearch(String gender,String documentNumber,String order)
-	{
-		this.gender=gender;
-		this.documentNumber=documentNumber;
-		this.order=FormatUtils.completaCerosIzq(11,order.length(),order);
+
+	public Person buildSearch(String gender, String documentNumber, String order) {
+		this.gender = gender;
+		this.documentNumber = documentNumber;
+		this.order = FormatUtils.completaCerosIzq(11, order.length(), order);
 		return this;
+	}
+
+	public Person fromJson(String personJson) {
+		Gson gson = new Gson();
+		return gson.fromJson(personJson, Person.class);
 	}
 
 }

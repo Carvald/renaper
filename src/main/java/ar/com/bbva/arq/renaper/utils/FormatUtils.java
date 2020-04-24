@@ -1,4 +1,4 @@
-package ar.com.bbva.arq.esqueleto.utils;
+package ar.com.bbva.arq.renaper.utils;
 
 public class FormatUtils {
 

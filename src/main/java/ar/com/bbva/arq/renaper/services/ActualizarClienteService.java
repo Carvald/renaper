@@ -1,4 +1,4 @@
-package ar.com.bbva.arq.esqueleto.service;
+package ar.com.bbva.arq.renaper.services;
 
 import org.springframework.stereotype.Service;
 import ar.com.bbva.soa.conectores.BbvaSoaMensaje;

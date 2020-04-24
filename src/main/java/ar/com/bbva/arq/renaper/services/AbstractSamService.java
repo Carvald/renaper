@@ -1,4 +1,4 @@
-package ar.com.bbva.arq.esqueleto.service;
+package ar.com.bbva.arq.renaper.services;
 
 import java.util.HashMap;
 import java.util.Map;

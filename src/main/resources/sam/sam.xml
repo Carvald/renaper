@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE service-access-manager PUBLIC "-//Service Access Manager//DTD Service Access Manager Configuration//EN" "sam-config.dtd">
 
-<service-access-manager name="EsqueletoSpringBootSAM">
+<service-access-manager name="RenaperSpringBootSAM">
 
 	<context-manager classname="ar.com.itrsa.sam.impl.ContextManagerImpl">
          <context-factory classname="com.bbva.sam.bbvaPaq.impl.BbvaPaqContextFactoryImpl">

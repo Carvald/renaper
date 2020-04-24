@@ -12,12 +12,12 @@
 	</parent>
 
 	<groupId>ar.com.bbva.arq</groupId>
-	<artifactId>esqueleto-spring-boot-sam</artifactId>
+	<artifactId>renaper_api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>esqueleto-spring-boot-sam</name>
-	<description>Esqueleto de aplicación web usando spring boot y SAM</description>
+	<name>renaper_api</name>
+	<description>Consulta y actualiazación data clientes con RENAPER</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -44,10 +44,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
@@ -60,14 +56,12 @@
     		<groupId>io.springfox</groupId>
    			 <artifactId>springfox-swagger2</artifactId>
     		<version>2.9.2</version>
-			</dependency>
-			
+			</dependency>			
 			<dependency>
     			<groupId>io.springfox</groupId>
     			<artifactId>springfox-swagger-ui</artifactId>
    				 <version>2.9.2</version>
 			</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
