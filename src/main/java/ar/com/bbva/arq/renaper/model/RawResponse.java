@@ -5,6 +5,7 @@ public class RawResponse {
 	private String codigoRetorno;
 	private String codigoError;
 	private String mensaje;
+	private RenaperDataDTO respuestaConsultaRenaper;
 
 	public String getMensaje() {
 		return mensaje;
@@ -28,6 +29,14 @@ public class RawResponse {
 
 	public void setCodigoError(String codigoError) {
 		this.codigoError = codigoError;
+	}
+
+	public RenaperDataDTO getRespuestaConsultaRenaper() {
+		return respuestaConsultaRenaper;
+	}
+
+	public void setRespuestaConsultaRenaper(RenaperDataDTO respuestaConsultaRenaper) {
+		this.respuestaConsultaRenaper = respuestaConsultaRenaper;
 	}
 
 }

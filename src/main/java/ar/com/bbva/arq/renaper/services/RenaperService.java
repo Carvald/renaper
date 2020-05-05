@@ -1,6 +1,5 @@
 package ar.com.bbva.arq.renaper.services;
 
-
 import org.springframework.stereotype.Service;
 
 import ar.com.bbva.arq.renaper.model.Person;
@@ -19,28 +18,31 @@ public class RenaperService extends AbstractSamService {
 	}
 
 	public RenaperDataDTO getRenaperDatosPersona(Person person) throws ServiceException {
-		try {			
-			RawResponse respuestaWs = null;
+		try {
+			RawResponse respuestaWs;
 			respuestaWs = (RawResponse) ejecutar(crearServiceAccessManagerContext(),
-					"TM_SERVICIO_INICIAL.RENAPER_DATOS_PERSONA", person, Person.class, RawResponse.class, true, false, null);
-			return  new RenaperDataDTO().build(respuestaWs);			
-		} catch (TransactionException exception) {
-			throw crearErrorGenerico();
-		}
-	}
-	
-	public RawResponse orquestarDatosPersona(Person person) throws ServiceException {
-		try {			
-			RawResponse respuestaWs = null;
-			RenaperDataDTO renaperDataDTO =getRenaperDatosPersona(person);
-			PersonAltaDatos personAltaDatos=new PersonAltaDatos().buildFromRenaper(renaperDataDTO.getPerson());
-			respuestaWs = (RawResponse) ejecutar(crearServiceAccessManagerContext(),
-					"TM_SERVICIO_INICIAL.ALTA_MODIFICACION_CLIENTES_DESDE_RENAPER ", personAltaDatos, PersonAltaDatos.class, RawResponse.class, true, false, null);
-			return respuestaWs;			
+					"TM_SERVICIO_INICIAL.RENAPER_DATOS_PERSONA", person, Person.class, RawResponse.class, true, false,
+					null);
+			return new RenaperDataDTO().build(respuestaWs);
 		} catch (TransactionException exception) {
 			throw crearErrorGenerico();
 		}
 	}
 
+	public RawResponse orquestarDatosPersona(Person person) throws ServiceException {
+		try {
+			RawResponse respuestaWs = new RawResponse();
+			RenaperDataDTO renaperDataDTO = getRenaperDatosPersona(person);
+			PersonAltaDatos personAltaDatos = new PersonAltaDatos().buildFromRenaper(renaperDataDTO.getPerson());
+			if(renaperDataDTO.getCode().equals("10001") && renaperDataDTO.getValid().equals("Vigente"))
+				{respuestaWs = (RawResponse) ejecutar(crearServiceAccessManagerContext(),
+						"TM_SERVICIO_INICIAL.ALTA_MODIFICACION_CLIENTES_DESDE_RENAPER ", personAltaDatos,
+						PersonAltaDatos.class, RawResponse.class, true, false, null);}
+			respuestaWs.setRespuestaConsultaRenaper(renaperDataDTO);
+			return respuestaWs;
+		} catch (TransactionException exception) {
+			throw crearErrorGenerico();
+		}
+	}
 
 }

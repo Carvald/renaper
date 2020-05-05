@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.collections.map.CaseInsensitiveMap;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -20,7 +20,7 @@ import ar.org.bbva.util.ConvertUtils;
 import ar.org.bbva.util.converters.IConvertionManager;
 
 public abstract class AbstractSamService {
-	private static final Log log = LogFactory.getLog(AbstractSamService.class);
+	private static final Logger log = LoggerFactory.getLogger(AbstractSamService.class);
 
 	@Autowired
 	private IConvertionManager convertionManager;
@@ -69,7 +69,7 @@ public abstract class AbstractSamService {
 		String errorCode = null;
 
 		if (status != null && !status.isOk()) {
-			log.error(status);
+			log.debug(status.toString());
 			if (status.getListaErrores() != null && status.getListaErrores().size() > 0) {
 				message = (BbvaSoaMensaje) status.getListaErrores().get(0);
 				if (noEnmascararEnErrorGenerico(message)) {
@@ -99,9 +99,13 @@ public abstract class AbstractSamService {
 				if (entradaCaseInsensitive) {
 					parametersExecute = (Map) ConvertUtils.convert(getConvertionManager(), CaseInsensitiveMap.class,
 							beanEntrada);
-				} else {
+				} else {try {
 					parametersExecute = (Map) ConvertUtils.convert(getConvertionManager(), java.util.HashMap.class,
 							beanEntrada);
+				} catch (Exception e) {
+					log.debug(e.toString());
+				}
+					
 				}
 			}
 

@@ -31,7 +31,7 @@ public class PersonAltaDatos {
 
 
 	public PersonAltaDatos buildFromRenaper(Person person) {
-		this.numeroDocumento=checkForNull(person.getDocumentNumber());
+		this.numeroDocumento=checkForNull(person.getNumber());
 		this.nombre=checkForNull(person.getNames());
 		this.apellido=checkForNull(person.getLastNames());
 		this.sexo=checkForNull(person.getGender());
