@@ -8,7 +8,7 @@ public class RenaperDataDTO {
 
 	private String code;
 	private String message;
-	private Person person;
+	private PersonResponseDTO person;
 	private String valid;
 
 	public String getCode() {
@@ -27,11 +27,11 @@ public class RenaperDataDTO {
 		this.message = message;
 	}
 
-	public Person getPerson() {
+	public PersonResponseDTO getPerson() {
 		return person;
 	}
 
-	public void setPerson(Person person) {
+	public void setPerson(PersonResponseDTO person) {
 		this.person = person;
 	}
 
@@ -43,7 +43,7 @@ public class RenaperDataDTO {
 		this.valid = valid;
 	}
 
-	public RenaperDataDTO build(RawResponse response) {
+	public RenaperDataDTO build(EsbResponse response) {
 		Gson gson = new Gson();
 		JsonParser parser = new JsonParser();
 		Object entrada = parser.parse(response.getMensaje());
@@ -52,7 +52,7 @@ public class RenaperDataDTO {
 		String personJson = jsonObject.get("person") != null
 				? jsonObject.get("person").getAsJsonPrimitive().getAsString()
 				: "";
-		this.person = this.code.equals("10001") ? gson.fromJson(personJson, Person.class) : new Person();
+		this.person = this.code.equals("10001") ? gson.fromJson(personJson, PersonResponseDTO.class) : new PersonResponseDTO();
 		this.valid = jsonObject.get("valid") != null ? jsonObject.get("valid").getAsString() : "";
 		this.message = jsonObject.get("message") != null ? jsonObject.get("message").getAsString() : "";
 		return this;

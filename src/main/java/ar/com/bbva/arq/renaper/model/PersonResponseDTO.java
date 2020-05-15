@@ -2,9 +2,8 @@ package ar.com.bbva.arq.renaper.model;
 
 import com.google.gson.Gson;
 
-import ar.com.bbva.arq.renaper.utils.FormatUtils;
 
-public class Person {
+public class PersonResponseDTO {
 
 	private String number;
 	private String gender;
@@ -214,16 +213,10 @@ public class Person {
 		this.documentNumber = documentNumber;
 	}
 
-	public Person buildSearch(String gender, String documentNumber, String order) {
-		this.gender = gender;
-		this.documentNumber = documentNumber;
-		this.order = FormatUtils.completaCerosIzq(11, order.length(), order);
-		return this;
-	}
-
-	public Person fromJson(String personJson) {
+	public PersonRequestDTO fromJson(String personJson) {
 		Gson gson = new Gson();
-		return gson.fromJson(personJson, Person.class);
+		return gson.fromJson(personJson, PersonRequestDTO.class);
 	}
+	
 
 }

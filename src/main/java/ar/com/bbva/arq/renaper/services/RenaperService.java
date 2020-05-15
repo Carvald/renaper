@@ -2,10 +2,12 @@ package ar.com.bbva.arq.renaper.services;
 
 import org.springframework.stereotype.Service;
 
-import ar.com.bbva.arq.renaper.model.Person;
+import ar.com.bbva.arq.renaper.model.PersonRequestDTO;
 import ar.com.bbva.arq.renaper.model.PersonAltaDatos;
-import ar.com.bbva.arq.renaper.model.RawResponse;
+import ar.com.bbva.arq.renaper.model.EsbResponse;
 import ar.com.bbva.arq.renaper.model.RenaperDataDTO;
+import ar.com.bbva.arq.renaper.model.UpdateClientDataDTO;
+import ar.com.bbva.arq.renaper.utils.Constants;
 import ar.com.bbva.soa.conectores.BbvaSoaMensaje;
 import ar.com.itrsa.sam.TransactionException;
 
@@ -17,29 +19,30 @@ public class RenaperService extends AbstractSamService {
 		return true;
 	}
 
-	public RenaperDataDTO getRenaperDatosPersona(Person person) throws ServiceException {
+	public RenaperDataDTO getRenaperDatosPersona(PersonRequestDTO person) throws ServiceException {
 		try {
-			RawResponse respuestaWs;
-			respuestaWs = (RawResponse) ejecutar(crearServiceAccessManagerContext(),
-					"TM_SERVICIO_INICIAL.RENAPER_DATOS_PERSONA", person, Person.class, RawResponse.class, true, false,
-					null);
-			return new RenaperDataDTO().build(respuestaWs);
+			EsbResponse esbResponse;
+			esbResponse = (EsbResponse) ejecutar(crearServiceAccessManagerContext(), Constants.RENAPER_ESB_SERVICE,
+					person, PersonRequestDTO.class, EsbResponse.class, true, false, null);
+			return new RenaperDataDTO().build(esbResponse);
 		} catch (TransactionException exception) {
 			throw crearErrorGenerico();
 		}
 	}
 
-	public RawResponse orquestarDatosPersona(Person person) throws ServiceException {
+	public String orquestarDatosPersona(UpdateClientDataDTO updateClientDataDTO) throws ServiceException {
 		try {
-			RawResponse respuestaWs = new RawResponse();
-			RenaperDataDTO renaperDataDTO = getRenaperDatosPersona(person);
+			EsbResponse esbResponse = new EsbResponse();
+			RenaperDataDTO renaperDataDTO = getRenaperDatosPersona(updateClientDataDTO.getRenaperPersonRequest());
 			PersonAltaDatos personAltaDatos = new PersonAltaDatos().buildFromRenaper(renaperDataDTO.getPerson());
-			if(renaperDataDTO.getCode().equals("10001") && renaperDataDTO.getValid().equals("Vigente"))
-				{respuestaWs = (RawResponse) ejecutar(crearServiceAccessManagerContext(),
-						"TM_SERVICIO_INICIAL.ALTA_MODIFICACION_CLIENTES_DESDE_RENAPER ", personAltaDatos,
-						PersonAltaDatos.class, RawResponse.class, true, false, null);}
-			respuestaWs.setRespuestaConsultaRenaper(renaperDataDTO);
-			return respuestaWs;
+			if (renaperDataDTO.getCode().equals(Constants.SUCCESS_RENAPER_CODE)
+					&& renaperDataDTO.getValid().equals(Constants.VIGENTE_RENAPER)) {
+				esbResponse = (EsbResponse) ejecutar(crearServiceAccessManagerContext(),
+						Constants.UPDATE_DATA_ESB_SERVICE, personAltaDatos, PersonAltaDatos.class, EsbResponse.class,
+						true, false, null);
+			}
+			return esbResponse.getCodigoError().equals(Constants.SUCCESS_RENAPER_CODE)?Constants.SUCCESS_MESSAGE:Constants.UPDATE_FAIL_MESSAGE
+					+esbResponse.getCodigoRetorno();
 		} catch (TransactionException exception) {
 			throw crearErrorGenerico();
 		}

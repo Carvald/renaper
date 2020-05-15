@@ -1,11 +1,12 @@
 package ar.com.bbva.arq.renaper.model;
 
-public class RawResponse {
+public class EsbResponse {
 
 	private String codigoRetorno;
 	private String codigoError;
 	private String mensaje;
-	private RenaperDataDTO respuestaConsultaRenaper;
+	private PersonResponseDTO personResponseDTO;
+
 
 	public String getMensaje() {
 		return mensaje;
@@ -31,12 +32,13 @@ public class RawResponse {
 		this.codigoError = codigoError;
 	}
 
-	public RenaperDataDTO getRespuestaConsultaRenaper() {
-		return respuestaConsultaRenaper;
+	public PersonResponseDTO getPersonResponseDTO() {
+		return personResponseDTO;
 	}
 
-	public void setRespuestaConsultaRenaper(RenaperDataDTO respuestaConsultaRenaper) {
-		this.respuestaConsultaRenaper = respuestaConsultaRenaper;
+	public void setPersonResponseDTO(PersonResponseDTO personResponseDTO) {
+		this.personResponseDTO = personResponseDTO;
 	}
 
+	
 }

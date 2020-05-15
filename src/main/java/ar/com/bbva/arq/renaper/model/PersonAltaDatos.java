@@ -1,8 +1,5 @@
 package ar.com.bbva.arq.renaper.model;
 
-import com.google.gson.Gson;
-
-import ar.com.bbva.arq.renaper.utils.FormatUtils;
 
 public class PersonAltaDatos {
 
@@ -30,8 +27,8 @@ public class PersonAltaDatos {
 	private String opcion;
 
 
-	public PersonAltaDatos buildFromRenaper(Person person) {
-		this.numeroDocumento=checkForNull(person.getNumber());
+	public PersonAltaDatos buildFromRenaper(PersonResponseDTO person) {
+		this.numeroDocumento=checkForNull(person.getDocumentNumber());
 		this.nombre=checkForNull(person.getNames());
 		this.apellido=checkForNull(person.getLastNames());
 		this.sexo=checkForNull(person.getGender());
