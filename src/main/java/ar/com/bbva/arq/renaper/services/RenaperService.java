@@ -34,7 +34,7 @@ public class RenaperService extends AbstractSamService {
 		try {
 			EsbResponse esbResponse = new EsbResponse();
 			RenaperDataDTO renaperDataDTO = getRenaperDatosPersona(updateClientDataDTO.getRenaperPersonRequest());
-			PersonAltaDatos personAltaDatos = new PersonAltaDatos().buildFromRenaper(renaperDataDTO.getPerson());
+			PersonAltaDatos personAltaDatos = new PersonAltaDatos().buildFromRenaper(renaperDataDTO.getPerson(),updateClientDataDTO);
 			if (renaperDataDTO.getCode().equals(Constants.SUCCESS_RENAPER_CODE)
 					&& renaperDataDTO.getValid().equals(Constants.VIGENTE_RENAPER)) {
 				esbResponse = (EsbResponse) ejecutar(crearServiceAccessManagerContext(),

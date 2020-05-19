@@ -25,9 +25,13 @@ public class PersonAltaDatos {
 	private String paisNacimiento;
 	private String marcaFallecido;
 	private String opcion;
+	private String nombreInformado;
+	private String apellidoInformado;
+	private String fechaNacimientoInformado;
 
 
-	public PersonAltaDatos buildFromRenaper(PersonResponseDTO person) {
+
+	public PersonAltaDatos buildFromRenaper(PersonResponseDTO person,UpdateClientDataDTO updateClientDataDTO) {
 		this.numeroDocumento=checkForNull(person.getDocumentNumber());
 		this.nombre=checkForNull(person.getNames());
 		this.apellido=checkForNull(person.getLastNames());
@@ -50,6 +54,9 @@ public class PersonAltaDatos {
 		this.paisNacimiento=checkForNull(person.getCountryBirth());
 		this.marcaFallecido=checkForNull(person.getMessageOfDeath());
 		this.opcion="01";
+		this.nombreInformado=updateClientDataDTO.getNombreInformado();
+		this.apellidoInformado=updateClientDataDTO.getApellidoInformado();
+		this.fechaNacimientoInformado=updateClientDataDTO.getFechaNacimientoInformado();
 		return this;
 	}
 	
@@ -275,6 +282,30 @@ public class PersonAltaDatos {
 
 	public void setOpcion(String opcion) {
 		this.opcion = opcion;
+	}
+
+	public String getNombreInformado() {
+		return nombreInformado;
+	}
+
+	public void setNombreInformado(String nombreInformado) {
+		this.nombreInformado = nombreInformado;
+	}
+
+	public String getApellidoInformado() {
+		return apellidoInformado;
+	}
+
+	public void setApellidoInformado(String apellidoInformado) {
+		this.apellidoInformado = apellidoInformado;
+	}
+
+	public String getFechaNacimientoInformado() {
+		return fechaNacimientoInformado;
+	}
+
+	public void setFechaNacimientoInformado(String fechaNacimientoInformado) {
+		this.fechaNacimientoInformado = fechaNacimientoInformado;
 	}
 
 	
