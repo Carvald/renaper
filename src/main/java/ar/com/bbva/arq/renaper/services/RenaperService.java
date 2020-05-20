@@ -41,7 +41,7 @@ public class RenaperService extends AbstractSamService {
 						Constants.UPDATE_DATA_ESB_SERVICE, personAltaDatos, PersonAltaDatos.class, EsbResponse.class,
 						true, false, null);
 			}
-			return esbResponse.getCodigoError().equals(Constants.SUCCESS_RENAPER_CODE)?Constants.SUCCESS_MESSAGE:Constants.UPDATE_FAIL_MESSAGE
+			return esbResponse.getCodigoRetorno().equals(Constants.SUCCESS_UPDATE)?Constants.SUCCESS_MESSAGE:Constants.UPDATE_FAIL_MESSAGE
 					+esbResponse.getCodigoRetorno();
 		} catch (TransactionException exception) {
 			throw crearErrorGenerico();

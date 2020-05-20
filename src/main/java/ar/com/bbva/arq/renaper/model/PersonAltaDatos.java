@@ -32,7 +32,7 @@ public class PersonAltaDatos {
 
 
 	public PersonAltaDatos buildFromRenaper(PersonResponseDTO person,UpdateClientDataDTO updateClientDataDTO) {
-		this.numeroDocumento=checkForNull(person.getDocumentNumber());
+		this.numeroDocumento=checkForNull(person.getNumber());
 		this.nombre=checkForNull(person.getNames());
 		this.apellido=checkForNull(person.getLastNames());
 		this.sexo=checkForNull(person.getGender());
@@ -54,8 +54,8 @@ public class PersonAltaDatos {
 		this.paisNacimiento=checkForNull(person.getCountryBirth());
 		this.marcaFallecido=checkForNull(person.getMessageOfDeath());
 		this.opcion="01";
-		this.nombreInformado=updateClientDataDTO.getNombreInformado();
-		this.apellidoInformado=updateClientDataDTO.getApellidoInformado();
+		this.nombreInformado=updateClientDataDTO.getNombreInformado().toUpperCase();
+		this.apellidoInformado=updateClientDataDTO.getApellidoInformado().toUpperCase();
 		this.fechaNacimientoInformado=updateClientDataDTO.getFechaNacimientoInformado();
 		return this;
 	}
