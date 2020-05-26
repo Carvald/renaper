@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import com.bbva.sam.bbvaPaq.BbvaPaqConstants;
 
+import ar.com.bbva.arq.renaper.utils.HTTPResponseCodesEnum;
 import ar.com.bbva.soa.conectores.BbvaSoaMensaje;
 import ar.com.bbva.soa.conectores.BbvaSoaStatus;
 import ar.com.itrsa.sam.IContext;
@@ -56,6 +57,10 @@ public abstract class AbstractSamService {
 
 	protected abstract boolean noEnmascararEnErrorGenerico(BbvaSoaMensaje mensaje);
 
+	protected ServiceException crearExcepcion(String code,String message) {
+		return new ServiceException(code, message, null);
+	}
+	
 	protected ServiceException crearErrorGenerico() {
 		return new ServiceException(defaultErrorCode, defaultErrorMessage, null);
 	}
@@ -77,7 +82,7 @@ public abstract class AbstractSamService {
 					errorCode = message.getCodigo();
 				}
 			}
-			throw (errorMessage != null ? new ServiceException(errorCode, errorMessage, null) : crearErrorGenerico());
+			throw (errorMessage != null ? new ServiceException(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), errorMessage, null) : crearErrorGenerico());
 		}
 	}
 

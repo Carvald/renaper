@@ -8,6 +8,7 @@ import ar.com.bbva.arq.renaper.model.EsbResponse;
 import ar.com.bbva.arq.renaper.model.RenaperDataDTO;
 import ar.com.bbva.arq.renaper.model.UpdateClientDataDTO;
 import ar.com.bbva.arq.renaper.utils.Constants;
+import ar.com.bbva.arq.renaper.utils.HTTPResponseCodesEnum;
 import ar.com.bbva.soa.conectores.BbvaSoaMensaje;
 import ar.com.itrsa.sam.TransactionException;
 
@@ -24,27 +25,35 @@ public class RenaperService extends AbstractSamService {
 			EsbResponse esbResponse;
 			esbResponse = (EsbResponse) ejecutar(crearServiceAccessManagerContext(), Constants.RENAPER_ESB_SERVICE,
 					person, PersonRequestDTO.class, EsbResponse.class, true, false, null);
-			return new RenaperDataDTO().build(esbResponse);
+			RenaperDataDTO renaperData = new RenaperDataDTO().build(esbResponse);
+			if (!renaperData.getValid().equals(Constants.VIGENTE_RENAPER)
+					|| !renaperData.getCode().equals(Constants.SUCCESS_RENAPER_CODE)) {
+				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(), Constants.GET_DATA_FAIL_MESSAGE);
+			} else {
+				return renaperData;
+			}
 		} catch (TransactionException exception) {
-			throw crearErrorGenerico();
+			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(),
+					Constants.SERVER_FAIL_MESSAGE);
 		}
 	}
 
 	public String orquestarDatosPersona(UpdateClientDataDTO updateClientDataDTO) throws ServiceException {
 		try {
-			EsbResponse esbResponse = new EsbResponse();
+			EsbResponse esbResponse;
 			RenaperDataDTO renaperDataDTO = getRenaperDatosPersona(updateClientDataDTO.getRenaperPersonRequest());
-			PersonAltaDatos personAltaDatos = new PersonAltaDatos().buildFromRenaper(renaperDataDTO.getPerson(),updateClientDataDTO);
-			if (renaperDataDTO.getCode().equals(Constants.SUCCESS_RENAPER_CODE)
-					&& renaperDataDTO.getValid().equals(Constants.VIGENTE_RENAPER)) {
-				esbResponse = (EsbResponse) ejecutar(crearServiceAccessManagerContext(),
-						Constants.UPDATE_DATA_ESB_SERVICE, personAltaDatos, PersonAltaDatos.class, EsbResponse.class,
-						true, false, null);
+			PersonAltaDatos personAltaDatos = new PersonAltaDatos().buildFromRenaper(renaperDataDTO.getPerson(),
+					updateClientDataDTO);
+			esbResponse = (EsbResponse) ejecutar(crearServiceAccessManagerContext(), Constants.UPDATE_DATA_ESB_SERVICE,
+					personAltaDatos, PersonAltaDatos.class, EsbResponse.class, true, false, null);
+			if (!esbResponse.getCodigoRetorno().equals(Constants.SUCCESS_UPDATE)) {
+				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(), Constants.UPDATE_FAIL_MESSAGE+"- "+esbResponse.getCodigoError());
+			} else {
+				return Constants.SUCCESS_MESSAGE;
 			}
-			return esbResponse.getCodigoRetorno().equals(Constants.SUCCESS_UPDATE)?Constants.SUCCESS_MESSAGE:Constants.UPDATE_FAIL_MESSAGE
-					+esbResponse.getCodigoRetorno();
 		} catch (TransactionException exception) {
-			throw crearErrorGenerico();
+			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(),
+					Constants.SERVER_FAIL_MESSAGE);
 		}
 	}
 

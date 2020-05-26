@@ -14,7 +14,11 @@ public class Constants {
 	
 	public static final String SUCCESS_MESSAGE="Actualizado con éxito";
 	
-	public static final String UPDATE_FAIL_MESSAGE="Ocurrió un error en la actualización - ";
+	public static final String UPDATE_FAIL_MESSAGE="Ocurrió un error en el alta";
+	
+	public static final String GET_DATA_FAIL_MESSAGE="Error en consulta a RENAPER, Documento erróneo o no vigente. ";
+	
+	public static final String SERVER_FAIL_MESSAGE="Esta transacción no puede ser realizada por el momento.";
 	
 	
 }

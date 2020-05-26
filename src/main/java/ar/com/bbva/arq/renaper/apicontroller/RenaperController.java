@@ -1,5 +1,6 @@
 package ar.com.bbva.arq.renaper.apicontroller;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,8 @@ import ar.com.bbva.arq.renaper.model.RenaperDataDTO;
 import ar.com.bbva.arq.renaper.model.RenaperResponse;
 import ar.com.bbva.arq.renaper.model.UpdateClientDataDTO;
 import ar.com.bbva.arq.renaper.services.RenaperService;
+import ar.com.bbva.arq.renaper.services.ServiceException;
+import ar.com.bbva.arq.renaper.utils.HTTPResponseCodesEnum;
 import io.swagger.annotations.*;
 
 @RestController
@@ -26,26 +29,42 @@ public class RenaperController {
 	@RequestMapping(method = RequestMethod.GET, value = "/api/renaper/consulta/{genero}/{numeroDocumento}/{expediente}", produces = "application/json")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Consulta realizada con éxito", response = RenaperDataDTO.class),
+			@ApiResponse(code = 400, message = "Error en data del request", response = RenaperDataDTO.class),
 			@ApiResponse(code = 500, message = "Error interno del servidor", response = RenaperDataDTO.class) })
 	public RenaperResponse<RenaperDataDTO> consultaRenaper(@PathVariable("genero") String genero,
 			@PathVariable("numeroDocumento") String documentNumber, @PathVariable("expediente") String expediente) {
 		RenaperResponse<RenaperDataDTO> response = new RenaperResponse<>();
-		response.setResult(renaperService
-				.getRenaperDatosPersona(new PersonRequestDTO().buildSearch(genero.toUpperCase(), documentNumber, expediente)));
-		return response.toStatus200OK();
+		try {
+			response.setResult(renaperService.getRenaperDatosPersona(
+					new PersonRequestDTO().buildSearch(genero.toUpperCase(), documentNumber, expediente)));
+			response.setStatusCode(HTTPResponseCodesEnum.STATUS_200.getStatusCode());
+			response.setStatusText(HTTPResponseCodesEnum.STATUS_200.getStatusText());
+		} catch (ServiceException e) {
+			response.setStatusCode(e.getCodigo());
+			response.setStatusText(e.getMessage());
+		}
+		return response;
 
 	}
 
 	@ApiOperation(value = "Alta modificación datos cliente", response = RenaperDataDTO.class)
-	@PostMapping( value = "/api/renaper/altamodificacion", produces = "application/json")
+	@PostMapping(value = "/api/renaper/altamodificacion", produces = "application/json")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Operación realizada con éxito", response = RenaperDataDTO.class),
+			@ApiResponse(code = 400, message = "Error en data del request", response = RenaperDataDTO.class),
 			@ApiResponse(code = 500, message = "Error interno del servidor", response = RenaperDataDTO.class) })
 	public RenaperResponse<String> infoSubmit(@RequestBody UpdateClientDataDTO updateClientDataDTO) {
 		RenaperResponse<String> response = new RenaperResponse<>();
-		response.setResult(renaperService
-				.orquestarDatosPersona(updateClientDataDTO));
-		return response.toStatus200OK();
+		try {
+			response.setResult(renaperService.orquestarDatosPersona(updateClientDataDTO));
+			response.setStatusCode(HTTPResponseCodesEnum.STATUS_200.getStatusCode());
+			response.setStatusText(HTTPResponseCodesEnum.STATUS_200.getStatusText());
+		} catch (ServiceException e) {
+			response.setStatusCode(e.getCodigo());
+			response.setStatusText(e.getMessage());
+		}
+
+		return response;
 
 	}
 
