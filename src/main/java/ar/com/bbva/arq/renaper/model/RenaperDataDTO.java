@@ -1,8 +1,13 @@
 package ar.com.bbva.arq.renaper.model;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import ar.com.bbva.arq.renaper.utils.StringTransformUtils;
+
 
 public class RenaperDataDTO {
 
@@ -52,10 +57,20 @@ public class RenaperDataDTO {
 		String personJson = jsonObject.get("person") != null
 				? jsonObject.get("person").getAsJsonPrimitive().getAsString()
 				: "";
-		this.person = this.code.equals("10001") ? gson.fromJson(personJson, PersonResponseDTO.class) : new PersonResponseDTO();
+		this.person = this.code.equals("10001") ? gson.fromJson(personJson, PersonResponseDTO.class)
+				: new PersonResponseDTO();
 		this.valid = jsonObject.get("valid") != null ? jsonObject.get("valid").getAsString() : "";
 		this.message = jsonObject.get("message") != null ? jsonObject.get("message").getAsString() : "";
+		if (this.getPerson() != null) {
+			this.person.setCity(StringTransformUtils.fixSpecialCharacterFromESB(this.person.getCity()).toUpperCase());
+			this.person.setMunicipality(
+					StringTransformUtils.fixSpecialCharacterFromESB(this.person.getMunicipality()).toUpperCase());
+			this.person.setNames(StringTransformUtils.fixSpecialCharacterFromESB(this.person.getNames()).toUpperCase());
+			this.person.setLastNames(
+					StringTransformUtils.fixSpecialCharacterFromESB(this.person.getLastNames()).toUpperCase());
+		}
 		return this;
 	}
+
 
 }

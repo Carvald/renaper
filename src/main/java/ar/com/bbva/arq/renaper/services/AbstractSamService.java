@@ -82,7 +82,7 @@ public abstract class AbstractSamService {
 					errorCode = message.getCodigo();
 				}
 			}
-			throw (errorMessage != null ? new ServiceException(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), errorMessage, null) : crearErrorGenerico());
+			throw (errorMessage != null ? new ServiceException(errorCode, errorMessage, null) : crearErrorGenerico());
 		}
 	}
 

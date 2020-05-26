@@ -32,9 +32,8 @@ public class RenaperService extends AbstractSamService {
 			} else {
 				return renaperData;
 			}
-		} catch (TransactionException exception) {
-			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(),
-					Constants.SERVER_FAIL_MESSAGE);
+		} catch (TransactionException e) {
+			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
 		}
 	}
 
@@ -47,14 +46,19 @@ public class RenaperService extends AbstractSamService {
 			esbResponse = (EsbResponse) ejecutar(crearServiceAccessManagerContext(), Constants.UPDATE_DATA_ESB_SERVICE,
 					personAltaDatos, PersonAltaDatos.class, EsbResponse.class, true, false, null);
 			if (!esbResponse.getCodigoRetorno().equals(Constants.SUCCESS_UPDATE)) {
-				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(), Constants.UPDATE_FAIL_MESSAGE+"- "+esbResponse.getCodigoError());
+				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(),
+						Constants.UPDATE_FAIL_MESSAGE + " - " + esbResponse.getCodigoError());
 			} else {
 				return Constants.SUCCESS_MESSAGE;
 			}
-		} catch (TransactionException exception) {
-			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(),
-					Constants.SERVER_FAIL_MESSAGE);
+		} catch (TransactionException | ServiceException exception) {
+			if (exception instanceof ServiceException) {
+				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(), exception.getMessage());
+			} else {
+				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
+			}
 		}
+
 	}
 
 }
