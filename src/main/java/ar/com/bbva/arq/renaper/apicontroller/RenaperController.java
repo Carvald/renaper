@@ -29,7 +29,7 @@ public class RenaperController {
 	@RequestMapping(method = RequestMethod.GET, value = "/api/renaper/consulta/{genero}/{numeroDocumento}/{expediente}",  produces = "application/json;charset=UTF-8")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Consulta realizada con éxito", response = RenaperDataDTO.class),
-			@ApiResponse(code = 400, message = "Error en data del request", response = RenaperDataDTO.class),
+			@ApiResponse(code = 400, message = "Error técnico de negocio", response = RenaperDataDTO.class),
 			@ApiResponse(code = 500, message = "Error interno del servidor", response = RenaperDataDTO.class) })
 	public RenaperResponse<RenaperDataDTO> consultaRenaper(@PathVariable("genero") String genero,
 			@PathVariable("numeroDocumento") String documentNumber, @PathVariable("expediente") String expediente) {
@@ -51,7 +51,7 @@ public class RenaperController {
 	@PostMapping(value = "/api/renaper/altamodificacion", produces = "application/json;charset=UTF-8")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Operación realizada con éxito", response = RenaperDataDTO.class),
-			@ApiResponse(code = 400, message = "Error en data del request", response = RenaperDataDTO.class),
+			@ApiResponse(code = 400, message = "Error técnico de negocio", response = RenaperDataDTO.class),
 			@ApiResponse(code = 500, message = "Error interno del servidor", response = RenaperDataDTO.class) })
 	public RenaperResponse<String> infoSubmit(@RequestBody UpdateClientDataDTO updateClientDataDTO) {
 		RenaperResponse<String> response = new RenaperResponse<>();
