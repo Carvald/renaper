@@ -12,8 +12,7 @@
 	</parent>
 
 	<groupId>ar.com.bbva.arq</groupId>
-	<artifactId>renaper_api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>clientesAPI</artifactId>
 	<packaging>war</packaging>
 
 	<name>renaper_api</name>
@@ -98,6 +97,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+        <finalName>clientesAPI</finalName>
 	</build>
 
 </project>
