@@ -21,7 +21,7 @@
         <rollingPolicy
             class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily and when the file reaches 10 MegaBytes -->
-            <fileNamePattern>/log/apps/was/clientesAPI/CLientesApi-%d{yyyy-MM-dd}.%i.log
+            <fileNamePattern>/log/apps/was/clientesAPI/ClientesApi-%d{yyyy-MM-dd}.%i.log
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                 class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
