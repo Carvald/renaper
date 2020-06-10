@@ -19,7 +19,6 @@ public class StringTransformUtils {
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < fieldToAdjust.length(); i++) {
 				int c = (int) fieldToAdjust.charAt(i);
-				System.out.println((int) fieldToAdjust.charAt(i)+" "+fieldToAdjust.charAt(i));
 				if (c != 131 && c != 128 && c != 152)
 					sb.append(fieldToAdjust.charAt(i));
 			}
