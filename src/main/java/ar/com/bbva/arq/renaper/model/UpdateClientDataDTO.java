@@ -6,6 +6,7 @@ public class UpdateClientDataDTO {
 	private String nombreInformado;
 	private String apellidoInformado;
 	private String fechaNacimientoInformado;
+	private String flag;
 	
 	public PersonRequestDTO getRenaperPersonRequest() {
 		return renaperPersonRequest;
@@ -31,6 +32,14 @@ public class UpdateClientDataDTO {
 	public void setFechaNacimientoInformado(String fechaNacimientoInformado) {
 		this.fechaNacimientoInformado = fechaNacimientoInformado;
 	}
-
+	public String getFlag() {
+		return flag;
+	}
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+	
+	
+	
 
 }

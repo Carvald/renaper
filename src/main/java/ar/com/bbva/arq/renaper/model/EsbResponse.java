@@ -5,8 +5,17 @@ public class EsbResponse {
 	private String codigoRetorno;
 	private String codigoError;
 	private String mensaje;
+	private String numeroCliente;
 	private PersonResponseDTO personResponseDTO;
 
+
+	public String getNumeroCliente() {
+		return numeroCliente;
+	}
+
+	public void setNumeroCliente(String numeroCliente) {
+		this.numeroCliente = numeroCliente;
+	}
 
 	public String getMensaje() {
 		return mensaje;

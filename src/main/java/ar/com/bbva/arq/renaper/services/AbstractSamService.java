@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 import com.bbva.sam.bbvaPaq.BbvaPaqConstants;
 
-import ar.com.bbva.arq.renaper.utils.HTTPResponseCodesEnum;
 import ar.com.bbva.soa.conectores.BbvaSoaMensaje;
 import ar.com.bbva.soa.conectores.BbvaSoaStatus;
 import ar.com.itrsa.sam.IContext;
@@ -129,6 +128,10 @@ public abstract class AbstractSamService {
 			if (claseBeanSalida != null) {
 				respuesta = ConvertUtils.convert(getConvertionManager(), claseBeanSalida, parametersExecute);
 			}
+			else {
+				respuesta=parametersExecute;	
+			}
+			
 
 		} catch (ServiceException e) {
 			log.error("Error al ejecutar " + nombreServicio + ": " + e.getMessage(), e);

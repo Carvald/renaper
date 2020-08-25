@@ -1,7 +1,7 @@
 package ar.com.bbva.arq.renaper.model;
 
+import java.util.Map;
 import com.google.gson.Gson;
-
 import ar.com.bbva.arq.renaper.utils.FormatUtils;
 
 public class PersonRequestDTO {
@@ -9,8 +9,9 @@ public class PersonRequestDTO {
 	private String gender;
 	private String order;
 	private String documentNumber;
-
 	
+	
+
 	public String getGender() {
 		return gender;
 	}
@@ -34,6 +35,7 @@ public class PersonRequestDTO {
 	public void setDocumentNumber(String documentNumber) {
 		this.documentNumber = documentNumber;
 	}
+	
 
 	public PersonRequestDTO buildSearch(String gender, String documentNumber, String order) {
 		this.gender = gender;
@@ -41,10 +43,13 @@ public class PersonRequestDTO {
 		this.order = FormatUtils.completaCerosIzq(11, order.length(), order);
 		return this;
 	}
+	
 
 	public PersonRequestDTO fromJson(String personJson) {
 		Gson gson = new Gson();
 		return gson.fromJson(personJson, PersonRequestDTO.class);
 	}
+
+
 
 }

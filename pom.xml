@@ -16,7 +16,8 @@
 	<packaging>war</packaging>
 
 	<name>renaper_api</name>
-	<description>Consulta y actualiazación data clientes con RENAPER</description>
+	<description>Consulta y actualiazación data clientes con RENAPER
+	</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -78,6 +79,20 @@
 			<version>2.9.2</version>
 		</dependency>
 		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.10</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<version>2.3.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -97,7 +112,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-        <finalName>clientesAPI</finalName>
+		<finalName>clientesAPI</finalName>
 	</build>
 
 </project>

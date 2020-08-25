@@ -60,6 +60,77 @@ public class PersonAltaDatos {
 		return this;
 	}
 	
+	
+	
+	public PersonAltaDatos buildFromRenaper(PersonResponseDTO person,BarcodeResponseDTO barcodeResponseDTO) {
+		this.numeroDocumento=checkForNull(person.getNumber());
+		this.nombre=checkForNull(person.getNames());
+		this.apellido=checkForNull(person.getLastNames());
+		this.sexo=checkForNull(person.getGender());
+		this.fechaNacimiento=checkForNull(person.getBirthdate());
+		this.numeroCopia=checkForNull(person.getCopy());
+		this.fechaExpiracionDocumento=checkForNull(person.getExpirationDate());
+		this.fechaEmisionDocumento=checkForNull(person.getCreationDate());
+		this.numeroCUIL=checkForNull(person.getCuil());
+		this.calleDomicilio=checkForNull(person.getStreetAddress());
+		this.numeroDomicilio=checkForNull(person.getNumberStreet());
+		this.pisoDomicilio=checkForNull(person.getFloor());
+		this.departamentoDomicilio=checkForNull(person.getDepartment());
+		this.codigoPostalDomicilio=checkForNull(person.getZipCode());
+		this.ciudadDomicilio=checkForNull(person.getCity());
+		this.municipalidadDomicilio=checkForNull(person.getMunicipality());
+		this.provinciaDomicilio=checkForNull(person.getProvince());
+		this.paisDomicilio=checkForNull(person.getCountry());
+		this.nacionalidad=checkForNull(person.getNationality());
+		this.paisNacimiento=checkForNull(person.getCountryBirth());
+		this.marcaFallecido=checkForNull(person.getMessageOfDeath());
+		this.opcion="01";
+		this.nombreInformado=barcodeResponseDTO.getNombreInformado().toUpperCase();
+		this.apellidoInformado=barcodeResponseDTO.getApellidoInformado().toUpperCase();
+		this.fechaNacimientoInformado=barcodeResponseDTO.getFechaNacInformado();
+		return this;
+	}
+	
+	
+	public PersonAltaDatos buildFromRenaper(PersonResponseDTO person) {
+		this.numeroDocumento=checkForNull(person.getNumber());
+		this.nombre=checkForNull(person.getNames());
+		this.apellido=checkForNull(person.getLastNames());
+		this.sexo=checkForNull(person.getGender());
+		this.fechaNacimiento=checkForNull(person.getBirthdate());
+		this.numeroCopia=checkForNull(person.getCopy());
+		this.fechaExpiracionDocumento=checkForNull(person.getExpirationDate());
+		this.fechaEmisionDocumento=checkForNull(person.getCreationDate());
+		this.numeroCUIL=checkForNull(person.getCuil());
+		this.calleDomicilio=checkForNull(person.getStreetAddress());
+		this.numeroDomicilio=checkForNull(person.getNumberStreet());
+		this.pisoDomicilio=checkForNull(person.getFloor());
+		this.departamentoDomicilio=checkForNull(person.getDepartment());
+		this.codigoPostalDomicilio=checkForNull(person.getZipCode());
+		this.ciudadDomicilio=checkForNull(person.getCity());
+		this.municipalidadDomicilio=checkForNull(person.getMunicipality());
+		this.provinciaDomicilio=checkForNull(person.getProvince());
+		this.paisDomicilio=checkForNull(person.getCountry());
+		this.nacionalidad=checkForNull(person.getNationality());
+		this.paisNacimiento=checkForNull(person.getCountryBirth());
+		this.marcaFallecido=checkForNull(person.getMessageOfDeath());
+		this.opcion="01";
+		return this;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public String checkForNull(String attr) {
 		return attr==null ||attr.equals("null")?"":attr;
 	}

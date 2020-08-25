@@ -1,7 +1,5 @@
 package ar.com.bbva.arq.renaper.model;
 
-import org.apache.commons.lang.StringUtils;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

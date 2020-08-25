@@ -20,5 +20,18 @@ public class Constants {
 	
 	public static final String SERVER_FAIL_MESSAGE="Esta transacción no puede ser realizada por el momento.";
 	
+	public static final String SERVER_FAIL_IMG_PROC="Error interno del servidor durante el procesamiento de imagenes.";
+	
+	public static final String SERVER_FAIL_IMG_PROC_FORMAT="Error interno del servidor durante el procesamiento de imagenes, revise los formatos y extensiones de los archivos solo puede procesar .jpg .png o archivos.pdf ";
+	
+	public static final String SERVER_FAIL_IMG_PROC_EX="Error interno del servidor durante el procesamiento de imagenes maximo de imagenes excedido";
+	
+	public static final String BARCODE_READ_ESB_SERVICE="TM_SERVICIO_INICIAL.BARCODE_READ";
+	
+	public static final String THUBAN_UPLOAD_SERVICE="TM_SERVICIO_INICIAL.TH_PUBLICARDOC";
+	
+	public static final String UPLOAD_INVALID="Deve enviar archivos de imàgenes en la peticiòn";
+	
+	
 	
 }
