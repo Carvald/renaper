@@ -1,6 +1,5 @@
 package ar.com.bbva.arq.renaper.model;
 
-import java.util.Map;
 import com.google.gson.Gson;
 import ar.com.bbva.arq.renaper.utils.FormatUtils;
 

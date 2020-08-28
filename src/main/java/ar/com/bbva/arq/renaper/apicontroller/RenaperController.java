@@ -63,11 +63,8 @@ public class RenaperController {
 			response.setStatusCode(HTTPResponseCodesEnum.STATUS_200.getStatusCode());
 			response.setStatusText(HTTPResponseCodesEnum.STATUS_200.getStatusText());
 		} catch (ServiceException e) {
-			if (e.getCodigo().equals(HTTPResponseCodesEnum.STATUS_400.getStatusCode())) {
-				throw new BadRequestException(e.getMessage());
-			} else {
-				throw new InternalServerException(e.getMessage());
-			}
+			response.setStatusCode(e.getCodigo());
+			response.setStatusText(e.getMessage());
 		}
 		return response;
 
@@ -86,11 +83,8 @@ public class RenaperController {
 			response.setStatusCode(HTTPResponseCodesEnum.STATUS_200.getStatusCode());
 			response.setStatusText(HTTPResponseCodesEnum.STATUS_200.getStatusText());
 		} catch (ServiceException e) {
-			if (e.getCodigo().equals(HTTPResponseCodesEnum.STATUS_400.getStatusCode())) {
-				throw new BadRequestException(e.getMessage());
-			} else {
-				throw new InternalServerException(e.getMessage());
-			}
+			response.setStatusCode(e.getCodigo());
+			response.setStatusText(e.getMessage());
 		}
 		return response;
 	}

@@ -1,7 +1,11 @@
 package ar.com.bbva.arq.renaper.model;
 
 import java.util.Map;
+
+
 import com.google.gson.Gson;
+
+import ar.com.bbva.arq.renaper.utils.FechaUtils;
 import ar.com.bbva.arq.renaper.utils.FormatUtils;
 
 public class BarcodeResponseDTO {
@@ -95,6 +99,17 @@ public class BarcodeResponseDTO {
 		this.image=(String) map.get("barcodeimg");
 		return this;
 
+	}
+	
+	public BarcodeResponseDTO buildFrommInputInfo(Information information) {		
+		this.nombreInformado = information.getNombreInformado();
+		this.apellidoInformado = information.getApellidoInformado();
+		try {
+			this.fechaNacInformado = FechaUtils.formatearFecha(information.getFechaNacimientoInformado(),FechaUtils.DATE_FORMAT_AAAA_MM_DD_GUION,FechaUtils.DATE_FORMAT_DEFAULT );
+		} catch (Exception e) {
+			
+		}
+		return this;
 	}
 
 }

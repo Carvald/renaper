@@ -22,19 +22,18 @@
 			<div class="col-md-12">
 				<div class="col-md-12">
 				<h3>
-					<img src="logo.png" alt="Registro Nacional de la persona">
+					<img src="logo6.png" alt="Registro Nacional de la persona">
 				</h3>
 			</div>
 			</div>
 		</div>
 		 <br>
-		 
-		<div th:if="${information.renaper}" class="row">
+		<div class="row">
 			<div class="col-md-12">
 			 <h3 class="text-center text-primary">Resultado consulta a RENAPER</h3>			 
 			</div>
 		</div>
-		<div th:if="${information.renaper}" class="row">
+		<div class="row">
 			<div class="col-md-12">
 				<table class="table table-striped">
 					<thead>
@@ -113,10 +112,9 @@
 				<div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5  th:if="${information.renaper}"  class="text-primary" id="modal-title" text-align="center">Completado con éxito</h5>
-                <h5  th:unless="${information.renaper}"  class="text-danger" id="modal-title" text-align="center">Requiere consuta a renaper</h5>
+                <h5   class="text-primary" id="modal-title" text-align="center">Completado con éxito</h5>
             </div>
-            <div class="modal-body" th:if="${information.renaper}" >
+            <div class="modal-body" th:if="${information.host}" >
             <b> Código de respuesta: <p class="text-primary" th:text="${information.code}"/>
             <b> Código de respuesta: <p class="text-primary" th:text="${information.message}"/>
              </div>
@@ -127,38 +125,13 @@
         </div>
 			</div>
 		</div>
-		
-		<div th:if="${information.thuban}" class="row">
-			<div class="col-md-12">
-			 <h3 class="text-center text-primary">Resultado subida a Thuban</h3>			 
-			</div>
-		</div>
-		<div th:if="${information.thuban}" class="row">
-			<div class="col-md-12">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="text-primary" id="modal-title" text-align="center">Completado con Ã©xito</h5>
-            </div>
-            <div class="modal-body">
-            <b> Id Thuban: <p class="text-primary" th:text="${information.idThuban}"/>
-             </div>
-           </tbody>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-			</div>
-		</div>
-		
-		
-	</div>
-
+			
+</div>	
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/scripts.js"></script>
 	<div align="left">
-		<hr> <a href="/barcoderead">Consultar otro documento</a>
+		<hr> <a href="/inputdata">Consultar otro documento</a>
 	</div>
 </body>
 </html>

@@ -1,0 +1,2 @@
+cipher.provider.AES=SunJCE
+cipher.secretKey.AES=80\:1E\:7B\:3B\:7B\:23\:47\:21\:94\:9D\:EE\:EA\:3A\:A3\:17\:98

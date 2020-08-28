@@ -13,6 +13,7 @@
     <appender name="RollingFile"
         class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>C:\\logs\\local\\apps\\renaper_api\RenaperApi.log</file>
+        <!--<file>/log/apps/was/clientesAPI/RenaperApi.log</file>-->
         <encoder
             class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
@@ -23,6 +24,9 @@
             <!-- rollover daily and when the file reaches 10 MegaBytes -->
             <fileNamePattern>C:\\logs\\local\\apps\\renaper_api\RenaperApi-%d{yyyy-MM-dd}.%i.log
             </fileNamePattern>
+            
+            <!--<fileNamePattern>/log/apps/was/clientesAPI/RenaperApi-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>-->
             <timeBasedFileNamingAndTriggeringPolicy
                 class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>10MB</maxFileSize>
@@ -31,7 +35,7 @@
     </appender>
      
     <!-- LOG everything at INFO level -->
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </root> 

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDF417-RENAPER-THUBAN</title>
+<meta name="description" content="">
+<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+<script src="js/sripts.js"></script>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<h3 class="text-center text-primary"></h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h3>
+					<img src="logo6.png" alt="Registro Nacional de la persona">
+				</h3>
+			</div>
+
+		</div>
+		<br>
+		<form role="form" th:object="${information}" method="post">
+			<div class="row">
+				<div class="col-md-12">
+
+					<div class="row">
+						<div class="col-md-12">
+							<table class="table table-striped">
+								<tbody>
+									<tr>
+										<th scope="row"></th>
+										<td></td>
+										<td><div class="form-group">
+												<label class="font-weight-bold" for="sexo"> Sexo </label> <label
+													for="genderSelect"></label> <select class="form-control"
+													th:required="true" th:field="*{gender}">
+													<option value="" th:text=".."></option>
+													<option th:value="'M'" th:text="M"></option>
+													<option th:value="'F'" th:text="F"></option>
+												</select>
+											</div></td>
+										<td></td>
+										<td>
+											<div class="form-group">
+												<label class="font-weight-bold"
+													title="Longitud máxima 8 dígitos" for="documentNumber">
+													Documento </label>
+												<div data-tip="longitud máxima 8 dígitos">
+													<input type="text"
+														th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+														class="form-control" id="documentNumber"
+														th:field="*{documentNumber}" maxlength="8" min="0"
+														required />
+												</div>
+
+											</div>
+										</td>
+										<td></td>
+										<td>
+											<div class="form-group">
+												<label class="font-weight-bold"
+													title="Longitud máxima 11 dígitos" for="order">
+													Trámite N° </label>
+												<div data-tip="longitud máxima 11 dígitos">
+													<input type="text"
+														th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+														class="form-control" id="order" th:field="*{order}"
+														maxlength="11" min="0" required />
+												</div>
+											</div>
+										</td>
+										<td></td>
+										<td>
+										<td><div class="form-group">
+												<label class="font-weight-bold" title="Actualizar Cliente"
+													for="order"> Actualizar Cliente</label>
+												<div data-tip="">
+													<input class="form-control" onclick="myFunction()"
+														type="checkbox" th:field="*{host}" />
+												</div>
+											</div></td>
+
+										<td></td>
+										<td>
+											<div class="form-group">
+											<label class="font-weight-bold" title=""
+													for="order"></label>
+												<button class="btn btn-info btn-sm">
+													<i class="fa fa-search"></i>Procesar
+												</button>
+											</div>
+										</td>
+										<td>
+											<div class="form-group">
+											<label class="font-weight-bold" title=""
+													for="order"></label>
+												<button class="btn btn-info btn-sm" type="reset">
+													<i class="fa fa-trash"></i>Limpiar
+												</button>
+											</div>
+										</td>
+
+									</tr>
+							</table>
+							<div id="myDIV" style="display: none">
+								<table class="table table-striped">
+									<tr>
+										<th scope="row"></th>
+										<td></td>
+										<td><div class="form-group">
+												<label class="font-weight-bold"
+													title="Longitud máxima 8 dígitos" for="documentNumber">
+													Nombre Informado </label>
+												<div data-tip="Nombre informado">
+													<input type="text"
+														class="form-control" id="nommbreInformado"
+														th:field="*{nombreInformado}" style="text-transform: uppercase;"
+														 />
+												</div>
+
+											</div></td>
+										<td></td>
+										<td>
+											<div class="form-group">
+												<label class="font-weight-bold"
+													title="Longitud máxima 8 dígitos" for="apellidoInformado">
+													Apellido Informado </label>
+												<div data-tip="Apellido informado">
+													<input type="text"
+														class="form-control" id="apellidoInformado"
+														th:field="*{apellidoInformado}" style="text-transform: uppercase;"
+														 />
+												</div>
+
+											</div>
+										</td>
+										<td></td>
+										<td>
+											<div class="form-group">
+												<label class="font-weight-bold"
+													title="Longitud máxima 11 dígitos" for="fechaNacimientoInformado">
+													Fecha Nacimiento </label>
+												<div data-tip="Fecha de nacimiento informado">
+													<input type="date" name="begin" 
+        												placeholder="dd-mm-yyyy" value="" class="form-control" id="fechaNacimientoInformado" th:field="*{fechaNacimientoInformado}"
+        												min="1900-01-01" max="2050-12-31" > 							
+												</div>
+											</div>
+										</td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/scripts.js"></script>
+	<div align="left">
+		<hr> <a href="/">A menú de selección</a>
+	</div>
+</body>
+</html>

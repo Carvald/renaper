@@ -4,8 +4,12 @@ import java.util.HashMap;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
+
+import ar.com.bbva.arq.renaper.config.ClavesConfiguration;
+
 import ar.com.bbva.arq.renaper.model.ThubanUploadRequestDTO;
 import ar.com.bbva.arq.renaper.utils.Constants;
 import ar.com.bbva.arq.renaper.utils.HTTPResponseCodesEnum;
@@ -16,10 +20,8 @@ import ar.com.itrsa.sam.TransactionException;
 @Service
 public class ThubanService extends AbstractSamService {
 
-	@Value("${thuban.user}") 
-	String user;
-	@Value("${thuban.pass}") 
-	String pass;
+	@Autowired
+	ClavesConfiguration clavesConfiguration;
 	
 	@Override
 	protected boolean noEnmascararEnErrorGenerico(BbvaSoaMensaje mensaje) {
@@ -30,7 +32,7 @@ public class ThubanService extends AbstractSamService {
 	public String publicar(byte[] documento,String numeroCliente) {
 		try {
 			ThubanUploadRequestDTO thubanUploadRequestDTO = new ThubanUploadRequestDTO().build(documento,
-					armarClaseDocumentalCLILegajo(numeroCliente), user, pass,numeroCliente);
+					armarClaseDocumentalCLILegajo(numeroCliente), clavesConfiguration.getUsuario(), clavesConfiguration.getPassword(),numeroCliente);
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("Usuario", thubanUploadRequestDTO.getUsuario());
 			parameters.put("Clave", thubanUploadRequestDTO.getClave());
@@ -75,22 +77,6 @@ public class ThubanService extends AbstractSamService {
 		return campos.toString();
 	}
 
-	public String getUser() {
-		return user;
-	}
 
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-	public String getPass() {
-		return pass;
-	}
-
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
-	
-	
 
 }

@@ -119,18 +119,6 @@ public class PersonAltaDatos {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public String checkForNull(String attr) {
 		return attr==null ||attr.equals("null")?"":attr;
 	}
