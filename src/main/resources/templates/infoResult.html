@@ -28,6 +28,42 @@
 			</div>
 		</div>
 		 <br>
+		  <br>
+		 <div class="row">
+			<div class="col-md-12">
+			<h3 class="text-center text-primary">Resultado Barcode Read</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col"></th>
+							<th scope="col">Documento</th>
+							<th scope="col">Trámite</th>
+							<th scope="col">Genero</th>
+							<th scope="col">Nombres</th>
+							<th scope="col">Apellidos</th>
+							<th scope="col">Fecha de nacimiento</th>
+							<th scope="col">Código de barras obtenido de</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row"></th>
+							<td><p th:text="'' + ${information.barcodeResponseDTO.documentNumber}" /></td>
+							<td><p th:text="'' + ${information.barcodeResponseDTO.order}" /></td>
+							<td><p th:text="'' + ${information.barcodeResponseDTO.gender}" /></td>
+							<td><p th:text="'' + ${information.barcodeResponseDTO.nombreInformado}" /></td>
+							<td><p th:text="'' + ${information.barcodeResponseDTO.apellidoInformado}" /></td>
+							<td><p th:text="'' + ${information.barcodeResponseDTO.fechaNacInformado}" /></td>
+							<td><img style="width: auto; height: 195px;" th:src="@{'data:image/jpeg;base64,'+${information.barcodeResponseDTO.image}}"  /></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 		 
 		<div th:if="${information.renaper}" class="row">
 			<div class="col-md-12">
