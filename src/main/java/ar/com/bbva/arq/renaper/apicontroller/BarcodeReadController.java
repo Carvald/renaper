@@ -1,6 +1,7 @@
 package ar.com.bbva.arq.renaper.apicontroller;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 
@@ -81,9 +82,12 @@ public class BarcodeReadController {
 			information.setMessage(Constants.SUCCESS_MESSAGE);
 			information.setValid(renaperResponse.getValid());
 			}
-			information.setBarcodeResponseDTO(barcodeResponseDTO);			
+			information.setBarcodeResponseDTO(barcodeResponseDTO);	
+			
+			String documentacionClienteStringBase64=Base64.getEncoder().encodeToString(documentacionClienteBytes);
+			
 			if (information.getThuban())
-				information.setIdThuban(thubanService.publicar(documentacionClienteBytes, numeroCliente));
+				information.setIdThuban(thubanService.publicar(documentacionClienteStringBase64, numeroCliente));
 			return "infoResult";
 		} catch (ServiceException e) {
 			information.setCode(e.getCodigo());

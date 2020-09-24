@@ -4,8 +4,10 @@ import java.util.HashMap;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import ar.com.bbva.arq.renaper.config.ClavesConfiguration;
@@ -20,8 +22,14 @@ import ar.com.itrsa.sam.TransactionException;
 @Service
 public class ThubanService extends AbstractSamService {
 
+	private static final Logger log = LoggerFactory.getLogger(AbstractSamService.class);
+	
+	
 	@Autowired
 	ClavesConfiguration clavesConfiguration;
+	
+	@Autowired
+	private Environment environment;
 	
 	@Override
 	protected boolean noEnmascararEnErrorGenerico(BbvaSoaMensaje mensaje) {
@@ -29,10 +37,10 @@ public class ThubanService extends AbstractSamService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public String publicar(byte[] documento,String numeroCliente) {
+	public String publicar(String documento,String numeroCliente) {
 		try {
 			ThubanUploadRequestDTO thubanUploadRequestDTO = new ThubanUploadRequestDTO().build(documento,
-					armarClaseDocumentalCLILegajo(numeroCliente), clavesConfiguration.getUsuario(), clavesConfiguration.getPassword(),numeroCliente);
+					armarClaseDocumentalCLILegajo(numeroCliente), clavesConfiguration.getUsuario(), environment.getProperty("password"),numeroCliente);
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("Usuario", thubanUploadRequestDTO.getUsuario());
 			parameters.put("Clave", thubanUploadRequestDTO.getClave());

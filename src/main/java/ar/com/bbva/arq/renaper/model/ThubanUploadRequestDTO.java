@@ -12,13 +12,13 @@ public class ThubanUploadRequestDTO {
 	String ListaCampos;
 	String Documento;
 	
-	public ThubanUploadRequestDTO build(byte[] documento,String listaCampos,String user,String pass,String numeroCliente) {
+	public ThubanUploadRequestDTO build(String documento,String listaCampos,String user,String pass,String numeroCliente) {
 		this.Usuario=user;
 		this.Clave=pass;
 		this.ClaseDocumental = "CLI-LEGAJOS";
 		this.NombreArchivo = "dniDoc"+numeroCliente+".pdf";
 		this.ListaCampos = listaCampos;
-		this.Documento = Arrays.toString(documento);
+		this.Documento = documento;
 		return this;
 	}
 	
