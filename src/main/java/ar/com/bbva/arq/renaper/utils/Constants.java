@@ -33,5 +33,10 @@ public class Constants {
 	public static final String UPLOAD_INVALID="Deve enviar archivos de imàgenes en la peticiòn";
 	
 	
+	public static final String RENAPER_FINGER_TRX_ESB_SERVICE="TM_SERVICIO_INICIAL.RENAPER_FINGER_TRX";
+	
+	public static final String RENAPER_FINGER_AUTH_ESB_SERVICE="TM_SERVICIO_INICIAL.RENAPER_FINGER_AUTH";
+	
+	
 	
 }

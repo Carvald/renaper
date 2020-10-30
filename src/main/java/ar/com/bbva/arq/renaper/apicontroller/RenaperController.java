@@ -19,7 +19,11 @@ import ar.com.bbva.arq.renaper.config.Pdf417Configuration;
 import ar.com.bbva.arq.renaper.exceptions.BadRequestException;
 import ar.com.bbva.arq.renaper.exceptions.InternalServerException;
 import ar.com.bbva.arq.renaper.model.AltaDatosResponseDTO;
+import ar.com.bbva.arq.renaper.model.AttemptstRequestDTO;
+import ar.com.bbva.arq.renaper.model.AttemptstResponseDTO;
 import ar.com.bbva.arq.renaper.model.BarcodeResponseDTO;
+import ar.com.bbva.arq.renaper.model.FingerPrintRequestDTO;
+import ar.com.bbva.arq.renaper.model.FingerPrintResponseDTO;
 import ar.com.bbva.arq.renaper.model.PersonRequestDTO;
 import ar.com.bbva.arq.renaper.model.RenaperDataDTO;
 import ar.com.bbva.arq.renaper.model.RenaperResponse;
@@ -105,6 +109,52 @@ public class RenaperController {
 					pdf417Configuration.getMegasdni(), pdf417Configuration.getMegasfile());
 			BarcodeResponseDTO personRequestDTO = pdf147Service.obtenerDatosDNI(documentacionClienteBytes);
 			response.setResult(personRequestDTO);
+			response.setStatusCode(HTTPResponseCodesEnum.STATUS_200.getStatusCode());
+			response.setStatusText(HTTPResponseCodesEnum.STATUS_200.getStatusText());
+		} catch (ServiceException e) {
+			if (e.getCodigo().equals(HTTPResponseCodesEnum.STATUS_400.getStatusCode())) {
+				throw new BadRequestException(e.getMessage());
+			} else {
+				throw new InternalServerException(e.getMessage());
+			}
+		}
+		return response;
+	}
+	
+	
+	@ApiOperation(value = "Identificación por huella", response = RenaperDataDTO.class)
+	@PostMapping(value = "/api/renaper/identificacionporhuella", produces = "application/json;charset=UTF-8")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Operación realizada con éxito", response = String.class),
+			@ApiResponse(code = 400, message = "Error técnico de negocio"),
+			@ApiResponse(code = 500, message = "Error interno del servidor") })
+	public RenaperResponse<FingerPrintResponseDTO> identificacionPorHuella(@RequestBody FingerPrintRequestDTO fingerPrintDataDTO) {
+		RenaperResponse<FingerPrintResponseDTO> response = new RenaperResponse<>();
+		try {
+			response.setResult(renaperService.identificacionPorhuella(fingerPrintDataDTO));
+			response.setStatusCode(HTTPResponseCodesEnum.STATUS_200.getStatusCode());
+			response.setStatusText(HTTPResponseCodesEnum.STATUS_200.getStatusText());
+		} catch (ServiceException e) {
+			if (e.getCodigo().equals(HTTPResponseCodesEnum.STATUS_400.getStatusCode())) {
+				throw new BadRequestException(e.getMessage());
+			} else {
+				throw new InternalServerException(e.getMessage());
+			}
+		}
+		return response;
+	}
+	
+	
+	@ApiOperation(value = "Intentos disponibles Identificación por huella", response = RenaperDataDTO.class)
+	@PostMapping(value = "/api/renaper/intentosdisponibles", produces = "application/json;charset=UTF-8")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Operación realizada con éxito", response = String.class),
+			@ApiResponse(code = 400, message = "Error técnico de negocio"),
+			@ApiResponse(code = 500, message = "Error interno del servidor") })
+	public RenaperResponse<AttemptstResponseDTO> intentosDisponibles(@RequestBody AttemptstRequestDTO attemptstRequestDTO) {
+		RenaperResponse<AttemptstResponseDTO> response = new RenaperResponse<>();
+		try {
+			response.setResult(renaperService.intentosDisponibles(attemptstRequestDTO));
 			response.setStatusCode(HTTPResponseCodesEnum.STATUS_200.getStatusCode());
 			response.setStatusText(HTTPResponseCodesEnum.STATUS_200.getStatusText());
 		} catch (ServiceException e) {

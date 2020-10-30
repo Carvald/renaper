@@ -23,7 +23,7 @@ public class RenaperApplication extends SpringBootServletInitializer {
 	
 	
 	
- @Override
+	 @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         // Estamos corriendo en un servlet container, Websphere application server posiblemente
         // En estos casos cargamos el profile de Spring Boot mediante JNDI

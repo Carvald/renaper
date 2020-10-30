@@ -6,8 +6,12 @@ import org.springframework.web.servlet.ModelAndView;
 import ar.com.bbva.arq.renaper.model.PersonRequestDTO;
 import ar.com.bbva.arq.renaper.model.PersonAltaDatos;
 import ar.com.bbva.arq.renaper.model.AltaDatosResponseDTO;
+import ar.com.bbva.arq.renaper.model.AttemptstRequestDTO;
+import ar.com.bbva.arq.renaper.model.AttemptstResponseDTO;
 import ar.com.bbva.arq.renaper.model.BarcodeResponseDTO;
 import ar.com.bbva.arq.renaper.model.EsbResponse;
+import ar.com.bbva.arq.renaper.model.FingerPrintRequestDTO;
+import ar.com.bbva.arq.renaper.model.FingerPrintResponseDTO;
 import ar.com.bbva.arq.renaper.model.RenaperDataDTO;
 import ar.com.bbva.arq.renaper.model.UpdateClientDataDTO;
 import ar.com.bbva.arq.renaper.utils.Constants;
@@ -75,7 +79,7 @@ public class RenaperService extends AbstractSamService {
 			EsbResponse esbResponse;
 			RenaperDataDTO renaperDataDTO = getRenaperDatosPersona(updateClientDataDTO.getRenaperPersonRequest());
 			altaDatosResponseDTO.setRenaperDataDTO(renaperDataDTO);
-			if (updateClientDataDTO.getFlag()==null) {
+			if (updateClientDataDTO.getFlag() == null) {
 				PersonAltaDatos personAltaDatos = new PersonAltaDatos().buildFromRenaper(renaperDataDTO.getPerson(),
 						updateClientDataDTO);
 				esbResponse = (EsbResponse) ejecutar(crearServiceAccessManagerContext(),
@@ -120,4 +124,38 @@ public class RenaperService extends AbstractSamService {
 
 	}
 
-}
+	public FingerPrintResponseDTO identificacionPorhuella(FingerPrintRequestDTO fingerPrintDataDTO) {
+		try {
+			FingerPrintResponseDTO fingerPrintResponseDTO;
+			fingerPrintResponseDTO = (FingerPrintResponseDTO) ejecutar(crearServiceAccessManagerContext(),
+					Constants.RENAPER_FINGER_AUTH_ESB_SERVICE, fingerPrintDataDTO, FingerPrintRequestDTO.class,
+					FingerPrintResponseDTO.class, true, false, null);
+			if (fingerPrintResponseDTO.getCode().equals("0")) {
+				return fingerPrintResponseDTO;
+			} else {
+				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(),
+						fingerPrintResponseDTO.getMessage());
+			}
+		} catch (TransactionException exception) {
+			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
+		}
+		
+	}
+
+
+
+	public AttemptstResponseDTO intentosDisponibles(AttemptstRequestDTO attemptstRequestDTO) {
+		try {
+			AttemptstResponseDTO attemptstResponseDTO;
+			attemptstResponseDTO = (AttemptstResponseDTO) ejecutar(crearServiceAccessManagerContext(),
+					Constants.RENAPER_FINGER_TRX_ESB_SERVICE, attemptstRequestDTO, AttemptstRequestDTO.class,
+					FingerPrintResponseDTO.class, true, false, null);
+			return attemptstResponseDTO;
+		} catch (TransactionException exception) {
+				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
+			}
+		}
+
+	}
+
+
