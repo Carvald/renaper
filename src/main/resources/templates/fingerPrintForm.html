@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDF417-RENAPER-THUBAN</title>
+<meta name="description" content="">
+<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+<script src="js/sripts.js"></script>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<h3 class="text-center text-primary"></h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h3>
+					<img src="logo.png" alt="Registro Nacional de la persona">
+				</h3>
+			</div>
+
+		</div>
+		<br>
+
+		<div class="row">
+			<div class="col-md-12">
+				<form role="form" class="form-inline" th:object="${information}"
+					method="post" enctype="multipart/form-data">
+					<div class="col-md-3">
+					<div class="form-group">
+						<div class="form-group">
+							<div>
+             					<label class="font-weight-bold">Indica los servicios que desas ejecutar</label>
+             					<input  class="form-control" type="checkbox"  th:checked="'checked'" disabled="true"/>Barcode Read
+              					 <input  class="form-control" type="checkbox" th:field="*{renaper}"/>RENAPER
+             					 <input  class="form-control" type="checkbox" th:field="*{host}"/>Actualizar Cliente
+             					 <input  class="form-control" type="checkbox" th:field="*{thuban}" />Thuban
+           					 </div>
+						</div>
+					</div>
+					</div>
+					<div class="col-md-2"></div>
+					<div class="col-md-3">
+					<div class="form-group">
+								<label class="font-weight-bold">Archivos a procesar</label>
+								<p th:text="${message}" th:if="${message ne null}"
+									class="alert alert-primary"></p>
+								<div class="form-group">
+									<input id="file" type="file" name="file" class="form-control-file"
+										required onchange="upload_check()" multiple>
+								</div>
+					</div>
+					</div>
+					<div class="col-md-1"></div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<button class="btn btn-info btn-sm">
+							<i class="fa fa-search"></i>Procesar
+						</button>
+						<div class="col-md-1"></div>
+						<button class="btn btn-info btn-sm" type="reset">
+							<i class="fa fa-trash"></i>Limpiar
+						</button>
+						
+					</div>
+				</div>	
+					<hr>
+					<div class="form-group">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/scripts.js"></script>
+	<div align="left">
+		<hr> <a href="/clientesAPI">A menú de selección</a>
+	</div>
+</body>
+</html>

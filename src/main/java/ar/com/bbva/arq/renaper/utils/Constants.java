@@ -37,6 +37,8 @@ public class Constants {
 	
 	public static final String RENAPER_FINGER_AUTH_ESB_SERVICE="TM_SERVICIO_INICIAL.RENAPER_FINGER_AUTH";
 	
+	public static final String PCHU_OPCION_IDA="IDA";
+	
 	public static final String PCHU_OPCION_VUELTA="VUELTA";
 	
 	

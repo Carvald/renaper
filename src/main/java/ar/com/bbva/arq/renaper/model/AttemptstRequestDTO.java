@@ -1,6 +1,5 @@
 package ar.com.bbva.arq.renaper.model;
 
-import ar.com.bbva.arq.renaper.utils.Constants;
 
 public class AttemptstRequestDTO {
 
@@ -51,12 +50,12 @@ public class AttemptstRequestDTO {
 		this.renaper = renaper;
 	}
 	
-	public AttemptstRequestDTO buildFromSimpleDto(AttemptstRequestSimpleDTO attemptstRequestSimpleDTO, String respuestaRenaper) {
+	public AttemptstRequestDTO buildFromSimpleDto(AttemptstRequestSimpleDTO attemptstRequestSimpleDTO, String respuestaRenaper,String opcion) {
 		
 		this.nroclie=attemptstRequestSimpleDTO.getNroclie();
 		this.nrodoc=attemptstRequestSimpleDTO.getNrodoc();
 		this.tipdoc=attemptstRequestSimpleDTO.getTipdoc();
-		this.opcion=Constants.PCHU_OPCION_VUELTA;
+		this.opcion=opcion;
 		this.renaper=respuestaRenaper;
 		return this;
 	

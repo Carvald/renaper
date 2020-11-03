@@ -20,5 +20,13 @@ public FingerPrintRequestDTO buildFromRequestComposed(FingerPrintCircuitRequestD
 	
 } 
 
+public FingerPrintRequestDTO buildFromCircuitRequest(afisrequest afisrequest) {
+
+	this.afisrequest = afisrequest;
+	return this;
+	
+	
+} 
+
 }
 

@@ -179,7 +179,7 @@ public class RenaperService extends AbstractSamService {
 			AttemptstResponseDTO attemptstResponseDTO;
 
 			AttemptstRequestDTO attemptstRequestDTO = new AttemptstRequestDTO().buildFromSimpleDto(
-					fingerPrintCircuitRequestDTO.getAttemptsRequestSimpleDTO(), fingerPrintResponseDTO.getCode());
+					fingerPrintCircuitRequestDTO.getAttemptsRequestSimpleDTO(), fingerPrintResponseDTO.getCode(),Constants.PCHU_OPCION_VUELTA);
 
 			attemptstResponseDTO = (AttemptstResponseDTO) ejecutar(crearServiceAccessManagerContext(),
 					Constants.RENAPER_FINGER_TRX_ESB_SERVICE, attemptstRequestDTO, AttemptstRequestDTO.class,

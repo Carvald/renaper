@@ -7,6 +7,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 import ar.com.bbva.arq.spring.boot.utils.JNDIProfileHelper;
 
+
+
 @SpringBootApplication
 @ComponentScan(basePackages = {"ar.com.bbva.arq.renaper", "ar.com.bbva.arq.spring.boot.utils"})
 public class RenaperApplication extends SpringBootServletInitializer {
@@ -15,14 +17,15 @@ public class RenaperApplication extends SpringBootServletInitializer {
 		SpringApplication.run(RenaperApplication.class, args);
 	}
 
-	/* 
+
+	
 	@Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(RenaperApplication.class);
     }
-	*/
 	
 	
+	/*
 	@Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         // Estamos corriendo en un servlet container, Websphere application server posiblemente
@@ -30,6 +33,7 @@ public class RenaperApplication extends SpringBootServletInitializer {
         JNDIProfileHelper.loadProfile();
         return builder.sources(RenaperApplication.class);
     }
+	*/
 
 	
 }
