@@ -1,5 +1,7 @@
 package ar.com.bbva.arq.renaper.model;
 
+import ar.com.bbva.arq.renaper.utils.Constants;
+
 public class AttemptstRequestDTO {
 
 	private String opcion;
@@ -7,7 +9,7 @@ public class AttemptstRequestDTO {
 	private String tipdoc;
 	private String nrodoc;
 	private String renaper;
-	private String ip;
+
 
 	public String getOpcion() {
 		return opcion;
@@ -48,15 +50,18 @@ public class AttemptstRequestDTO {
 	public void setRenaper(String renaper) {
 		this.renaper = renaper;
 	}
-
-	public String getIp() {
-		return ip;
+	
+	public AttemptstRequestDTO buildFromSimpleDto(AttemptstRequestSimpleDTO attemptstRequestSimpleDTO, String respuestaRenaper) {
+		
+		this.nroclie=attemptstRequestSimpleDTO.getNroclie();
+		this.nrodoc=attemptstRequestSimpleDTO.getNrodoc();
+		this.tipdoc=attemptstRequestSimpleDTO.getTipdoc();
+		this.opcion=Constants.PCHU_OPCION_VUELTA;
+		this.renaper=respuestaRenaper;
+		return this;
+	
 	}
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-	
-	
+
 
 }

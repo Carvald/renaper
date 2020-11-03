@@ -57,4 +57,13 @@ public class afisrequest {
 		finger2WSQ = finger2wsq;
 	}
 
+	public afisrequest buildFromRequestComposed(FingerPrintCircuitRequestDTO fingerPrintCircuitRequestDTO) {
+		this.setFinger1Index(fingerPrintCircuitRequestDTO.getAfisrequest().getFinger1Index());
+		this.setFinger1WSQ(fingerPrintCircuitRequestDTO.getAfisrequest().getFinger1WSQ());
+		this.setFinger2Index(fingerPrintCircuitRequestDTO.getAfisrequest().getFinger2Index());
+		this.setFinger2WSQ(fingerPrintCircuitRequestDTO.getAfisrequest().getFinger2WSQ());
+		this.setGender(fingerPrintCircuitRequestDTO.getAfisrequest().getGender());
+		this.setNumber(fingerPrintCircuitRequestDTO.getAfisrequest().getNumber());
+		return this;
+	}
 }

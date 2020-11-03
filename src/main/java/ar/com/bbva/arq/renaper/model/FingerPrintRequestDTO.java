@@ -12,7 +12,13 @@ public void setAfisrequest(afisrequest afisrequest) {
 	this.afisrequest = afisrequest;
 }	
 	
-
+public FingerPrintRequestDTO buildFromRequestComposed(FingerPrintCircuitRequestDTO fingerPrintCircuitRequestDTO) {
+	afisrequest afr = new afisrequest();
+	this.afisrequest = afr.buildFromRequestComposed(fingerPrintCircuitRequestDTO);
+	return this;
+	
+	
+} 
 
 }
 

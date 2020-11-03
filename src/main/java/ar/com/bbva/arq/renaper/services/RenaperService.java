@@ -10,8 +10,11 @@ import ar.com.bbva.arq.renaper.model.AttemptstRequestDTO;
 import ar.com.bbva.arq.renaper.model.AttemptstResponseDTO;
 import ar.com.bbva.arq.renaper.model.BarcodeResponseDTO;
 import ar.com.bbva.arq.renaper.model.EsbResponse;
+import ar.com.bbva.arq.renaper.model.FingerPrintCircuitRequestDTO;
+import ar.com.bbva.arq.renaper.model.FingerPrintCircuitResponseDTO;
 import ar.com.bbva.arq.renaper.model.FingerPrintRequestDTO;
 import ar.com.bbva.arq.renaper.model.FingerPrintResponseDTO;
+import ar.com.bbva.arq.renaper.model.OrquestarDataDTO;
 import ar.com.bbva.arq.renaper.model.RenaperDataDTO;
 import ar.com.bbva.arq.renaper.model.UpdateClientDataDTO;
 import ar.com.bbva.arq.renaper.utils.Constants;
@@ -139,10 +142,8 @@ public class RenaperService extends AbstractSamService {
 		} catch (TransactionException exception) {
 			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
 		}
-		
+
 	}
-
-
 
 	public AttemptstResponseDTO intentosDisponibles(AttemptstRequestDTO attemptstRequestDTO) {
 		try {
@@ -150,12 +151,69 @@ public class RenaperService extends AbstractSamService {
 			attemptstResponseDTO = (AttemptstResponseDTO) ejecutar(crearServiceAccessManagerContext(),
 					Constants.RENAPER_FINGER_TRX_ESB_SERVICE, attemptstRequestDTO, AttemptstRequestDTO.class,
 					FingerPrintResponseDTO.class, true, false, null);
-			return attemptstResponseDTO;
-		} catch (TransactionException exception) {
-				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
+
+			if (attemptstResponseDTO.getCoderr().equals("00")) {
+				return attemptstResponseDTO;
+			} else {
+				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(),
+						attemptstResponseDTO.getRetorno());
 			}
+
+		} catch (TransactionException exception) {
+			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
+		}
+	}
+
+	public FingerPrintCircuitResponseDTO actualizarIntentosIdentificacionPorHuella(
+			FingerPrintCircuitRequestDTO fingerPrintCircuitRequestDTO) {
+		FingerPrintCircuitResponseDTO fingerPrintCircuitResponseDTO = new FingerPrintCircuitResponseDTO();
+		try {
+			FingerPrintResponseDTO fingerPrintResponseDTO;
+			FingerPrintRequestDTO fingerPrintRequestDTO = new FingerPrintRequestDTO();
+			fingerPrintRequestDTO.buildFromRequestComposed(fingerPrintCircuitRequestDTO);
+
+			fingerPrintResponseDTO = (FingerPrintResponseDTO) ejecutar(crearServiceAccessManagerContext(),
+					Constants.RENAPER_FINGER_AUTH_ESB_SERVICE, fingerPrintRequestDTO, FingerPrintRequestDTO.class,
+					FingerPrintResponseDTO.class, true, false, null);
+
+			AttemptstResponseDTO attemptstResponseDTO;
+
+			AttemptstRequestDTO attemptstRequestDTO = new AttemptstRequestDTO().buildFromSimpleDto(
+					fingerPrintCircuitRequestDTO.getAttemptsRequestSimpleDTO(), fingerPrintResponseDTO.getCode());
+
+			attemptstResponseDTO = (AttemptstResponseDTO) ejecutar(crearServiceAccessManagerContext(),
+					Constants.RENAPER_FINGER_TRX_ESB_SERVICE, attemptstRequestDTO, AttemptstRequestDTO.class,
+					FingerPrintResponseDTO.class, true, false, null);
+
+			fingerPrintCircuitResponseDTO.setVueltaAttemptstResponseDTO(attemptstResponseDTO);
+			fingerPrintCircuitResponseDTO.setFingerPrintResponseDTO(fingerPrintResponseDTO);
+			return fingerPrintCircuitResponseDTO;
+
+		} catch (TransactionException exception) {
+			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
 		}
 
 	}
 
+	public AltaDatosResponseDTO orquestarDatosPersonaConDataRenaper(OrquestarDataDTO orquestarDataDTO) {
+		AltaDatosResponseDTO altaDatosResponseDTO = new AltaDatosResponseDTO();
+		try {
+			EsbResponse esbResponse;
+			PersonAltaDatos personAltaDatos = new PersonAltaDatos().buildFromRenaper(orquestarDataDTO.getPerson(),
+					orquestarDataDTO);
+			esbResponse = (EsbResponse) ejecutar(crearServiceAccessManagerContext(), Constants.UPDATE_DATA_ESB_SERVICE,
+					personAltaDatos, PersonAltaDatos.class, EsbResponse.class, true, false, null);
+			if (!esbResponse.getCodigoRetorno().equals(Constants.SUCCESS_UPDATE)) {
+				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(),
+						Constants.UPDATE_FAIL_MESSAGE + " - " + esbResponse.getCodigoError());
+			} else {
+				altaDatosResponseDTO.setAltaDatosResult(Constants.SUCCESS_UPDATE);
+			}
+		} catch (TransactionException exception) {
+			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
 
+		}
+		return altaDatosResponseDTO;
+	}
+
+}
