@@ -150,9 +150,9 @@ public class RenaperService extends AbstractSamService {
 			AttemptstResponseDTO attemptstResponseDTO;
 			attemptstResponseDTO = (AttemptstResponseDTO) ejecutar(crearServiceAccessManagerContext(),
 					Constants.RENAPER_FINGER_TRX_ESB_SERVICE, attemptstRequestDTO, AttemptstRequestDTO.class,
-					FingerPrintResponseDTO.class, true, false, null);
+					AttemptstResponseDTO.class, true, false, null);
 
-			if (attemptstResponseDTO.getCoderr().equals("00")) {
+			if (attemptstResponseDTO.getCoderr()!=null && attemptstResponseDTO.getCoderr().equals("00")) {
 				return attemptstResponseDTO;
 			} else {
 				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(),
@@ -163,6 +163,21 @@ public class RenaperService extends AbstractSamService {
 			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
 		}
 	}
+	
+
+	public AttemptstResponseDTO intentosDisponiblesSubmit(AttemptstRequestDTO attemptstRequestDTO) {
+		try {
+			AttemptstResponseDTO attemptstResponseDTO;
+			attemptstResponseDTO = (AttemptstResponseDTO) ejecutar(crearServiceAccessManagerContext(),
+					Constants.RENAPER_FINGER_TRX_ESB_SERVICE, attemptstRequestDTO, AttemptstRequestDTO.class,
+					AttemptstResponseDTO.class, true, false, null);
+				return attemptstResponseDTO;
+
+		} catch (TransactionException exception) {
+			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
+		}
+	}
+
 
 	public FingerPrintCircuitResponseDTO actualizarIntentosIdentificacionPorHuella(
 			FingerPrintCircuitRequestDTO fingerPrintCircuitRequestDTO) {

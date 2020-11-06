@@ -22,7 +22,7 @@
 			<div class="col-md-12">
 				<div class="col-md-12">
 				<h3>
-					<img src="logo.png" alt="Registro Nacional de la persona">
+					<img src="logo7.png" alt="Registro Nacional de la persona">
 				</h3>
 			</div>
 			</div>
@@ -31,130 +31,25 @@
 		  <br>
 		 <div class="row">
 			<div class="col-md-12">
-			<h3 class="text-center text-primary">Resultado Barcode Read</h3>
+			<h3 class="text-center text-primary">Resultado renaper finger auth<</h3>
+			</div>
+		</div>
+
+		<div  class="row">
+			<div class="col-md-12">
+			 <h3 class="text-center text-primary">Resultado PCHU </h3>			 
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th scope="col"></th>
-							<th scope="col">Documento</th>
-							<th scope="col">Trámite</th>
-							<th scope="col">Genero</th>
-							<th scope="col">Nombres</th>
-							<th scope="col">Apellidos</th>
-							<th scope="col">Fecha de nacimiento</th>
-							<th scope="col">Código de barras obtenido de</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th scope="row"></th>
-							<td><p th:text="'' + ${information.barcodeResponseDTO.documentNumber}" /></td>
-							<td><p th:text="'' + ${information.barcodeResponseDTO.order}" /></td>
-							<td><p th:text="'' + ${information.barcodeResponseDTO.gender}" /></td>
-							<td><p th:text="'' + ${information.barcodeResponseDTO.nombreInformado}" /></td>
-							<td><p th:text="'' + ${information.barcodeResponseDTO.apellidoInformado}" /></td>
-							<td><p th:text="'' + ${information.barcodeResponseDTO.fechaNacInformado}" /></td>
-							<td><img style="width: auto; height: 195px;" th:src="@{'data:image/jpeg;base64,'+${information.barcodeResponseDTO.image}}"  /></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		 
-		<div th:if="${information.renaper}" class="row">
-			<div class="col-md-12">
-			 <h3 class="text-center text-primary">Resultado consulta a RENAPER</h3>			 
-			</div>
-		</div>
-		<div th:if="${information.renaper}" class="row">
-			<div class="col-md-12">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th scope="col"></th>
-							<th scope="col">Documento</th>
-							<th scope="col">Cuil</th>
-							<th scope="col">Genero</th>
-							<th scope="col">Nombres</th>
-							<th scope="col">Apellidos</th>
-							<th scope="col">Fecha de nacimiento</th>
-							<th scope="col">Ejemplar</th>
-							<th scope="col">Fecha de expiración</th>
-							<th scope="col">Fecha de expedición</th>
-							<th scope="col">Nacionalidad</th>
-							<th scope="col">País de nacimiento</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th scope="row"></th>
-							<td><p th:text="'' + ${information.person.number}" /></td>
-							<td><p th:text="'' + ${information.person.cuil}" /></td>
-							<td><p th:text="'' + ${information.person.gender}" /></td>
-							<td><p th:text="'' + ${information.person.names}" /></td>
-							<td><p th:text="'' + ${information.person.lastNames}" /></td>
-							<td><p th:text="'' + ${information.person.birthdate}" /></td>
-							<td><p th:text="'' + ${information.person.copy}" /></td>
-							<td><p th:text="'' + ${information.person.expirationDate}" /></td>
-							<td><p th:text="'' + ${information.person.creationDate}" /></td>
-							<td><p th:text="'' + ${information.person.nationality}" /></td>
-							<td><p th:text="'' + ${information.person.countryBirth}" /></td>
-						</tr>
-					</tbody>
-					<thead>
-						<tr>
-							<th scope="col"></th>
-							<th scope="col">Calle</th>
-							<th scope="col">Altura</th>
-							<th scope="col">Departamento</th>
-							<th scope="col">Código postal</th>
-							<th scope="col">Ciudad</th>
-							<th scope="col">Barrio</th>
-							<th scope="col">Provincia</th>
-							<th scope="col">País</th>
-							<th scope="col">Fallecimiento</th>
-							<th scope="col">Válido</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th scope="row"></th>
-							<td><p th:text="'' + ${information?.person?.streetAddress != null} ? ${information?.person?.streetAddress}" /></td>
-							<td><p th:text="'' + ${information?.person?.numberStreet != null} ? ${information?.person?.numberStreet}" /></td>
-							<td><p th:text="'' + ${information?.person?.floor != null} ? ${information?.person?.floor}" /></td>
-							<td><p th:text="'' + ${information?.person?.zipCode != null} ? ${information?.person?.zipCode}" /></td>
-							<td><p th:text="'' + ${information?.person?.city != null} ? ${information?.person?.city}" /></td>
-							<td><p th:text="'' + ${information?.person?.municipality != null} ? ${information?.person?.municipality}" /></td>
-							<td><p th:text="'' + ${information?.person?.province != null} ? ${information?.person?.province}" /></td>
-							<td><p th:text="'' + ${information?.person?.country != null} ? ${information?.person?.country}" /></td>
-							<td><p th:text="'' + ${information?.person?.messageOfDeath != null} ? ${information?.person?.messageOfDeath}" /></td>
-							<td><p th:text="'' + ${information.valid}" /></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		
-		<div th:if="${information.host}" class="row">
-			<div class="col-md-12">
-			 <h3 class="text-center text-primary">Resultado proceso de actualizacion</h3>			 
-			</div>
-		</div>
-		<div th:if="${information.host}" class="row">
-			<div class="col-md-12">
 				<div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5  th:if="${information.renaper}"  class="text-primary" id="modal-title" text-align="center">Completado con éxito</h5>
-                <h5  th:unless="${information.renaper}"  class="text-danger" id="modal-title" text-align="center">Requiere consuta a renaper</h5>
+                <h5 class="text-primary" id="modal-title" text-align="center">Subtran IDA</h5>
             </div>
-            <div class="modal-body" th:if="${information.renaper}" >
-            <b> Código de respuesta: <p class="text-primary" th:text="${information.code}"/>
-            <b> Código de respuesta: <p class="text-primary" th:text="${information.message}"/>
+            <div class="modal-body">
+            <b> Código de retorno: <p class="text-primary" th:text="${fingerPrintFlowCircuitDTO.attemptstResponseIdaDTO.retorno}"/>
+            <b> Código de errror: <p class="text-primary" th:text="${fingerPrintFlowCircuitDTO.attemptstResponseIdaDTO.coderr}"/>
              </div>
            </tbody>
             </div>
@@ -186,6 +81,31 @@
         </div>
 			</div>
 		</div>
+		
+		<div  class="row">
+			<div class="col-md-12">
+			 <h3 class="text-center text-primary">Resultado PCHU </h3>			 
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="text-primary" id="modal-title" text-align="center">Subtran VUELTA</h5>
+            </div>
+            <div class="modal-body">
+            <b> Código de retorno: <p class="text-primary" th:text="${fingerPrintFlowCircuitDTO.attemptstResponseVueltaDTO.retorno}"/>
+            <b> Código de errror: <p class="text-primary" th:text="${fingerPrintFlowCircuitDTO.attemptstResponseVueltaDTO.coderr}"/>
+             </div>
+           </tbody>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+			</div>
+		</div>
+		
 		
 		
 	</div>

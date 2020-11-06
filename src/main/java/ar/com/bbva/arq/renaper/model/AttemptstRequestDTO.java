@@ -1,5 +1,7 @@
 package ar.com.bbva.arq.renaper.model;
 
+import ar.com.bbva.arq.renaper.enums.TipoDocumentoEnum;
+import ar.com.bbva.arq.renaper.utils.FormatUtils;
 
 public class AttemptstRequestDTO {
 
@@ -53,8 +55,20 @@ public class AttemptstRequestDTO {
 	public AttemptstRequestDTO buildFromSimpleDto(AttemptstRequestSimpleDTO attemptstRequestSimpleDTO, String respuestaRenaper,String opcion) {
 		
 		this.nroclie=attemptstRequestSimpleDTO.getNroclie();
-		this.nrodoc=attemptstRequestSimpleDTO.getNrodoc();
+		this.nrodoc=FormatUtils.completaCerosIzq(13, attemptstRequestSimpleDTO.getNrodoc().length(),attemptstRequestSimpleDTO.getNrodoc());
 		this.tipdoc=attemptstRequestSimpleDTO.getTipdoc();
+		this.opcion=opcion;
+		this.renaper=respuestaRenaper;
+		return this;
+	
+	}
+	
+	
+public AttemptstRequestDTO buildFromSimpleDtoFlowCircuit(AttemptstRequestSimpleDTO attemptstRequestSimpleDTO, String respuestaRenaper,String opcion) {
+		
+		this.nroclie=attemptstRequestSimpleDTO.getNroclie();
+		this.nrodoc=FormatUtils.completaCerosIzq(13, attemptstRequestSimpleDTO.getNrodoc().length(), attemptstRequestSimpleDTO.getNrodoc());
+		this.tipdoc=TipoDocumentoEnum.getByDescripcion(attemptstRequestSimpleDTO.getTipdoc()).getCodigoAltamira();
 		this.opcion=opcion;
 		this.renaper=respuestaRenaper;
 		return this;

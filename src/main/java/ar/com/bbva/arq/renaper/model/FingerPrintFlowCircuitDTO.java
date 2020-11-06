@@ -5,7 +5,8 @@ public class FingerPrintFlowCircuitDTO {
 	private AttemptstRequestSimpleDTO attemptsRequestSimpleDTO;
 	private afisrequest afisrequest;
 	private FingerPrintResponseDTO fingerPrintResponseDTO;
-	private AttemptstResponseDTO attemptstResponseDTO;
+	private AttemptstResponseDTO attemptstResponseIdaDTO;
+	private AttemptstResponseDTO attemptstResponseVueltaDTO;
 	private String message;
 	private String code;
 
@@ -33,12 +34,22 @@ public class FingerPrintFlowCircuitDTO {
 		this.fingerPrintResponseDTO = fingerPrintResponseDTO;
 	}
 
-	public AttemptstResponseDTO getAttemptstResponseDTO() {
-		return attemptstResponseDTO;
+
+
+	public AttemptstResponseDTO getAttemptstResponseIdaDTO() {
+		return attemptstResponseIdaDTO;
 	}
 
-	public void setAttemptstResponseDTO(AttemptstResponseDTO attemptstResponseDTO) {
-		this.attemptstResponseDTO = attemptstResponseDTO;
+	public void setAttemptstResponseIdaDTO(AttemptstResponseDTO attemptstResponseIdaDTO) {
+		this.attemptstResponseIdaDTO = attemptstResponseIdaDTO;
+	}
+
+	public AttemptstResponseDTO getAttemptstResponseVueltaDTO() {
+		return attemptstResponseVueltaDTO;
+	}
+
+	public void setAttemptstResponseVueltaDTO(AttemptstResponseDTO attemptstResponseVueltaDTO) {
+		this.attemptstResponseVueltaDTO = attemptstResponseVueltaDTO;
 	}
 
 	public String getMessage() {

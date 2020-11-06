@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PDF417-RENAPER-THUBAN</title>
+<title>RENAPER_FINGER_AUTH</title>
 <meta name="description" content="">
 <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
 <script src="js/sripts.js"></script>
@@ -25,68 +25,154 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h3>
-					<img src="logo.png" alt="Registro Nacional de la persona">
+					<img src="logo7.png" alt="Registro Nacional de la persona">
 				</h3>
 			</div>
 
 		</div>
-		<br>
+		<br> <br>
+		<form role="form" th:object="${fingerPrintFlowCircuitDTO}"
+			method="post">
+			<div class="row">
+				<div class="col-md-12">
 
-		<div class="row">
-			<div class="col-md-12">
-				<form role="form" class="form-inline" th:object="${information}"
-					method="post" enctype="multipart/form-data">
-					<div class="col-md-3">
-					<div class="form-group">
-						<div class="form-group">
-							<div>
-             					<label class="font-weight-bold">Indica los servicios que desas ejecutar</label>
-             					<input  class="form-control" type="checkbox"  th:checked="'checked'" disabled="true"/>Barcode Read
-              					 <input  class="form-control" type="checkbox" th:field="*{renaper}"/>RENAPER
-             					 <input  class="form-control" type="checkbox" th:field="*{host}"/>Actualizar Cliente
-             					 <input  class="form-control" type="checkbox" th:field="*{thuban}" />Thuban
-           					 </div>
+					<div class="row">
+						<div class="col-md-12">
+							<table class="table table-striped">
+								<tbody>
+									<tr>
+										<th scope="row"></th>
+										<td><div class="form-group">
+												<div class="form-group">
+													<label class="font-weight-bold" for="sexo">Género</label> <label
+														for="genderSelect"></label> <select class="form-control"
+														th:required="true" th:field="*{afisrequest.gender}">
+														<option value="" th:text=".."></option>
+														<option th:value="'M'" th:text="M"></option>
+														<option th:value="'F'" th:text="F"></option>
+													</select>
+												</div>
+											</div></td>
+										<td><div class="form-group">
+												<div class="form-group">
+													<label class="font-weight-bold" for="sexo">Tipo
+														documento</label> <label for="genderSelect"></label> <select
+														class="form-control" th:required="true"
+														th:field="*{attemptsRequestSimpleDTO.tipdoc}">
+														<option value="" th:text=".."></option>
+														<option th:value="'DNI'" th:text="DNI"></option>
+														<option th:value="'LC'" th:text="LC"></option>
+														<option th:value="'LEN'" th:text="LEN"></option>
+														<option th:value="'CI'" th:text="CI"></option>
+														<option th:value="'PASPORTE'" th:text="PASAPORTE"></option>
+														<option th:value="'CUIT'" th:text="CUIT"></option>
+														<option th:value="'RENAPER'" th:text="RENAPER"></option>
+														<option th:value="'DNE'" th:text="DNE"></option>
+														<option th:value="'CUIL'" th:text="CUIL"></option>
+														<option th:value="'DNI_MASCULINO'" th:text="DNI_MASCULINO"></option>
+														<option th:value="'DNI_FEMENINO'" th:text="DNI_FEMENINO"></option>
+													</select>
+												</div>
+											</div></td>
+										<td><div class="form-group">
+												<label class="font-weight-bold"
+													title="Longitud máxima 13 dígitos" for="documentNumber">
+													Documento </label>
+												<div data-tip="longitud máxima 13 dígitos">
+													<input type="text"
+														th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+														class="form-control" id="documentNumber"
+														th:field="*{attemptsRequestSimpleDTO.nrodoc}"
+														maxlength="13" min="0" required />
+												</div>
+											</div></td>
+										<td><div class="form-group">
+												<label class="font-weight-bold"
+													title="Longitud máxima 8 dígitos" for="documentNumber">
+													Numero cliente </label>
+												<div data-tip="longitud máxima 8 dígitos">
+													<input type="text"
+														th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+														class="form-control" id="documentNumber"
+														th:field="*{attemptsRequestSimpleDTO.nroclie}"
+														maxlength="8" min="0" required />
+												</div>
+											</div></td>
+										<td><div class="form-group">
+												<label class="font-weight-bold"
+													title="Longitud máxima 8 dígitos" for="documentNumber">
+													Numero dedo 1 </label>
+												<div data-tip="longitud máxima 1 dígito">
+													<input type="text"
+														th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+														class="form-control" id="documentNumber"
+														th:field="*{afisrequest.finger1Index}" maxlength="1"
+														min="0" required />
+												</div>
+											</div></td>
+										<td><div class="form-group">
+												<label class="font-weight-bold"
+													title="Longitud máxima 8 dígitos" for="documentNumber">
+													Dedo 1 B64 </label>
+												<div>
+													<textarea class="form-control" id="documentNumber"
+														th:field="*{afisrequest.finger1WSQ}" required>
+														</textarea>
+												</div>
+
+											</div></td>
+										<td><div class="form-group">
+												<label class="font-weight-bold"
+													title="Longitud máxima 8 dígitos" for="documentNumber">
+													Numero dedo 2 </label>
+												<div data-tip="longitud máxima 1 dígito">
+													<input type="text"
+														th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+														class="form-control" id="documentNumber"
+														th:field="*{afisrequest.finger2Index}" maxlength="1"
+														min="0" required />
+												</div>
+
+											</div></td>
+										<td><div class="form-group">
+												<label class="font-weight-bold"
+													title="Longitud máxima 8 dígitos" for="documentNumber">
+													Dedo 2 B64 </label>
+												<div>
+													<textarea class="form-control" id="documentNumber"
+														th:field="*{afisrequest.finger2WSQ}" required>
+														</textarea>
+												</div>
+
+											</div></td>
+										<td><div class="form-group">
+												<button class="btn btn-info btn-sm">
+													<i class="fa fa-search"></i>Procesar
+												</button>
+												<div class="col-md-1"></div>
+												<button class="btn btn-info btn-sm" type="reset">
+													<i class="fa fa-trash"></i>Limpiar
+												</button>
+
+											</div></td>
+
+									</tr>
+							</table>
 						</div>
 					</div>
-					</div>
-					<div class="col-md-2"></div>
-					<div class="col-md-3">
-					<div class="form-group">
-								<label class="font-weight-bold">Archivos a procesar</label>
-								<p th:text="${message}" th:if="${message ne null}"
-									class="alert alert-primary"></p>
-								<div class="form-group">
-									<input id="file" type="file" name="file" class="form-control-file"
-										required onchange="upload_check()" multiple>
-								</div>
-					</div>
-					</div>
-					<div class="col-md-1"></div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<button class="btn btn-info btn-sm">
-							<i class="fa fa-search"></i>Procesar
-						</button>
-						<div class="col-md-1"></div>
-						<button class="btn btn-info btn-sm" type="reset">
-							<i class="fa fa-trash"></i>Limpiar
-						</button>
-						
-					</div>
-				</div>	
-					<hr>
-					<div class="form-group">
-					</div>
-				</form>
+				</div>
 			</div>
-		</div>
+		</form>
+
+
 	</div>
 
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/scripts.js"></script>
 	<div align="left">
-		<hr> <a href="/clientesAPI">A menú de selección</a>
+		<hr>
+		<a href="/clientesAPI">A menú de selección</a>
 	</div>
 </body>
 </html>
