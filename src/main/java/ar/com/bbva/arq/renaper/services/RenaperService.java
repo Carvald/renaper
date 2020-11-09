@@ -151,14 +151,8 @@ public class RenaperService extends AbstractSamService {
 			attemptstResponseDTO = (AttemptstResponseDTO) ejecutar(crearServiceAccessManagerContext(),
 					Constants.RENAPER_FINGER_TRX_ESB_SERVICE, attemptstRequestDTO, AttemptstRequestDTO.class,
 					AttemptstResponseDTO.class, true, false, null);
-			if (attemptstResponseDTO.getCoderr() != 
-					null && attemptstResponseDTO.getRetorno() != null) {
 				return attemptstResponseDTO;
-			} else {
-				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(),
-						attemptstResponseDTO.getRetorno());
-			}
-
+			
 		} catch (TransactionException exception) {
 			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
 		}
