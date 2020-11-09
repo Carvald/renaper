@@ -34,11 +34,9 @@ public class FingerPrintFlowController {
 			@ModelAttribute FingerPrintFlowCircuitDTO fingerPrintFlowCircuitDTO, Model model) throws IOException {
 
 		try {
-
 			AttemptstRequestDTO attemptstRequestDTO = new AttemptstRequestDTO().buildFromSimpleDtoFlowCircuit(
 					fingerPrintFlowCircuitDTO.getAttemptsRequestSimpleDTO(), "", Constants.PCHU_OPCION_IDA);
 			fingerPrintFlowCircuitDTO.setAttemptstResponseIdaDTO(renaperService.intentosDisponiblesSubmit(attemptstRequestDTO));
-
 			FingerPrintRequestDTO fingerPrintRequestDTO = new FingerPrintRequestDTO();
 			fingerPrintRequestDTO.buildFromCircuitRequest(fingerPrintFlowCircuitDTO.getAfisrequest());
 			/*fingerPrintRequestDTO.getAfisrequest()

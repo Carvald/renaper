@@ -1,9 +1,6 @@
 package ar.com.bbva.arq.renaper.apicontroller;
 
-
 import java.util.List;
-
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -24,6 +21,8 @@ import ar.com.bbva.arq.renaper.model.AttemptstResponseDTO;
 import ar.com.bbva.arq.renaper.model.BarcodeResponseDTO;
 import ar.com.bbva.arq.renaper.model.FingerPrintCircuitRequestDTO;
 import ar.com.bbva.arq.renaper.model.FingerPrintCircuitResponseDTO;
+import ar.com.bbva.arq.renaper.model.FingerPrintCircuitUnifiedRequestDTO;
+import ar.com.bbva.arq.renaper.model.FingerPrintCircuitUnifiedResponseDTO;
 import ar.com.bbva.arq.renaper.model.FingerPrintRequestDTO;
 import ar.com.bbva.arq.renaper.model.FingerPrintResponseDTO;
 import ar.com.bbva.arq.renaper.model.OrquestarDataDTO;
@@ -102,7 +101,8 @@ public class RenaperController {
 			@ApiResponse(code = 200, message = "Operación realizada con éxito", response = BarcodeResponseDTO.class),
 			@ApiResponse(code = 400, message = "Error técnico de negocio"),
 			@ApiResponse(code = 500, message = "Error interno del servidor") })
-	public RenaperResponse<BarcodeResponseDTO> extraerDatosDni(@RequestPart(value = "file", required = true) List<MultipartFile> files) {
+	public RenaperResponse<BarcodeResponseDTO> extraerDatosDni(
+			@RequestPart(value = "file", required = true) List<MultipartFile> files) {
 		RenaperResponse<BarcodeResponseDTO> response = new RenaperResponse<>();
 		try {
 			if (files.isEmpty()) {
@@ -123,15 +123,15 @@ public class RenaperController {
 		}
 		return response;
 	}
-	
-	
+
 	@ApiOperation(value = "Identificación por huella", response = RenaperDataDTO.class)
 	@PostMapping(value = "/api/renaper/identificacionporhuella", produces = "application/json;charset=UTF-8")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Operación realizada con éxito", response = String.class),
 			@ApiResponse(code = 400, message = "Error técnico de negocio"),
 			@ApiResponse(code = 500, message = "Error interno del servidor") })
-	public RenaperResponse<FingerPrintResponseDTO> identificacionPorHuella(@RequestBody FingerPrintRequestDTO fingerPrintDataDTO) {
+	public RenaperResponse<FingerPrintResponseDTO> identificacionPorHuella(
+			@RequestBody FingerPrintRequestDTO fingerPrintDataDTO) {
 		RenaperResponse<FingerPrintResponseDTO> response = new RenaperResponse<>();
 		try {
 			response.setResult(renaperService.identificacionPorhuella(fingerPrintDataDTO));
@@ -146,15 +146,15 @@ public class RenaperController {
 		}
 		return response;
 	}
-	
-	
+
 	@ApiOperation(value = "Intentos disponibles Identificación por huella", response = RenaperDataDTO.class)
 	@PostMapping(value = "/api/renaper/intentosdisponibles", produces = "application/json;charset=UTF-8")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Operación realizada con éxito", response = String.class),
 			@ApiResponse(code = 400, message = "Error técnico de negocio"),
 			@ApiResponse(code = 500, message = "Error interno del servidor") })
-	public RenaperResponse<AttemptstResponseDTO> intentosDisponibles(@RequestBody AttemptstRequestDTO attemptstRequestDTO) {
+	public RenaperResponse<AttemptstResponseDTO> intentosDisponibles(
+			@RequestBody AttemptstRequestDTO attemptstRequestDTO) {
 		RenaperResponse<AttemptstResponseDTO> response = new RenaperResponse<>();
 		try {
 			response.setResult(renaperService.intentosDisponibles(attemptstRequestDTO));
@@ -169,19 +169,20 @@ public class RenaperController {
 		}
 		return response;
 	}
-	
-	
+
 	@ApiOperation(value = "Identificación por huella integrada con pchu", response = RenaperDataDTO.class)
 	@PostMapping(value = "/api/renaper/actualizarintentosidentificacionporhuella", produces = "application/json;charset=UTF-8")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Operación realizada con éxito", response = String.class),
 			@ApiResponse(code = 400, message = "Error técnico de negocio"),
 			@ApiResponse(code = 500, message = "Error interno del servidor") })
-	public RenaperResponse<FingerPrintCircuitResponseDTO> actualizarIntentosIdentificacionPorHuella(@RequestBody FingerPrintCircuitRequestDTO fingerPrintCircuitRequestDTO) {
+	public RenaperResponse<FingerPrintCircuitResponseDTO> actualizarIntentosIdentificacionPorHuella(
+			@RequestBody FingerPrintCircuitRequestDTO fingerPrintCircuitRequestDTO) {
 		RenaperResponse<FingerPrintCircuitResponseDTO> response = new RenaperResponse<>();
 		try {
-			
-			if (fingerPrintCircuitRequestDTO.getAttemptsRequestSimpleDTO()== null ||fingerPrintCircuitRequestDTO.getAfisrequest() == null ) {
+
+			if (fingerPrintCircuitRequestDTO.getAttemptsRequestSimpleDTO() == null
+					|| fingerPrintCircuitRequestDTO.getAfisrequest() == null) {
 				throw new BadRequestException(HTTPResponseCodesEnum.STATUS_400.getStatusText());
 			}
 			response.setResult(renaperService.actualizarIntentosIdentificacionPorHuella(fingerPrintCircuitRequestDTO));
@@ -196,18 +197,63 @@ public class RenaperController {
 		}
 		return response;
 	}
-	
-	
+
 	@ApiOperation(value = "Alta modificación datos cliente", response = RenaperDataDTO.class)
 	@PostMapping(value = "/api/renaper/altamodificacioncondatarenaper", produces = "application/json;charset=UTF-8")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Operación realizada con éxito", response = String.class),
 			@ApiResponse(code = 400, message = "Error técnico de negocio"),
 			@ApiResponse(code = 500, message = "Error interno del servidor") })
-	public RenaperResponse<AltaDatosResponseDTO> altaModificacionConDataRenaper(@RequestBody OrquestarDataDTO orquestarDataDTO) {
+	public RenaperResponse<AltaDatosResponseDTO> altaModificacionConDataRenaper(
+			@RequestBody OrquestarDataDTO orquestarDataDTO) {
 		RenaperResponse<AltaDatosResponseDTO> response = new RenaperResponse<>();
 		try {
 			response.setResult(renaperService.orquestarDatosPersonaConDataRenaper(orquestarDataDTO));
+			response.setStatusCode(HTTPResponseCodesEnum.STATUS_200.getStatusCode());
+			response.setStatusText(HTTPResponseCodesEnum.STATUS_200.getStatusText());
+		} catch (ServiceException e) {
+			if (e.getCodigo().equals(HTTPResponseCodesEnum.STATUS_400.getStatusCode())) {
+				throw new BadRequestException(e.getMessage());
+			} else {
+				throw new InternalServerException(e.getMessage());
+			}
+		}
+		return response;
+	}
+
+	@ApiOperation(value = "Identificación por huella integrada con pchu general", response = RenaperDataDTO.class)
+	@PostMapping(value = "/api/renaper/identificacionporhuellabundle", produces = "application/json;charset=UTF-8")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Operación realizada con éxito", response = String.class),
+			@ApiResponse(code = 400, message = "Error técnico de negocio"),
+			@ApiResponse(code = 500, message = "Error interno del servidor") })
+	public RenaperResponse<FingerPrintCircuitUnifiedResponseDTO> identificacionPorHuellaUnificado(
+			@RequestBody FingerPrintCircuitUnifiedRequestDTO fingerPrintCircuitUnifiedRequestDTO) {
+		RenaperResponse<FingerPrintCircuitUnifiedResponseDTO> response = new RenaperResponse<>();
+		try {
+			FingerPrintCircuitUnifiedResponseDTO fingerPrintCircuitUnifiedResponseDTOResponseDTO = new FingerPrintCircuitUnifiedResponseDTO();
+
+			if (fingerPrintCircuitUnifiedRequestDTO.getAttemptsRequestDTO() == null) {
+				throw new BadRequestException(HTTPResponseCodesEnum.STATUS_400.getStatusText());
+			}
+			if (fingerPrintCircuitUnifiedRequestDTO.getAttemptsRequestDTO().getOpcion()
+					.equals(Constants.PCHU_OPCION_IDA)) {
+				fingerPrintCircuitUnifiedResponseDTOResponseDTO.setIdaAttemptstResponseDTO(renaperService
+						.intentosDisponibles(fingerPrintCircuitUnifiedRequestDTO.getAttemptsRequestDTO()));
+				response.setResult(fingerPrintCircuitUnifiedResponseDTOResponseDTO);
+			} else if (fingerPrintCircuitUnifiedRequestDTO.getAttemptsRequestDTO().getOpcion()
+					.equals(Constants.PCHU_OPCION_VUELTA)) {
+				FingerPrintCircuitResponseDTO fingerPrintCircuitResponseDTO = renaperService
+						.actualizarIntentosIdentificacionPorHuellaUnificado(fingerPrintCircuitUnifiedRequestDTO);
+				fingerPrintCircuitUnifiedResponseDTOResponseDTO
+						.setFingerPrintResponseDTO(fingerPrintCircuitResponseDTO.getFingerPrintResponseDTO());
+				fingerPrintCircuitUnifiedResponseDTOResponseDTO
+						.setVueltaAttemptstResponseDTO(fingerPrintCircuitResponseDTO.getVueltaAttemptstResponseDTO());
+				response.setResult(fingerPrintCircuitUnifiedResponseDTOResponseDTO);
+
+			} else {
+				response.setResult(fingerPrintCircuitUnifiedResponseDTOResponseDTO);
+			}
 			response.setStatusCode(HTTPResponseCodesEnum.STATUS_200.getStatusCode());
 			response.setStatusText(HTTPResponseCodesEnum.STATUS_200.getStatusText());
 		} catch (ServiceException e) {

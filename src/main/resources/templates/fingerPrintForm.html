@@ -44,7 +44,7 @@
 										<th scope="row"></th>
 										<td><div class="form-group">
 												<div class="form-group">
-													<label class="font-weight-bold" for="sexo">Género</label> <label
+													<label class="font-weight-bold" for="sexo">Sexo</label> <label
 														for="genderSelect"></label> <select class="form-control"
 														th:required="true" th:field="*{afisrequest.gender}">
 														<option value="" th:text=".."></option>
@@ -55,8 +55,7 @@
 											</div></td>
 										<td><div class="form-group">
 												<div class="form-group">
-													<label class="font-weight-bold" for="sexo">Tipo
-														documento</label> <label for="genderSelect"></label> <select
+													<label class="font-weight-bold" for="sexo">T/Doc</label> <label for="tipoDocumentSelect"></label> <select
 														class="form-control" th:required="true"
 														th:field="*{attemptsRequestSimpleDTO.tipdoc}">
 														<option value="" th:text=".."></option>
@@ -88,8 +87,8 @@
 											</div></td>
 										<td><div class="form-group">
 												<label class="font-weight-bold"
-													title="Longitud máxima 8 dígitos" for="documentNumber">
-													Numero cliente </label>
+													title="Longitud máxima 8 dígitos" for="clientNumber">
+													Número cliente </label>
 												<div data-tip="longitud máxima 8 dígitos">
 													<input type="text"
 														th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
@@ -100,8 +99,8 @@
 											</div></td>
 										<td><div class="form-group">
 												<label class="font-weight-bold"
-													title="Longitud máxima 8 dígitos" for="documentNumber">
-													Numero dedo 1 </label>
+													title="Longitud máxima 8 dígitos" for="finger1Number">
+													Número dedo 1 </label>
 												<div data-tip="longitud máxima 1 dígito">
 													<input type="text"
 														th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
@@ -112,7 +111,7 @@
 											</div></td>
 										<td><div class="form-group">
 												<label class="font-weight-bold"
-													title="Longitud máxima 8 dígitos" for="documentNumber">
+													title="Dedo 1 b 64" for="dedo1b64">
 													Dedo 1 B64 </label>
 												<div>
 													<textarea class="form-control" id="documentNumber"
@@ -123,8 +122,8 @@
 											</div></td>
 										<td><div class="form-group">
 												<label class="font-weight-bold"
-													title="Longitud máxima 8 dígitos" for="documentNumber">
-													Numero dedo 2 </label>
+													title="longitud máxima 1 dígito" for="finger2Number">
+													Número dedo 2 </label>
 												<div data-tip="longitud máxima 1 dígito">
 													<input type="text"
 														th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
@@ -136,10 +135,10 @@
 											</div></td>
 										<td><div class="form-group">
 												<label class="font-weight-bold"
-													title="Longitud máxima 8 dígitos" for="documentNumber">
+													title="Dedo 2 b 64" for="dedo2b64">
 													Dedo 2 B64 </label>
 												<div>
-													<textarea class="form-control" id="documentNumber"
+													<textarea class="form-control" id="dedo2b64"
 														th:field="*{afisrequest.finger2WSQ}" required>
 														</textarea>
 												</div>
