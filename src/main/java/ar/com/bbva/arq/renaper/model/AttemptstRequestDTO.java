@@ -70,7 +70,7 @@ public AttemptstRequestDTO buildFromSimpleDtoFlowCircuit(AttemptstRequestSimpleD
 		this.nrodoc=FormatUtils.completaCerosIzq(13, attemptstRequestSimpleDTO.getNrodoc().length(), attemptstRequestSimpleDTO.getNrodoc());
 		this.tipdoc=TipoDocumentoEnum.getByDescripcion(attemptstRequestSimpleDTO.getTipdoc()).getCodigoAltamira();
 		this.opcion=opcion;
-		this.renaper=respuestaRenaper;
+		this.renaper=FormatUtils.completaCerosIzq(2,respuestaRenaper.length(),respuestaRenaper);
 		return this;
 	
 	}

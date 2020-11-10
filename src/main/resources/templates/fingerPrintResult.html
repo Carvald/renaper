@@ -59,20 +59,23 @@
 			</div>
 		</div>
 		
-		<div th:if="${information.thuban}" class="row">
+		<div class="row">
 			<div class="col-md-12">
-			 <h3 class="text-center text-primary">Resultado subida a Thuban</h3>			 
+			 <h3 class="text-center text-primary">Resultado validación huella contra renaper</h3>			 
 			</div>
 		</div>
-		<div th:if="${information.thuban}" class="row">
+		<div class="row">
 			<div class="col-md-12">
 				<div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="text-primary" id="modal-title" text-align="center">Completado con éxito</h5>
+                <h5 class="text-primary" id="modal-title" text-align="center">Completado</h5>
             </div>
             <div class="modal-body">
-            <b> Id Thuban: <p class="text-primary" th:text="${information.idThuban}"/>
+            <b> Match Score: <p class="text-primary" th:text="${fingerPrintFlowCircuitDTO.fingerPrintResponseDTO.matchScore}"/>
+            <b> Match Type: <p class="text-primary" th:text="${fingerPrintFlowCircuitDTO.fingerPrintResponseDTO.matchType}"/>
+            <b> Code: <p class="text-primary" th:text="${fingerPrintFlowCircuitDTO.fingerPrintResponseDTO.code}"/>
+            <b> Message: <p class="text-primary" th:text="${fingerPrintFlowCircuitDTO.fingerPrintResponseDTO.message}"/>
              </div>
            </tbody>
             </div>
@@ -114,7 +117,7 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/scripts.js"></script>
 	<div align="left">
-		<hr> <a    href="/clientesAPI/barcoderead">Consultar otro documento</a>
+		<hr> <a    href="/clientesAPI/fingerprintflow">Procesar otra data</a>
 	</div>
 </body>
 </html>

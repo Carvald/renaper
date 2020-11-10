@@ -18,6 +18,7 @@ import ar.com.bbva.arq.renaper.model.OrquestarDataDTO;
 import ar.com.bbva.arq.renaper.model.RenaperDataDTO;
 import ar.com.bbva.arq.renaper.model.UpdateClientDataDTO;
 import ar.com.bbva.arq.renaper.utils.Constants;
+import ar.com.bbva.arq.renaper.utils.FormatUtils;
 import ar.com.bbva.arq.renaper.utils.HTTPResponseCodesEnum;
 import ar.com.bbva.soa.conectores.BbvaSoaMensaje;
 import ar.com.itrsa.sam.TransactionException;
@@ -188,6 +189,7 @@ public class RenaperService extends AbstractSamService {
 			attemptstResponseDTO = (AttemptstResponseDTO) ejecutar(crearServiceAccessManagerContext(),
 					Constants.RENAPER_FINGER_TRX_ESB_SERVICE, attemptstRequestDTO, AttemptstRequestDTO.class,
 					FingerPrintResponseDTO.class, true, false, null);
+			
 			fingerPrintCircuitResponseDTO.setVueltaAttemptstResponseDTO(attemptstResponseDTO);
 			fingerPrintCircuitResponseDTO.setFingerPrintResponseDTO(fingerPrintResponseDTO);
 			return fingerPrintCircuitResponseDTO;
@@ -210,12 +212,13 @@ public class RenaperService extends AbstractSamService {
 					FingerPrintResponseDTO.class, true, false, null);
 			AttemptstResponseDTO attemptstResponseDTO;
 			AttemptstRequestDTO attemptstRequestDTO = fingerPrintCircuitUnifiedRequestDTO.getAttemptsRequestDTO();
-			attemptstRequestDTO.setRenaper(fingerPrintResponseDTO.getCode());
-			
+			attemptstRequestDTO.setRenaper(FormatUtils.completaCerosIzq(2, fingerPrintResponseDTO.getCode().length(), fingerPrintResponseDTO.getCode()));
 			
 			attemptstResponseDTO = (AttemptstResponseDTO) ejecutar(crearServiceAccessManagerContext(),
 					Constants.RENAPER_FINGER_TRX_ESB_SERVICE, attemptstRequestDTO, AttemptstRequestDTO.class,
 					FingerPrintResponseDTO.class, true, false, null);
+			
+			attemptstResponseDTO = new AttemptstResponseDTO();
 			fingerPrintCircuitResponseDTO.setVueltaAttemptstResponseDTO(attemptstResponseDTO);
 			fingerPrintCircuitResponseDTO.setFingerPrintResponseDTO(fingerPrintResponseDTO);
 			return fingerPrintCircuitResponseDTO;
