@@ -45,8 +45,8 @@ public class FingerPrintFlowController {
 			fingerPrintFlowCircuitDTO
 					.setAttemptstResponseIdaDTO(renaperService.intentosDisponiblesSubmit(attemptstRequestDTO));
 			
-			fingerPrintFlowCircuitDTO
-			.setAttemptstResponseIdaDTO(atr);
+			/*fingerPrintFlowCircuitDTO
+			.setAttemptstResponseIdaDTO(atr);*/
 			FingerPrintRequestDTO fingerPrintRequestDTO = new FingerPrintRequestDTO();
 			fingerPrintRequestDTO.buildFromCircuitRequest(fingerPrintFlowCircuitDTO.getAfisrequest());
 			/*
