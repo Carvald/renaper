@@ -87,7 +87,7 @@ public class BarcodeReadController {
 			String documentacionClienteStringBase64=Base64.getEncoder().encodeToString(documentacionClienteBytes);
 			
 			if (information.getThuban())
-				information.setIdThuban(thubanService.publicar(documentacionClienteStringBase64, numeroCliente));
+				information.setIdThuban(thubanService.publicar(documentacionClienteStringBase64, numeroCliente,barcodeResponseDTO));
 			return "infoResult";
 		} catch (ServiceException e) {
 			information.setCode(e.getCodigo());

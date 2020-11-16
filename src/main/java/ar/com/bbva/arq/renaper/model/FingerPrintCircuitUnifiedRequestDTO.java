@@ -20,8 +20,7 @@ public class FingerPrintCircuitUnifiedRequestDTO {
 	public void setAttemptsRequestDTO(AttemptstRequestDTO attemptsRequestDTO) {
 		this.attemptsRequestDTO = attemptsRequestDTO;
 	}
-	
-	
+
 	
 	
 

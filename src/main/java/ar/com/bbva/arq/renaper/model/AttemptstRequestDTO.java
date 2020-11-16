@@ -66,7 +66,7 @@ public class AttemptstRequestDTO {
 	
 public AttemptstRequestDTO buildFromSimpleDtoFlowCircuit(AttemptstRequestSimpleDTO attemptstRequestSimpleDTO, String respuestaRenaper,String opcion) {
 		
-		this.nroclie=attemptstRequestSimpleDTO.getNroclie();
+		this.nroclie=FormatUtils.completaCerosIzq(8,attemptstRequestSimpleDTO.getNroclie().length(),attemptstRequestSimpleDTO.getNroclie());
 		this.nrodoc=FormatUtils.completaCerosIzq(13, attemptstRequestSimpleDTO.getNrodoc().length(), attemptstRequestSimpleDTO.getNrodoc());
 		this.tipdoc=TipoDocumentoEnum.getByDescripcion(attemptstRequestSimpleDTO.getTipdoc()).getCodigoAltamira();
 		this.opcion=opcion;
@@ -76,6 +76,14 @@ public AttemptstRequestDTO buildFromSimpleDtoFlowCircuit(AttemptstRequestSimpleD
 	}
 
 
+public AttemptstRequestDTO buildFromCheckAttempts(String opcion,String numeroCliente,String nroDoc, String tipoDocumento) {	
+	this.nroclie=FormatUtils.completaCerosIzq(8,numeroCliente.length(),numeroCliente);
+	this.nrodoc=FormatUtils.completaCerosIzq(13, nroDoc.length(), nroDoc);
+	this.tipdoc=FormatUtils.completaCerosIzq(2, tipoDocumento.length(),tipoDocumento);
+	this.opcion=opcion;
+	return this;
+
+}
 
 
 

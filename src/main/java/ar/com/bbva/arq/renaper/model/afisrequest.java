@@ -68,5 +68,16 @@ public class afisrequest {
 	}
 	
 	
+	public afisrequest buildFromValidationRequest(FingerPrintAfisRequestDTO fingerPrintAfisRequestDTO,String nroDoc) {
+		this.setFinger1Index(fingerPrintAfisRequestDTO.getFinger1Index());
+		this.setFinger1WSQ(fingerPrintAfisRequestDTO.getFinger1WSQ());
+		this.setFinger2Index(fingerPrintAfisRequestDTO.getFinger2Index());
+		this.setFinger2WSQ(fingerPrintAfisRequestDTO.getFinger2WSQ());
+		this.setGender(fingerPrintAfisRequestDTO.getGender());
+		this.setNumber(nroDoc);
+		return this;
+	}
+	
+	
 	
 }

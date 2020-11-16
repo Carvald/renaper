@@ -13,6 +13,7 @@ import ar.com.bbva.arq.renaper.model.AttemptstRequestDTO;
 import ar.com.bbva.arq.renaper.model.AttemptstResponseDTO;
 import ar.com.bbva.arq.renaper.model.FingerPrintFlowCircuitDTO;
 import ar.com.bbva.arq.renaper.model.FingerPrintRequestDTO;
+import ar.com.bbva.arq.renaper.model.FingerPrintResponseDTO;
 import ar.com.bbva.arq.renaper.services.RenaperService;
 import ar.com.bbva.arq.renaper.services.ServiceException;
 import ar.com.bbva.arq.renaper.utils.Constants;
@@ -36,38 +37,80 @@ public class FingerPrintFlowController {
 			@ModelAttribute FingerPrintFlowCircuitDTO fingerPrintFlowCircuitDTO, Model model) throws IOException {
 
 		try {
-			AttemptstRequestDTO attemptstRequestDTO = new AttemptstRequestDTO().buildFromSimpleDtoFlowCircuit(
-					fingerPrintFlowCircuitDTO.getAttemptsRequestSimpleDTO(), "", Constants.PCHU_OPCION_IDA);
-			
-			/*AttemptstResponseDTO atr= new AttemptstResponseDTO();
-			atr.setCoderr("e1111");
-			atr.setRetorno("retorno code");*/
-			fingerPrintFlowCircuitDTO
-					.setAttemptstResponseIdaDTO(renaperService.intentosDisponiblesSubmit(attemptstRequestDTO));
-			
-			/*fingerPrintFlowCircuitDTO
-			.setAttemptstResponseIdaDTO(atr);*/
-			FingerPrintRequestDTO fingerPrintRequestDTO = new FingerPrintRequestDTO();
-			fingerPrintRequestDTO.buildFromCircuitRequest(fingerPrintFlowCircuitDTO.getAfisrequest());
-			/*
-			 * fingerPrintRequestDTO.getAfisrequest()
-			 * .setNumber(fingerPrintFlowCircuitDTO.getAttemptsRequestSimpleDTO().getNrodoc(
-			 * ));
-			 */
-			fingerPrintRequestDTO.getAfisrequest().setNumber("17396778");
-			fingerPrintFlowCircuitDTO
-					.setFingerPrintResponseDTO(renaperService.identificacionPorhuella(fingerPrintRequestDTO));
+			if (fingerPrintFlowCircuitDTO.getCircuito().equals("I")) {
+				AttemptstRequestDTO attemptstRequestDTO = new AttemptstRequestDTO().buildFromSimpleDtoFlowCircuit(
+						fingerPrintFlowCircuitDTO.getAttemptsRequestSimpleDTO(), "", Constants.PCHU_OPCION_IDA);
+				fingerPrintFlowCircuitDTO
+						.setAttemptstResponseIdaDTO(renaperService.intentosDisponiblesSubmit(attemptstRequestDTO));
+				fingerPrintFlowCircuitDTO
+						.setAttemptstResponseIdaDTO(renaperService.intentosDisponiblesSubmit(attemptstRequestDTO));
+				
+				fingerPrintFlowCircuitDTO
+				.setFingerPrintResponseDTO(new FingerPrintResponseDTO());
+				
+				fingerPrintFlowCircuitDTO
+				.setAttemptstResponseVueltaDTO(new AttemptstResponseDTO());
+		
+				fingerPrintFlowCircuitDTO.setCompleto(false);
+				fingerPrintFlowCircuitDTO.setPchuvuelta(false);
+				fingerPrintFlowCircuitDTO.setPchuida(true);
+				
+				
+				return "fingerPrintResult";
+			} else if (fingerPrintFlowCircuitDTO.getCircuito().equals("V")) {
 
-			attemptstRequestDTO.setOpcion(Constants.PCHU_OPCION_VUELTA);
-			attemptstRequestDTO.setRenaper(FormatUtils.completaCerosIzq(2,
-					fingerPrintFlowCircuitDTO.getFingerPrintResponseDTO().getCode().length(),
-					fingerPrintFlowCircuitDTO.getFingerPrintResponseDTO().getCode()));
-			fingerPrintFlowCircuitDTO
-					.setAttemptstResponseVueltaDTO(renaperService.intentosDisponiblesSubmit(attemptstRequestDTO));
-			/*fingerPrintFlowCircuitDTO
-			.setAttemptstResponseVueltaDTO(atr);*/
+				AttemptstRequestDTO attemptstRequestDTO = new AttemptstRequestDTO().buildFromSimpleDtoFlowCircuit(
+						fingerPrintFlowCircuitDTO.getAttemptsRequestSimpleDTO(), "", Constants.PCHU_OPCION_VUELTA);
 
-			return "fingerPrintResult";
+				attemptstRequestDTO.setRenaper(
+						FormatUtils.completaCerosIzq(2, fingerPrintFlowCircuitDTO.getRespuestaRenaper().length(),
+								fingerPrintFlowCircuitDTO.getRespuestaRenaper()));
+				fingerPrintFlowCircuitDTO
+						.setAttemptstResponseIdaDTO(renaperService.intentosDisponiblesSubmit(attemptstRequestDTO));
+				
+				fingerPrintFlowCircuitDTO
+				.setAttemptstResponseIdaDTO(new AttemptstResponseDTO());
+				
+				
+				fingerPrintFlowCircuitDTO
+				.setFingerPrintResponseDTO(new FingerPrintResponseDTO());
+				fingerPrintFlowCircuitDTO.setCompleto(false);
+				fingerPrintFlowCircuitDTO.setPchuida(false);
+				fingerPrintFlowCircuitDTO.setPchuvuelta(true);
+
+				return "fingerPrintResult";
+
+			} else {
+				
+				AttemptstRequestDTO attemptstRequestDTO = new AttemptstRequestDTO().buildFromSimpleDtoFlowCircuit(
+						fingerPrintFlowCircuitDTO.getAttemptsRequestSimpleDTO(), "", Constants.PCHU_OPCION_IDA);
+				fingerPrintFlowCircuitDTO
+						.setAttemptstResponseIdaDTO(renaperService.intentosDisponiblesSubmit(attemptstRequestDTO));
+				fingerPrintFlowCircuitDTO
+						.setAttemptstResponseIdaDTO(renaperService.intentosDisponiblesSubmit(attemptstRequestDTO));
+				
+				FingerPrintRequestDTO fingerPrintRequestDTO = new FingerPrintRequestDTO();
+				fingerPrintRequestDTO.buildFromCircuitRequest(fingerPrintFlowCircuitDTO.getAfisrequest());
+
+				fingerPrintRequestDTO.getAfisrequest()
+						.setNumber(fingerPrintFlowCircuitDTO.getAttemptsRequestSimpleDTO().getNrodoc());
+
+				fingerPrintFlowCircuitDTO
+						.setFingerPrintResponseDTO(renaperService.identificacionPorhuella(fingerPrintRequestDTO));
+
+				attemptstRequestDTO.setOpcion(Constants.PCHU_OPCION_VUELTA);
+				attemptstRequestDTO.setRenaper(FormatUtils.completaCerosIzq(2,
+						fingerPrintFlowCircuitDTO.getFingerPrintResponseDTO().getCode().length(),
+						fingerPrintFlowCircuitDTO.getFingerPrintResponseDTO().getCode()));
+				fingerPrintFlowCircuitDTO
+						.setAttemptstResponseVueltaDTO(renaperService.intentosDisponiblesSubmit(attemptstRequestDTO));
+				fingerPrintFlowCircuitDTO.setCompleto(true);
+				return "fingerPrintResult";	
+				
+			}
+
+			
+
 		} catch (ServiceException e) {
 			fingerPrintFlowCircuitDTO.setCode(e.getCodigo());
 			fingerPrintFlowCircuitDTO.setMessage(e.getMessage());
@@ -75,4 +118,6 @@ public class FingerPrintFlowController {
 		}
 
 	}
+
 }
+

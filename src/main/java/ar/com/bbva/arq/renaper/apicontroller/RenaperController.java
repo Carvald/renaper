@@ -25,11 +25,13 @@ import ar.com.bbva.arq.renaper.model.FingerPrintCircuitUnifiedRequestDTO;
 import ar.com.bbva.arq.renaper.model.FingerPrintCircuitUnifiedResponseDTO;
 import ar.com.bbva.arq.renaper.model.FingerPrintRequestDTO;
 import ar.com.bbva.arq.renaper.model.FingerPrintResponseDTO;
+import ar.com.bbva.arq.renaper.model.FingerPrintValidationRequestDTO;
 import ar.com.bbva.arq.renaper.model.OrquestarDataDTO;
 import ar.com.bbva.arq.renaper.model.PersonRequestDTO;
 import ar.com.bbva.arq.renaper.model.RenaperDataDTO;
 import ar.com.bbva.arq.renaper.model.RenaperResponse;
 import ar.com.bbva.arq.renaper.model.UpdateClientDataDTO;
+import ar.com.bbva.arq.renaper.model.afisrequest;
 import ar.com.bbva.arq.renaper.services.Pdf417Service;
 import ar.com.bbva.arq.renaper.services.RenaperService;
 import ar.com.bbva.arq.renaper.services.ServiceException;
@@ -157,6 +159,7 @@ public class RenaperController {
 			@RequestBody AttemptstRequestDTO attemptstRequestDTO) {
 		RenaperResponse<AttemptstResponseDTO> response = new RenaperResponse<>();
 		try {
+
 			response.setResult(renaperService.intentosDisponibles(attemptstRequestDTO));
 			response.setStatusCode(HTTPResponseCodesEnum.STATUS_200.getStatusCode());
 			response.setStatusText(HTTPResponseCodesEnum.STATUS_200.getStatusText());
@@ -228,27 +231,37 @@ public class RenaperController {
 			@ApiResponse(code = 400, message = "Error técnico de negocio"),
 			@ApiResponse(code = 500, message = "Error interno del servidor") })
 	public RenaperResponse<FingerPrintCircuitUnifiedResponseDTO> identificacionPorHuellaUnificado(
-			@RequestBody FingerPrintCircuitUnifiedRequestDTO fingerPrintCircuitUnifiedRequestDTO) {
+			@RequestBody FingerPrintValidationRequestDTO fingerPrintValidatioRequestDTO) {
 		RenaperResponse<FingerPrintCircuitUnifiedResponseDTO> response = new RenaperResponse<>();
 		try {
+
+			FingerPrintCircuitUnifiedRequestDTO fingerPrintCircuitUnifiedRequestDTO = new FingerPrintCircuitUnifiedRequestDTO();
+			fingerPrintCircuitUnifiedRequestDTO.setAttemptsRequestDTO(new AttemptstRequestDTO().buildFromCheckAttempts(
+					fingerPrintValidatioRequestDTO.getOpcion(), fingerPrintValidatioRequestDTO.getNumeroCliente(),
+					fingerPrintValidatioRequestDTO.getNumeroDocumento(),
+					fingerPrintValidatioRequestDTO.getTipoDocumento()));
+			
 			FingerPrintCircuitUnifiedResponseDTO fingerPrintCircuitUnifiedResponseDTOResponseDTO = new FingerPrintCircuitUnifiedResponseDTO();
 
-			if (fingerPrintCircuitUnifiedRequestDTO.getAttemptsRequestDTO() == null) {
-				throw new BadRequestException(HTTPResponseCodesEnum.STATUS_400.getStatusText());
-			}
 			if (fingerPrintCircuitUnifiedRequestDTO.getAttemptsRequestDTO().getOpcion()
 					.equals(Constants.PCHU_OPCION_IDA)) {
-				fingerPrintCircuitUnifiedResponseDTOResponseDTO.setIdaAttemptstResponseDTO(renaperService
+				fingerPrintCircuitUnifiedResponseDTOResponseDTO.setAttemptsResponseDTO(renaperService
 						.intentosDisponibles(fingerPrintCircuitUnifiedRequestDTO.getAttemptsRequestDTO()));
 				response.setResult(fingerPrintCircuitUnifiedResponseDTOResponseDTO);
 			} else if (fingerPrintCircuitUnifiedRequestDTO.getAttemptsRequestDTO().getOpcion()
 					.equals(Constants.PCHU_OPCION_VUELTA)) {
+				
+				fingerPrintCircuitUnifiedRequestDTO.setAfisrequest(new afisrequest().buildFromValidationRequest(
+						fingerPrintValidatioRequestDTO.getFingerPrintAfisRequestDTO(),
+						fingerPrintValidatioRequestDTO.getNumeroDocumento()));
+
+				
 				FingerPrintCircuitResponseDTO fingerPrintCircuitResponseDTO = renaperService
 						.actualizarIntentosIdentificacionPorHuellaUnificado(fingerPrintCircuitUnifiedRequestDTO);
 				fingerPrintCircuitUnifiedResponseDTOResponseDTO
 						.setFingerPrintResponseDTO(fingerPrintCircuitResponseDTO.getFingerPrintResponseDTO());
 				fingerPrintCircuitUnifiedResponseDTOResponseDTO
-						.setVueltaAttemptstResponseDTO(fingerPrintCircuitResponseDTO.getVueltaAttemptstResponseDTO());
+						.setAttemptsResponseDTO(fingerPrintCircuitResponseDTO.getVueltaAttemptstResponseDTO());
 				response.setResult(fingerPrintCircuitUnifiedResponseDTOResponseDTO);
 
 			} else {

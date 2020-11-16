@@ -11,7 +11,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import ar.com.bbva.arq.renaper.config.ClavesConfiguration;
-
+import ar.com.bbva.arq.renaper.model.BarcodeResponseDTO;
 import ar.com.bbva.arq.renaper.model.ThubanUploadRequestDTO;
 import ar.com.bbva.arq.renaper.utils.Constants;
 import ar.com.bbva.arq.renaper.utils.HTTPResponseCodesEnum;
@@ -37,10 +37,10 @@ public class ThubanService extends AbstractSamService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public String publicar(String documento,String numeroCliente) {
+	public String publicar(String documento,String numeroCliente,BarcodeResponseDTO barcodeResponseDTO ) {
 		try {
 			ThubanUploadRequestDTO thubanUploadRequestDTO = new ThubanUploadRequestDTO().build(documento,
-					armarClaseDocumentalCLILegajo(numeroCliente), clavesConfiguration.getUsuario(), environment.getProperty("password"),numeroCliente);
+					armarClaseDocumentalCLILegajo(numeroCliente,barcodeResponseDTO), clavesConfiguration.getUsuario(), environment.getProperty("password"),numeroCliente);
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("Usuario", thubanUploadRequestDTO.getUsuario());
 			parameters.put("Clave", thubanUploadRequestDTO.getClave());
@@ -65,7 +65,7 @@ public class ThubanService extends AbstractSamService {
 
 	}
 
-	private String armarClaseDocumentalCLILegajo(String numeroCliente) {
+	private String armarClaseDocumentalCLILegajo(String numeroCliente,BarcodeResponseDTO barcodeResponseDTO ) {
 		StringBuilder campos = new StringBuilder();
 		String periodo = "";
 		String estado = "CONFIRMAR";
@@ -73,9 +73,9 @@ public class ThubanService extends AbstractSamService {
 		campos.append("N_PERIODO=" + periodo + "|");
 		campos.append("E_ESTADO=" + estado + "|");
 		campos.append("N_CLIENTE="+numeroCliente+"|");
-		campos.append("D_NOMBRE=CLIENTE PRUEBA|");
+		campos.append("D_NOMBRE="+barcodeResponseDTO.getNombreInformado()+" "+barcodeResponseDTO.getApellidoInformado()+"|");
 		campos.append("N_TIPO_DOC=00|");
-		campos.append("N_DOC_CUIL=201627685|");
+		campos.append("N_DOC_CUIL="+barcodeResponseDTO.getDocumentNumber()+"|");
 		campos.append("D_PREPARADOR=GPROBANK|");
 		campos.append("F_EMISION=" + FechaUtils.getFechaSistema(FechaUtils.DATE_FORMAT_AAAA_MM_DD_GUION) + "|");
 		campos.append("H_EMISION="

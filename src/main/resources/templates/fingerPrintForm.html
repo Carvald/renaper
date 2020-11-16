@@ -7,7 +7,7 @@
 <title>RENAPER_FINGER_AUTH</title>
 <meta name="description" content="">
 <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-<script src="js/sripts.js"></script>
+<script src="js/scripts.js"></script>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
 	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
@@ -31,139 +31,174 @@
 
 		</div>
 		<br> <br>
-		<form role="form" th:object="${fingerPrintFlowCircuitDTO}"
+		
+	<form role="form" th:object="${fingerPrintFlowCircuitDTO}"
 			method="post">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="row">
-						<div class="col-md-12">
-							<table class="table table-striped">
-								<tbody>
-									<tr>
-										<th scope="row"></th>
-										<td><div class="form-group">
-												<div class="form-group">
-													<label class="font-weight-bold" for="sexo">Sexo</label> <label
-														for="genderSelect"></label> <select class="form-control"
-														th:required="true" th:field="*{afisrequest.gender}">
-														<option value="" th:text=".."></option>
-														<option th:value="'M'" th:text="M"></option>
-														<option th:value="'F'" th:text="F"></option>
-													</select>
-												</div>
-											</div></td>
-										<td><div class="form-group">
-												<div class="form-group">
-													<label class="font-weight-bold" for="sexo">T/Doc</label> <label for="tipoDocumentSelect"></label> <select
-														class="form-control" th:required="true"
-														th:field="*{attemptsRequestSimpleDTO.tipdoc}">
-														<option value="" th:text=".."></option>
-														<option th:value="'DNI'" th:text="DNI"></option>
-														<option th:value="'LC'" th:text="LC"></option>
-														<option th:value="'LEN'" th:text="LEN"></option>
-														<option th:value="'CI'" th:text="CI"></option>
-														<option th:value="'PASPORTE'" th:text="PASAPORTE"></option>
-														<option th:value="'CUIT'" th:text="CUIT"></option>
-														<option th:value="'RENAPER'" th:text="RENAPER"></option>
-														<option th:value="'DNE'" th:text="DNE"></option>
-														<option th:value="'CUIL'" th:text="CUIL"></option>
-														<option th:value="'DNI_MASCULINO'" th:text="DNI_MASCULINO"></option>
-														<option th:value="'DNI_FEMENINO'" th:text="DNI_FEMENINO"></option>
-													</select>
-												</div>
-											</div></td>
-										<td><div class="form-group">
-												<label class="font-weight-bold"
-													title="Longitud máxima 13 dígitos" for="documentNumber">
-													Documento </label>
-												<div data-tip="longitud máxima 13 dígitos">
-													<input type="text"
-														th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-														class="form-control" id="documentNumber"
-														th:field="*{attemptsRequestSimpleDTO.nrodoc}"
-														maxlength="13" min="0" required />
-												</div>
-											</div></td>
-										<td><div class="form-group">
-												<label class="font-weight-bold"
-													title="Longitud máxima 8 dígitos" for="clientNumber">
-													Número cliente </label>
-												<div data-tip="longitud máxima 8 dígitos">
-													<input type="text"
-														th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-														class="form-control" id="documentNumber"
-														th:field="*{attemptsRequestSimpleDTO.nroclie}"
-														maxlength="8" min="0" required />
-												</div>
-											</div></td>
-										<td><div class="form-group">
-												<label class="font-weight-bold"
-													title="Longitud máxima 8 dígitos" for="finger1Number">
-													Número dedo 1 </label>
-												<div data-tip="longitud máxima 1 dígito">
-													<input type="text"
-														th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-														class="form-control" id="documentNumber"
-														th:field="*{afisrequest.finger1Index}" maxlength="1"
-														min="0" required />
-												</div>
-											</div></td>
-										<td><div class="form-group">
-												<label class="font-weight-bold"
-													title="Dedo 1 b 64" for="dedo1b64">
-													Dedo 1 B64 </label>
-												<div>
-													<textarea class="form-control" id="documentNumber"
-														th:field="*{afisrequest.finger1WSQ}" required>
+		
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-12">
+								<table class="table table-striped">
+									<tbody>
+										<tr>
+											<th scope="row"></th>
+											<td><div class="form-group">
+													<div class="form-group">
+														<label class="font-weight-bold" for="sexo">Sexo</label> <label
+															for="genderSelect"></label> <select class="form-control"
+															th:required="true" th:field="*{afisrequest.gender}">
+															<option value="" th:text=".."></option>
+															<option th:value="'M'" th:text="M"></option>
+															<option th:value="'F'" th:text="F"></option>
+														</select>
+													</div>
+												</div></td>
+											<td><div class="form-group">
+													<div class="form-group">
+														<label class="font-weight-bold" for="sexo">T/Doc</label> <label
+															for="tipoDocumentSelect"></label> <select
+															class="form-control" th:required="true"
+															th:field="*{attemptsRequestSimpleDTO.tipdoc}">
+															<option value="" th:text=".."></option>
+															<option th:value="'DNI'" th:text="DNI"></option>
+															<option th:value="'LC'" th:text="LC"></option>
+															<option th:value="'LEN'" th:text="LEN"></option>
+															<option th:value="'CI'" th:text="CI"></option>
+															<option th:value="'PASPORTE'" th:text="PASAPORTE"></option>
+															<option th:value="'CUIT'" th:text="CUIT"></option>
+															<option th:value="'RENAPER'" th:text="RENAPER"></option>
+															<option th:value="'DNE'" th:text="DNE"></option>
+															<option th:value="'CUIL'" th:text="CUIL"></option>
+															<option th:value="'DNI_MASCULINO'"
+																th:text="DNI_MASCULINO"></option>
+															<option th:value="'DNI_FEMENINO'" th:text="DNI_FEMENINO"></option>
+														</select>
+													</div>
+												</div></td>
+											<td><div class="form-group">
+													<label class="font-weight-bold"
+														title="Longitud máxima 13 dígitos" for="documentNumber">
+														Documento </label>
+													<div data-tip="longitud máxima 13 dígitos">
+														<input type="text"
+															th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+															class="form-control" 
+															th:field="*{attemptsRequestSimpleDTO.nrodoc}"
+															maxlength="13" min="0" required />
+													</div>
+												</div></td>
+											<td><div class="form-group">
+													<label class="font-weight-bold"
+														title="Longitud máxima 8 dígitos" for="clientNumber">
+														Número cliente </label>
+													<div data-tip="longitud máxima 8 dígitos">
+														<input type="text"
+															th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+															class="form-control" 
+															th:field="*{attemptsRequestSimpleDTO.nroclie}"
+															maxlength="8" min="0" required />
+													</div>
+												</div></td>
+											<td><div class="form-group">
+													<label class="font-weight-bold"
+														title="Longitud máxima 8 dígitos" for="finger1Number">
+														Número dedo 1 </label>
+													<div data-tip="longitud máxima 1 dígito">
+														<input type="text"
+															th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+															class="form-control"
+															th:field="*{afisrequest.finger1Index}" maxlength="1"
+															min="0"  />
+													</div>
+												</div></td>
+											<td><div class="form-group">
+													<label class="font-weight-bold" title="Dedo 1 b 64"
+														for="dedo1b64"> Dedo 1 B64 </label>
+													<div>
+														<textarea class="form-control" 
+															th:field="*{afisrequest.finger1WSQ}" >
 														</textarea>
-												</div>
+													</div>
 
-											</div></td>
-										<td><div class="form-group">
-												<label class="font-weight-bold"
-													title="longitud máxima 1 dígito" for="finger2Number">
-													Número dedo 2 </label>
-												<div data-tip="longitud máxima 1 dígito">
-													<input type="text"
-														th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-														class="form-control" id="documentNumber"
-														th:field="*{afisrequest.finger2Index}" maxlength="1"
-														min="0" required />
-												</div>
+												</div></td>
+											<td><div class="form-group">
+													<label class="font-weight-bold"
+														title="longitud máxima 1 dígito" for="finger2Number">
+														Número dedo 2 </label>
+													<div data-tip="longitud máxima 1 dígito">
+														<input type="text"
+															th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+															class="form-control" 
+															th:field="*{afisrequest.finger2Index}" maxlength="1"
+															min="0" />
+													</div>
 
-											</div></td>
-										<td><div class="form-group">
-												<label class="font-weight-bold"
-													title="Dedo 2 b 64" for="dedo2b64">
-													Dedo 2 B64 </label>
-												<div>
-													<textarea class="form-control" id="dedo2b64"
-														th:field="*{afisrequest.finger2WSQ}" required>
+												</div></td>
+											<td><div class="form-group">
+													<label class="font-weight-bold" title="Dedo 2 b 64"
+														for="dedo2b64"> Dedo 2 B64 </label>
+													<div>
+														<textarea class="form-control" id="dedo2b64"
+															th:field="*{afisrequest.finger2WSQ}" >
 														</textarea>
-												</div>
+													</div>
+												</div></td>
+											<td><div class="form-group" id="myDIV" style="display: none">
+													<div class="form-group">
+														<label class="font-weight-bold" for="rtaRen"> Renaper</label> <label
+															for="rtaRen"></label> <div data-tip="longitud máxima 2 dígitos">
+														<input type="text"
+															th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+															class="form-control"
+															th:field="*{respuestaRenaper}" maxlength="2"
+															min="0" />
+													</div>
+													</div>
+												</div></td>
+												
+												
+													<td>
+													<div class="form-group">
+														<label class="font-weight-bold" for="circuito">Circuito</label> <label
+															for="circuitSelect"></label> <select class="form-control"
+															th:required="true" th:field="*{circuito}" onchange="myFunctionDisplay()" id="flow" >
+															<option th:value="C" th:text="COMPLETO"></option>
+															<option th:value="'I'" th:text="PCHU-IDA"></option>
+															<option th:value="'V'" th:text="PCHU-VUELTA"></option>
+														</select>
+													</div>
+																		
+													
+												</td>										
+											
+											<td><div class="form-group">
+													<button class="btn btn-info btn-sm">
+														<i class="fa fa-search"></i>Procesar
+													</button>
+													<div class="col-md-1"></div>
+													<button class="btn btn-info btn-sm" type="reset">
+														<i class="fa fa-trash"></i>Limpiar
+													</button>
 
-											</div></td>
-										<td><div class="form-group">
-												<button class="btn btn-info btn-sm">
-													<i class="fa fa-search"></i>Procesar
-												</button>
-												<div class="col-md-1"></div>
-												<button class="btn btn-info btn-sm" type="reset">
-													<i class="fa fa-trash"></i>Limpiar
-												</button>
+												</div></td>	
+											
 
-											</div></td>
-
-									</tr>
-							</table>
+										</tr>
+								</table>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
+				</div>		
+				
+				
+						
+	
 		</form>
 
 
 	</div>
+	
 
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>

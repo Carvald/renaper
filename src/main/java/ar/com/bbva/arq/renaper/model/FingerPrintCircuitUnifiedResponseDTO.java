@@ -3,8 +3,8 @@ package ar.com.bbva.arq.renaper.model;
 public class FingerPrintCircuitUnifiedResponseDTO {
 
 	FingerPrintResponseDTO fingerPrintResponseDTO;
-	AttemptstResponseDTO idaAttemptstResponseDTO;
-	AttemptstResponseDTO vueltaAttemptstResponseDTO;
+	AttemptstResponseDTO attemptsResponseDTO;
+
 
 	public FingerPrintResponseDTO getFingerPrintResponseDTO() {
 		return fingerPrintResponseDTO;
@@ -13,22 +13,16 @@ public class FingerPrintCircuitUnifiedResponseDTO {
 	public void setFingerPrintResponseDTO(FingerPrintResponseDTO fingerPrintResponseDTO) {
 		this.fingerPrintResponseDTO = fingerPrintResponseDTO;
 	}
+
+	public AttemptstResponseDTO getAttemptsResponseDTO() {
+		return attemptsResponseDTO;
+	}
+
+	public void setAttemptsResponseDTO(AttemptstResponseDTO attemptsResponseDTO) {
+		this.attemptsResponseDTO = attemptsResponseDTO;
+	}
 	
 	
-	public AttemptstResponseDTO getIdaAttemptstResponseDTO() {
-		return idaAttemptstResponseDTO;
-	}
 
-	public void setIdaAttemptstResponseDTO(AttemptstResponseDTO idaAttemptstResponseDTO) {
-		this.idaAttemptstResponseDTO = idaAttemptstResponseDTO;
-	}
-
-	public AttemptstResponseDTO getVueltaAttemptstResponseDTO() {
-		return vueltaAttemptstResponseDTO;
-	}
-
-	public void setVueltaAttemptstResponseDTO(AttemptstResponseDTO vueltaAttemptstResponseDTO) {
-		this.vueltaAttemptstResponseDTO = vueltaAttemptstResponseDTO;
-	}
 
 }
