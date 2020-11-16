@@ -21,43 +21,86 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="col-md-12">
-				<h3>
-					<img src="logo7.png" alt="Registro Nacional de la persona">
-				</h3>
-			</div>
-			</div>
-		</div>
-		 <br>
-		  <br>
-		 <div class="row">
-			<div class="col-md-12">
-			<h3 class="text-center text-primary">Resultado renaper finger auth<</h3>
+					<h3>
+						<img src="logo7.png" alt="Registro Nacional de la persona">
+					</h3>
+				</div>
 			</div>
 		</div>
-
-		<div  class="row">
-			<div class="col-md-12">
-			 <h3 class="text-center text-primary">Resultado PCHU </h3>			 
-			</div>
-		</div>
+		<br> <br>
 		<div class="row">
 			<div class="col-md-12">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="text-primary" id="modal-title" text-align="center">Subtran IDA</h5>
-            </div>
-            <div class="modal-body">
-            <b> Código de retorno: <p class="text-primary" th:text="${fingerPrintFlowCircuitDTO.attemptstResponseIdaDTO.retorno}"/>
-            <b> Código de errror: <p class="text-primary" th:text="${fingerPrintFlowCircuitDTO.attemptstResponseIdaDTO.coderr}"/>
-             </div>
-           </tbody>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
+				<h3 class="text-center text-primary">Resultado renaper finger
+					auth.</h3>
 			</div>
 		</div>
+		<div th:if="${fingerPrintFlowCircuitDTO.circuito eq 'I'}">
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="text-center text-primary">Resultado PCHU</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="text-primary" id="modal-title" text-align="center">Subtran
+									IDA</h5>
+							</div>
+							<div class="modal-body">
+								<b> Código de retorno:
+									<p class="text-primary"
+										th:text="${fingerPrintFlowCircuitDTO.attemptstResponseIdaDTO.retorno}" />
+									<b> Código de errror:
+										<p class="text-primary"
+											th:text="${fingerPrintFlowCircuitDTO.attemptstResponseIdaDTO.coderr}" />
+							</div>
+							</tbody>
+						</div>
+						<div class="modal-footer"></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		
+		
+		
+			
+
+		
+		
+		<div th:if="${fingerPrintFlowCircuitDTO.circuito eq 'C'}">
+		
+		<div class="row">
+				<div class="col-md-12">
+					<h3 class="text-center text-primary">Resultado PCHU</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="text-primary" id="modal-title" text-align="center">Subtran
+									IDA</h5>
+							</div>
+							<div class="modal-body">
+								<b> Código de retorno:
+									<p class="text-primary"
+										th:text="${fingerPrintFlowCircuitDTO.attemptstResponseIdaDTO.retorno}" />
+									<b> Código de errror:
+										<p class="text-primary"
+											th:text="${fingerPrintFlowCircuitDTO.attemptstResponseIdaDTO.coderr}" />
+							</div>
+							</tbody>
+						</div>
+						<div class="modal-footer"></div>
+					</div>
+				</div>
+			</div>
+		
 		
 		<div class="row">
 			<div class="col-md-12">
@@ -85,6 +128,7 @@
 			</div>
 		</div>
 		
+		
 		<div  class="row">
 			<div class="col-md-12">
 			 <h3 class="text-center text-primary">Resultado PCHU </h3>			 
@@ -107,17 +151,53 @@
             </div>
         </div>
 			</div>
+		</div>	
+		
+		
+		
 		</div>
 		
+	<div th:if="${fingerPrintFlowCircuitDTO.circuito eq 'V'}">
+		<div  class="row">
+			<div class="col-md-12">
+			 <h3 class="text-center text-primary">Resultado PCHU </h3>			 
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="text-primary" id="modal-title" text-align="center">Subtran VUELTA</h5>
+            </div>
+            <div class="modal-body">
+            <b> Código de retorno: <p class="text-primary" th:text="${fingerPrintFlowCircuitDTO.attemptstResponseVueltaDTO.retorno}"/>
+            <b> Código de errror: <p class="text-primary" th:text="${fingerPrintFlowCircuitDTO.attemptstResponseVueltaDTO.coderr}"/>
+             </div>
+           </tbody>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+			</div>
+		</div>	
 		
 		
+	</div>	
+		
+
+
+
+
+
 	</div>
 
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/scripts.js"></script>
 	<div align="left">
-		<hr> <a    href="/clientesAPI/fingerprintflow">Procesar otra data</a>
+		<hr>
+		<a href="/clientesAPI/fingerprintflow">Procesar otra data</a>
 	</div>
 </body>
 </html>
