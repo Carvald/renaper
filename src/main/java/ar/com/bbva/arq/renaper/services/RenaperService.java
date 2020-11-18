@@ -83,7 +83,7 @@ public class RenaperService extends AbstractSamService {
 			EsbResponse esbResponse;
 			RenaperDataDTO renaperDataDTO = getRenaperDatosPersona(updateClientDataDTO.getRenaperPersonRequest());
 			altaDatosResponseDTO.setRenaperDataDTO(renaperDataDTO);
-			if (updateClientDataDTO.getFlag() == null) {
+			if (updateClientDataDTO.getFlag() != null && updateClientDataDTO.getFlag().equals("") ) {
 				PersonAltaDatos personAltaDatos = new PersonAltaDatos().buildFromRenaper(renaperDataDTO.getPerson(),
 						updateClientDataDTO);
 				esbResponse = (EsbResponse) ejecutar(crearServiceAccessManagerContext(),
@@ -91,9 +91,10 @@ public class RenaperService extends AbstractSamService {
 						true, false, null);
 				if (!esbResponse.getCodigoRetorno().equals(Constants.SUCCESS_UPDATE)) {
 					throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(),
-							Constants.UPDATE_FAIL_MESSAGE + " - " + esbResponse.getCodigoError());
+							Constants.UPDATE_FAIL_MESSAGE + " - codigo retornado: "+esbResponse.getCodigoRetorno()+" ref:" + esbResponse.getCodigoError());
 				} else {
 					altaDatosResponseDTO.setAltaDatosResult(Constants.SUCCESS_UPDATE);
+					altaDatosResponseDTO.setNumeroCliente(esbResponse.getNumeroCliente());
 
 				}
 			}
@@ -242,9 +243,10 @@ public class RenaperService extends AbstractSamService {
 					personAltaDatos, PersonAltaDatos.class, EsbResponse.class, true, false, null);
 			if (!esbResponse.getCodigoRetorno().equals(Constants.SUCCESS_UPDATE)) {
 				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(),
-						Constants.UPDATE_FAIL_MESSAGE + " - " + esbResponse.getCodigoError());
+						Constants.UPDATE_FAIL_MESSAGE + " - codigo retornado: "+esbResponse.getCodigoRetorno()+" ref:" + esbResponse.getCodigoError());
 			} else {
 				altaDatosResponseDTO.setAltaDatosResult(Constants.SUCCESS_UPDATE);
+				altaDatosResponseDTO.setNumeroCliente(esbResponse.getNumeroCliente());
 			}
 		} catch (TransactionException exception) {
 			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
