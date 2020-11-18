@@ -149,13 +149,15 @@ public class RenaperService extends AbstractSamService {
 	public AttemptstResponseDTO intentosDisponibles(AttemptstRequestDTO attemptstRequestDTO) {
 		try {
 			AttemptstResponseDTO attemptstResponseDTO;
-			attemptstRequestDTO.setNroclie(FormatUtils.completaCerosIzq(8,attemptstRequestDTO.getNroclie().length(),attemptstRequestDTO.getNroclie()));
-			attemptstRequestDTO.setNrodoc((FormatUtils.completaCerosIzq(13,attemptstRequestDTO.getNrodoc().length(),attemptstRequestDTO.getNrodoc())));
+			attemptstRequestDTO.setNroclie(FormatUtils.completaCerosIzq(8, attemptstRequestDTO.getNroclie().length(),
+					attemptstRequestDTO.getNroclie()));
+			attemptstRequestDTO.setNrodoc((FormatUtils.completaCerosIzq(13, attemptstRequestDTO.getNrodoc().length(),
+					attemptstRequestDTO.getNrodoc())));
 			attemptstResponseDTO = (AttemptstResponseDTO) ejecutar(crearServiceAccessManagerContext(),
 					Constants.RENAPER_FINGER_TRX_ESB_SERVICE, attemptstRequestDTO, AttemptstRequestDTO.class,
 					AttemptstResponseDTO.class, true, false, null);
-				return attemptstResponseDTO;
-			
+			return attemptstResponseDTO;
+
 		} catch (TransactionException exception) {
 			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
 		}
@@ -190,8 +192,8 @@ public class RenaperService extends AbstractSamService {
 					Constants.PCHU_OPCION_VUELTA);
 			attemptstResponseDTO = (AttemptstResponseDTO) ejecutar(crearServiceAccessManagerContext(),
 					Constants.RENAPER_FINGER_TRX_ESB_SERVICE, attemptstRequestDTO, AttemptstRequestDTO.class,
-					FingerPrintResponseDTO.class, true, false, null);
-			
+					AttemptstRequestDTO.class, true, false, null);
+
 			fingerPrintCircuitResponseDTO.setVueltaAttemptstResponseDTO(attemptstResponseDTO);
 			fingerPrintCircuitResponseDTO.setFingerPrintResponseDTO(fingerPrintResponseDTO);
 			return fingerPrintCircuitResponseDTO;
@@ -201,7 +203,7 @@ public class RenaperService extends AbstractSamService {
 		}
 
 	}
-	
+
 	public FingerPrintCircuitResponseDTO actualizarIntentosIdentificacionPorHuellaUnificado(
 			FingerPrintCircuitUnifiedRequestDTO fingerPrintCircuitUnifiedRequestDTO) {
 		FingerPrintCircuitResponseDTO fingerPrintCircuitResponseDTO = new FingerPrintCircuitResponseDTO();
@@ -214,11 +216,12 @@ public class RenaperService extends AbstractSamService {
 					FingerPrintResponseDTO.class, true, false, null);
 			AttemptstResponseDTO attemptstResponseDTO;
 			AttemptstRequestDTO attemptstRequestDTO = fingerPrintCircuitUnifiedRequestDTO.getAttemptsRequestDTO();
-			attemptstRequestDTO.setRenaper(FormatUtils.completaCerosIzq(2, fingerPrintResponseDTO.getCode().length(), fingerPrintResponseDTO.getCode()));
+			attemptstRequestDTO.setRenaper(FormatUtils.completaCerosIzq(2, fingerPrintResponseDTO.getCode().length(),
+					fingerPrintResponseDTO.getCode()));
 			attemptstResponseDTO = (AttemptstResponseDTO) ejecutar(crearServiceAccessManagerContext(),
 					Constants.RENAPER_FINGER_TRX_ESB_SERVICE, attemptstRequestDTO, AttemptstRequestDTO.class,
-					FingerPrintResponseDTO.class, true, false, null);
-			
+					AttemptstRequestDTO.class, true, false, null);
+
 			fingerPrintCircuitResponseDTO.setVueltaAttemptstResponseDTO(attemptstResponseDTO);
 			fingerPrintCircuitResponseDTO.setFingerPrintResponseDTO(fingerPrintResponseDTO);
 			return fingerPrintCircuitResponseDTO;
@@ -228,7 +231,7 @@ public class RenaperService extends AbstractSamService {
 		}
 
 	}
-	
+
 	public AltaDatosResponseDTO orquestarDatosPersonaConDataRenaper(OrquestarDataDTO orquestarDataDTO) {
 		AltaDatosResponseDTO altaDatosResponseDTO = new AltaDatosResponseDTO();
 		try {

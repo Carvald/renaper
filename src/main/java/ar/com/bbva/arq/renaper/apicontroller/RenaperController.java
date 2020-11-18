@@ -26,6 +26,7 @@ import ar.com.bbva.arq.renaper.model.FingerPrintCircuitUnifiedResponseDTO;
 import ar.com.bbva.arq.renaper.model.FingerPrintRequestDTO;
 import ar.com.bbva.arq.renaper.model.FingerPrintResponseDTO;
 import ar.com.bbva.arq.renaper.model.FingerPrintValidationRequestDTO;
+import ar.com.bbva.arq.renaper.model.FingerPrintValidationResponse;
 import ar.com.bbva.arq.renaper.model.OrquestarDataDTO;
 import ar.com.bbva.arq.renaper.model.PersonRequestDTO;
 import ar.com.bbva.arq.renaper.model.RenaperDataDTO;
@@ -230,9 +231,9 @@ public class RenaperController {
 			@ApiResponse(code = 200, message = "Operación realizada con éxito", response = String.class),
 			@ApiResponse(code = 400, message = "Error técnico de negocio"),
 			@ApiResponse(code = 500, message = "Error interno del servidor") })
-	public RenaperResponse<FingerPrintCircuitUnifiedResponseDTO> identificacionPorHuellaUnificado(
+	public FingerPrintValidationResponse identificacionPorHuellaUnificado(
 			@RequestBody FingerPrintValidationRequestDTO fingerPrintValidatioRequestDTO) {
-		RenaperResponse<FingerPrintCircuitUnifiedResponseDTO> response = new RenaperResponse<>();
+		FingerPrintValidationResponse fingerPrintValidationResponse = new FingerPrintValidationResponse();
 		try {
 
 			FingerPrintCircuitUnifiedRequestDTO fingerPrintCircuitUnifiedRequestDTO = new FingerPrintCircuitUnifiedRequestDTO();
@@ -240,35 +241,54 @@ public class RenaperController {
 					fingerPrintValidatioRequestDTO.getOpcion(), fingerPrintValidatioRequestDTO.getNumeroCliente(),
 					fingerPrintValidatioRequestDTO.getNumeroDocumento(),
 					fingerPrintValidatioRequestDTO.getTipoDocumento()));
-			
-			FingerPrintCircuitUnifiedResponseDTO fingerPrintCircuitUnifiedResponseDTOResponseDTO = new FingerPrintCircuitUnifiedResponseDTO();
+
+			FingerPrintCircuitUnifiedResponseDTO fingerPrintCircuitUnifiedResponseDTO = new FingerPrintCircuitUnifiedResponseDTO();
 
 			if (fingerPrintCircuitUnifiedRequestDTO.getAttemptsRequestDTO().getOpcion()
 					.equals(Constants.PCHU_OPCION_IDA)) {
-				fingerPrintCircuitUnifiedResponseDTOResponseDTO.setAttemptsResponseDTO(renaperService
+				fingerPrintCircuitUnifiedResponseDTO.setAttemptsResponseDTO(renaperService
 						.intentosDisponibles(fingerPrintCircuitUnifiedRequestDTO.getAttemptsRequestDTO()));
-				response.setResult(fingerPrintCircuitUnifiedResponseDTOResponseDTO);
-			} else if (fingerPrintCircuitUnifiedRequestDTO.getAttemptsRequestDTO().getOpcion()
-					.equals(Constants.PCHU_OPCION_VUELTA)) {
-				
+
+			} else {
 				fingerPrintCircuitUnifiedRequestDTO.setAfisrequest(new afisrequest().buildFromValidationRequest(
 						fingerPrintValidatioRequestDTO.getFingerPrintAfisRequestDTO(),
 						fingerPrintValidatioRequestDTO.getNumeroDocumento()));
-
-				
 				FingerPrintCircuitResponseDTO fingerPrintCircuitResponseDTO = renaperService
 						.actualizarIntentosIdentificacionPorHuellaUnificado(fingerPrintCircuitUnifiedRequestDTO);
-				fingerPrintCircuitUnifiedResponseDTOResponseDTO
+				fingerPrintCircuitUnifiedResponseDTO
 						.setFingerPrintResponseDTO(fingerPrintCircuitResponseDTO.getFingerPrintResponseDTO());
-				fingerPrintCircuitUnifiedResponseDTOResponseDTO
+				fingerPrintCircuitUnifiedResponseDTO
 						.setAttemptsResponseDTO(fingerPrintCircuitResponseDTO.getVueltaAttemptstResponseDTO());
-				response.setResult(fingerPrintCircuitUnifiedResponseDTOResponseDTO);
-
-			} else {
-				response.setResult(fingerPrintCircuitUnifiedResponseDTOResponseDTO);
 			}
-			response.setStatusCode(HTTPResponseCodesEnum.STATUS_200.getStatusCode());
-			response.setStatusText(HTTPResponseCodesEnum.STATUS_200.getStatusText());
+
+			
+			if(fingerPrintCircuitUnifiedResponseDTO.getAttemptsResponseDTO()!=null)
+			{fingerPrintValidationResponse
+					.setNroclie(fingerPrintCircuitUnifiedResponseDTO.getAttemptsResponseDTO().getNroclie());
+			fingerPrintValidationResponse
+					.setTipdoc(fingerPrintCircuitUnifiedResponseDTO.getAttemptsResponseDTO().getTipdoc());
+			fingerPrintValidationResponse
+					.setNrodoc(fingerPrintCircuitUnifiedResponseDTO.getAttemptsResponseDTO().getNrodoc());
+			fingerPrintValidationResponse
+					.setRetorno(fingerPrintCircuitUnifiedResponseDTO.getAttemptsResponseDTO().getRetorno());
+			fingerPrintValidationResponse
+					.setCoderr(fingerPrintCircuitUnifiedResponseDTO.getAttemptsResponseDTO().getCoderr());
+			}
+			
+			if(fingerPrintCircuitUnifiedResponseDTO.getFingerPrintResponseDTO()!=null)
+			{fingerPrintValidationResponse
+					.setCode(fingerPrintCircuitUnifiedResponseDTO.getFingerPrintResponseDTO().getCode());
+			fingerPrintValidationResponse
+					.setMatchScore(fingerPrintCircuitUnifiedResponseDTO.getFingerPrintResponseDTO().getMatchScore());
+			fingerPrintValidationResponse
+					.setMatchType(fingerPrintCircuitUnifiedResponseDTO.getFingerPrintResponseDTO().getMatchType());
+			fingerPrintValidationResponse
+					.setMessage(fingerPrintCircuitUnifiedResponseDTO.getFingerPrintResponseDTO().getMessage());
+			fingerPrintValidationResponse
+					.setResult(fingerPrintCircuitUnifiedResponseDTO.getFingerPrintResponseDTO().getResult());
+			}
+			
+
 		} catch (ServiceException e) {
 			if (e.getCodigo().equals(HTTPResponseCodesEnum.STATUS_400.getStatusCode())) {
 				throw new BadRequestException(e.getMessage());
@@ -276,7 +296,7 @@ public class RenaperController {
 				throw new InternalServerException(e.getMessage());
 			}
 		}
-		return response;
+		return fingerPrintValidationResponse;
 	}
 
 }

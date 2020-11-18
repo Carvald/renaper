@@ -1,6 +1,5 @@
 package ar.com.bbva.arq.renaper.model;
 
-import java.util.Arrays;
 
 
 public class ThubanUploadRequestDTO {
