@@ -22,10 +22,10 @@
         <rollingPolicy
             class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily and when the file reaches 10 MegaBytes -->
-          <fileNamePattern>C:\\logs\\local\\apps\\renaper_api\RenaperApi-%d{yyyy-MM-dd}.%i.log
+           <fileNamePattern>C:\\logs\\local\\apps\\renaper_api\RenaperApi-%d{yyyy-MM-dd}.%i.log
             </fileNamePattern>
             
-           <!--  <fileNamePattern>/log/apps/was/clientesAPI/RenaperApi-%d{yyyy-MM-dd}.%i.log
+          <!--  <fileNamePattern>/log/apps/was/clientesAPI/RenaperApi-%d{yyyy-MM-dd}.%i.log
             </fileNamePattern>-->
             <timeBasedFileNamingAndTriggeringPolicy
                 class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">

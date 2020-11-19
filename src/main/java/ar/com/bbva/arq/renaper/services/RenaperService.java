@@ -83,7 +83,7 @@ public class RenaperService extends AbstractSamService {
 			EsbResponse esbResponse;
 			RenaperDataDTO renaperDataDTO = getRenaperDatosPersona(updateClientDataDTO.getRenaperPersonRequest());
 			altaDatosResponseDTO.setRenaperDataDTO(renaperDataDTO);
-			if (updateClientDataDTO.getFlag() != null && updateClientDataDTO.getFlag().equals("") ) {
+			if (updateClientDataDTO.getFlag() == null || updateClientDataDTO.getFlag().equals("") ) {
 				PersonAltaDatos personAltaDatos = new PersonAltaDatos().buildFromRenaper(renaperDataDTO.getPerson(),
 						updateClientDataDTO);
 				esbResponse = (EsbResponse) ejecutar(crearServiceAccessManagerContext(),
@@ -221,7 +221,7 @@ public class RenaperService extends AbstractSamService {
 					fingerPrintResponseDTO.getCode()));
 			attemptstResponseDTO = (AttemptstResponseDTO) ejecutar(crearServiceAccessManagerContext(),
 					Constants.RENAPER_FINGER_TRX_ESB_SERVICE, attemptstRequestDTO, AttemptstRequestDTO.class,
-					AttemptstRequestDTO.class, true, false, null);
+					AttemptstResponseDTO.class, true, false, null);
 
 			fingerPrintCircuitResponseDTO.setVueltaAttemptstResponseDTO(attemptstResponseDTO);
 			fingerPrintCircuitResponseDTO.setFingerPrintResponseDTO(fingerPrintResponseDTO);

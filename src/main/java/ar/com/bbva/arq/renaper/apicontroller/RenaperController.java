@@ -235,7 +235,7 @@ public class RenaperController {
 			@RequestBody FingerPrintValidationRequestDTO fingerPrintValidatioRequestDTO) {
 		FingerPrintValidationResponse fingerPrintValidationResponse = new FingerPrintValidationResponse();
 		try {
-
+			
 			FingerPrintCircuitUnifiedRequestDTO fingerPrintCircuitUnifiedRequestDTO = new FingerPrintCircuitUnifiedRequestDTO();
 			fingerPrintCircuitUnifiedRequestDTO.setAttemptsRequestDTO(new AttemptstRequestDTO().buildFromCheckAttempts(
 					fingerPrintValidatioRequestDTO.getOpcion(), fingerPrintValidatioRequestDTO.getNumeroCliente(),
@@ -250,6 +250,10 @@ public class RenaperController {
 						.intentosDisponibles(fingerPrintCircuitUnifiedRequestDTO.getAttemptsRequestDTO()));
 
 			} else {
+				
+				if(fingerPrintValidatioRequestDTO.getFingerPrintAfisRequestDTO()==null)
+					throw new BadRequestException("Missing FingerPrintAfisRequestDTO()");
+				
 				fingerPrintCircuitUnifiedRequestDTO.setAfisrequest(new afisrequest().buildFromValidationRequest(
 						fingerPrintValidatioRequestDTO.getFingerPrintAfisRequestDTO(),
 						fingerPrintValidatioRequestDTO.getNumeroDocumento()));
