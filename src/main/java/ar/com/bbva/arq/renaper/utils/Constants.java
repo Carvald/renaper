@@ -41,6 +41,8 @@ public class Constants {
 	
 	public static final String PCHU_OPCION_VUELTA="VUELTA";
 	
+	public static final String SUCCESS_FINGERPRINT_MATCH="0";
+	
 	
 	
 }

@@ -66,7 +66,7 @@ public class FingerPrintFlowController {
 						FormatUtils.completaCerosIzq(2, fingerPrintFlowCircuitDTO.getRespuestaRenaper().length(),
 								fingerPrintFlowCircuitDTO.getRespuestaRenaper()));
 				fingerPrintFlowCircuitDTO
-						.setAttemptstResponseIdaDTO(renaperService.intentosDisponiblesSubmit(attemptstRequestDTO));
+						.setAttemptstResponseVueltaDTO(renaperService.intentosDisponiblesSubmit(attemptstRequestDTO));
 				
 				fingerPrintFlowCircuitDTO
 				.setAttemptstResponseIdaDTO(new AttemptstResponseDTO());

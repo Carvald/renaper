@@ -208,13 +208,25 @@ public class RenaperService extends AbstractSamService {
 	public FingerPrintCircuitResponseDTO actualizarIntentosIdentificacionPorHuellaUnificado(
 			FingerPrintCircuitUnifiedRequestDTO fingerPrintCircuitUnifiedRequestDTO) {
 		FingerPrintCircuitResponseDTO fingerPrintCircuitResponseDTO = new FingerPrintCircuitResponseDTO();
+		FingerPrintResponseDTO fingerPrintResponseDTO;
 		try {
-			FingerPrintResponseDTO fingerPrintResponseDTO;
 			FingerPrintRequestDTO fingerPrintRequestDTO = new FingerPrintRequestDTO();
 			fingerPrintRequestDTO.buildFromRequestComposed(fingerPrintCircuitUnifiedRequestDTO);
 			fingerPrintResponseDTO = (FingerPrintResponseDTO) ejecutar(crearServiceAccessManagerContext(),
 					Constants.RENAPER_FINGER_AUTH_ESB_SERVICE, fingerPrintRequestDTO, FingerPrintRequestDTO.class,
 					FingerPrintResponseDTO.class, true, false, null);
+			
+			if(!fingerPrintResponseDTO.getCode().equals(Constants.SUCCESS_FINGERPRINT_MATCH))
+				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(), fingerPrintResponseDTO.getMessage());
+						
+		} catch (TransactionException | ServiceException exception) {
+			if (exception instanceof ServiceException) {
+				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(), exception.getMessage());
+			} else {
+				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
+			}	
+		}
+			try {	
 			AttemptstResponseDTO attemptstResponseDTO;
 			AttemptstRequestDTO attemptstRequestDTO = fingerPrintCircuitUnifiedRequestDTO.getAttemptsRequestDTO();
 			attemptstRequestDTO.setRenaper(FormatUtils.completaCerosIzq(2, fingerPrintResponseDTO.getCode().length(),
@@ -227,8 +239,12 @@ public class RenaperService extends AbstractSamService {
 			fingerPrintCircuitResponseDTO.setFingerPrintResponseDTO(fingerPrintResponseDTO);
 			return fingerPrintCircuitResponseDTO;
 
-		} catch (TransactionException exception) {
-			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
+		} catch (TransactionException | ServiceException exception) {
+			if (exception instanceof ServiceException) {
+				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(), exception.getMessage());
+			} else {
+				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
+			}
 		}
 
 	}
