@@ -143,4 +143,77 @@ public abstract class AbstractSamService {
 
 		return respuesta;
 	}
+	
+	
+	
+	protected Object ejecutarYQEF(IContext serviceAccessManagerContext, String nombreServicio, Object beanEntrada, Class claseBeanEntrada, Class claseBeanSalida, boolean respuestaCaseInsensitive, boolean entradaCaseInsensitive, Map additionalParameters) throws ServiceException {
+		Object respuesta = null;
+		try {
+			if (beanEntrada != null && claseBeanEntrada != null && !claseBeanEntrada.isInstance(beanEntrada))
+				throw crearErrorGenerico();
+
+			Map parametersExecute = null;
+			Map parametersExecute2 = new HashMap();
+
+			if (entradaCaseInsensitive) {
+				parametersExecute = new CaseInsensitiveMap();
+			} else {
+				parametersExecute = new HashMap();
+			}
+
+			if (beanEntrada != null) {
+				if (entradaCaseInsensitive) {
+					parametersExecute = (Map) ConvertUtils.convert(getConvertionManager(), CaseInsensitiveMap.class,
+							beanEntrada);
+				} else {try {
+					parametersExecute = (Map) ConvertUtils.convert(getConvertionManager(), java.util.HashMap.class,
+							beanEntrada);
+				} catch (Exception e) {
+					log.debug(e.toString());
+				}
+					
+				}
+			}
+
+			if (additionalParameters != null)
+				// Agrego parametros adicionales que no forman parte del BEAN de entrada
+				{parametersExecute.putAll(additionalParameters);
+			    parametersExecute2.putAll(additionalParameters);}
+			
+			parametersExecute.get("record");
+			
+			parametersExecute2.put("Record", parametersExecute.get("record"));
+
+			getServiceAccessManager().execute(nombreServicio, serviceAccessManagerContext, parametersExecute2);
+
+			if (respuestaCaseInsensitive) {
+				parametersExecute = (Map) ConvertUtils.convertMapToMapCaseInsensitive(parametersExecute);
+			}
+
+			checkSoaStatus(parametersExecute);
+
+			if (claseBeanSalida != null) {
+				respuesta = ConvertUtils.convert(getConvertionManager(), claseBeanSalida, parametersExecute);
+			}
+			else {
+				respuesta=parametersExecute;	
+			}
+			
+
+		} catch (ServiceException e) {
+			log.error("Error al ejecutar " + nombreServicio + ": " + e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			log.error("Error al ejecutar " + nombreServicio + ": " + e.getMessage(), e);
+			throw crearErrorGenerico();
+		}
+
+		return respuesta;
+	}
+	
+	
+	
+	
+	
+	
 }

@@ -291,14 +291,13 @@ public class RenaperController {
 			fingerPrintValidationResponse
 					.setResult(fingerPrintCircuitUnifiedResponseDTO.getFingerPrintResponseDTO().getResult());
 			}
-			
+			fingerPrintValidationResponse.setStatusCode(HTTPResponseCodesEnum.STATUS_200.getStatusCode());
+			fingerPrintValidationResponse.setStatusText(HTTPResponseCodesEnum.STATUS_200.getStatusText());
 
 		} catch (ServiceException e) {
-			if (e.getCodigo().equals(HTTPResponseCodesEnum.STATUS_400.getStatusCode())) {
-				throw new BadRequestException(e.getMessage());
-			} else {
-				throw new InternalServerException(e.getMessage());
-			}
+			fingerPrintValidationResponse.setRetorno(e.getCodigo()+"-"+e.getMessage());
+			fingerPrintValidationResponse.setStatusCode(e.getCodigo());
+			fingerPrintValidationResponse.setStatusText(e.getMessage());
 		}
 		return fingerPrintValidationResponse;
 	}

@@ -217,11 +217,11 @@ public class RenaperService extends AbstractSamService {
 					FingerPrintResponseDTO.class, true, false, null);
 			
 			if(!fingerPrintResponseDTO.getCode().equals(Constants.SUCCESS_FINGERPRINT_MATCH))
-				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(), fingerPrintResponseDTO.getMessage());
+				throw crearExcepcion(fingerPrintResponseDTO.getCode(), fingerPrintResponseDTO.getMessage());
 						
 		} catch (TransactionException | ServiceException exception) {
 			if (exception instanceof ServiceException) {
-				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(), exception.getMessage());
+				throw crearExcepcion(((ServiceException) exception).getCodigo(), exception.getMessage());
 			} else {
 				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
 			}	
@@ -241,7 +241,7 @@ public class RenaperService extends AbstractSamService {
 
 		} catch (TransactionException | ServiceException exception) {
 			if (exception instanceof ServiceException) {
-				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(), exception.getMessage());
+				throw crearExcepcion(((ServiceException) exception).getCodigo(), exception.getMessage());
 			} else {
 				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
 			}

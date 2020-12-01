@@ -43,6 +43,13 @@ public class Constants {
 	
 	public static final String SUCCESS_FINGERPRINT_MATCH="0";
 	
+	public static final String SERVICIOS_XEROX="TM_SERVICIO_INICIAL.SERVICIOS_XEROX";
+	
+	public static final String FFDD_WFD_CONNECT="TM_SERVICIO_INICIAL.FFDD_WFD_CONNECT";
+	
+	public static final String ERROR_RENAPER="99";
+	
+	
 	
 	
 }

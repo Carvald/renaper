@@ -53,7 +53,7 @@ public class PersonAltaDatos {
 		this.nacionalidad=checkForNull(person.getNationality());
 		this.paisNacimiento=checkForNull(person.getCountryBirth());
 		this.marcaFallecido=checkForNull(person.getMessageOfDeath());
-		this.opcion="01";
+		this.opcion=(updateClientDataDTO.getOpcion()==null||updateClientDataDTO.getOpcion().equals(""))?"01":updateClientDataDTO.getOpcion();
 		this.nombreInformado=updateClientDataDTO.getNombreInformado().toUpperCase();
 		this.apellidoInformado=updateClientDataDTO.getApellidoInformado().toUpperCase();
 		this.fechaNacimientoInformado=updateClientDataDTO.getFechaNacimientoInformado();
@@ -83,7 +83,7 @@ public class PersonAltaDatos {
 		this.nacionalidad=checkForNull(person.getNationality());
 		this.paisNacimiento=checkForNull(person.getCountryBirth());
 		this.marcaFallecido=checkForNull(person.getMessageOfDeath());
-		this.opcion="01";
+		this.opcion=(orquestarDataDTO.getOpcion()==null||orquestarDataDTO.getOpcion().equals(""))?"01":orquestarDataDTO.getOpcion();
 		this.nombreInformado=orquestarDataDTO.getNombreInformado().toUpperCase();
 		this.apellidoInformado=orquestarDataDTO.getApellidoInformado().toUpperCase();
 		this.fechaNacimientoInformado=orquestarDataDTO.getFechaNacimientoInformado();
@@ -152,7 +152,7 @@ public class PersonAltaDatos {
 	
 	
 	public String checkForNull(String attr) {
-		return attr==null ||attr.equals("null")?"":attr;
+		return attr==null ||attr.equals("null")?"":attr.toUpperCase();
 	}
 
 
