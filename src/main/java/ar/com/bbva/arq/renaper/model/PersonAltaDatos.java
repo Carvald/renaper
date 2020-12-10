@@ -94,7 +94,7 @@ public class PersonAltaDatos {
 	
 	
 	
-	public PersonAltaDatos buildFromRenaper(PersonResponseDTO person,BarcodeResponseDTO barcodeResponseDTO) {
+	public PersonAltaDatos buildFromRenaper(PersonResponseDTO person,BarcodeResponseDTO barcodeResponseDTO,String opcion) {
 		this.numeroDocumento=checkForNull(person.getNumber());
 		this.nombre=checkForNull(person.getNames());
 		this.apellido=checkForNull(person.getLastNames());
@@ -116,7 +116,7 @@ public class PersonAltaDatos {
 		this.nacionalidad=checkForNull(person.getNationality());
 		this.paisNacimiento=checkForNull(person.getCountryBirth());
 		this.marcaFallecido=checkForNull(person.getMessageOfDeath());
-		this.opcion="01";
+		this.opcion=checkForNull(opcion);
 		this.nombreInformado=barcodeResponseDTO.getNombreInformado().toUpperCase();
 		this.apellidoInformado=barcodeResponseDTO.getApellidoInformado().toUpperCase();
 		this.fechaNacimientoInformado=barcodeResponseDTO.getFechaNacInformado();

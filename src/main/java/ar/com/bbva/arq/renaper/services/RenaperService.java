@@ -83,7 +83,7 @@ public class RenaperService extends AbstractSamService {
 			EsbResponse esbResponse;
 			RenaperDataDTO renaperDataDTO = getRenaperDatosPersona(updateClientDataDTO.getRenaperPersonRequest());
 			altaDatosResponseDTO.setRenaperDataDTO(renaperDataDTO);
-			if (updateClientDataDTO.getFlag() == null || updateClientDataDTO.getFlag().equals("") ) {
+			if (updateClientDataDTO.getFlag() == null || updateClientDataDTO.getFlag().equals("")) {
 				PersonAltaDatos personAltaDatos = new PersonAltaDatos().buildFromRenaper(renaperDataDTO.getPerson(),
 						updateClientDataDTO);
 				esbResponse = (EsbResponse) ejecutar(crearServiceAccessManagerContext(),
@@ -91,7 +91,8 @@ public class RenaperService extends AbstractSamService {
 						true, false, null);
 				if (!esbResponse.getCodigoRetorno().equals(Constants.SUCCESS_UPDATE)) {
 					throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(),
-							Constants.UPDATE_FAIL_MESSAGE + " - codigo retornado: "+esbResponse.getCodigoRetorno()+" ref:" + esbResponse.getCodigoError());
+							Constants.UPDATE_FAIL_MESSAGE + " - codigo retornado: " + esbResponse.getCodigoRetorno()
+									+ " ref:" + esbResponse.getCodigoError());
 				} else {
 					altaDatosResponseDTO.setAltaDatosResult(Constants.SUCCESS_UPDATE);
 					altaDatosResponseDTO.setNumeroCliente(esbResponse.getNumeroCliente());
@@ -159,8 +160,12 @@ public class RenaperService extends AbstractSamService {
 					AttemptstResponseDTO.class, true, false, null);
 			return attemptstResponseDTO;
 
-		} catch (TransactionException exception) {
-			throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
+		} catch (TransactionException | ServiceException exception) {
+			if (exception instanceof ServiceException) {
+				throw crearExcepcion(Constants.ERROR_CON_PCHU, exception.getMessage());
+			} else {
+				throw crearExcepcion(Constants.ERROR_CON_PCHU, Constants.SERVER_FAIL_MESSAGE);
+			}
 		}
 	}
 
@@ -208,29 +213,36 @@ public class RenaperService extends AbstractSamService {
 	public FingerPrintCircuitResponseDTO actualizarIntentosIdentificacionPorHuellaUnificado(
 			FingerPrintCircuitUnifiedRequestDTO fingerPrintCircuitUnifiedRequestDTO) {
 		FingerPrintCircuitResponseDTO fingerPrintCircuitResponseDTO = new FingerPrintCircuitResponseDTO();
-		FingerPrintResponseDTO fingerPrintResponseDTO;
+		FingerPrintResponseDTO fingerPrintResponseDTO = new FingerPrintResponseDTO();
 		try {
 			FingerPrintRequestDTO fingerPrintRequestDTO = new FingerPrintRequestDTO();
 			fingerPrintRequestDTO.buildFromRequestComposed(fingerPrintCircuitUnifiedRequestDTO);
 			fingerPrintResponseDTO = (FingerPrintResponseDTO) ejecutar(crearServiceAccessManagerContext(),
 					Constants.RENAPER_FINGER_AUTH_ESB_SERVICE, fingerPrintRequestDTO, FingerPrintRequestDTO.class,
 					FingerPrintResponseDTO.class, true, false, null);
-			
-			if(!fingerPrintResponseDTO.getCode().equals(Constants.SUCCESS_FINGERPRINT_MATCH))
-				throw crearExcepcion(fingerPrintResponseDTO.getCode(), fingerPrintResponseDTO.getMessage());
-						
+
+			if (fingerPrintResponseDTO.getCode().equals(Constants.WRONG_FINGERPRINT_HEIGHT))
+				throw crearExcepcion(Constants.ERROR_CON_RENAPER, fingerPrintResponseDTO.getMessage());
+
 		} catch (TransactionException | ServiceException exception) {
 			if (exception instanceof ServiceException) {
-				throw crearExcepcion(((ServiceException) exception).getCodigo(), exception.getMessage());
+				if (((ServiceException) exception).getCodigo().equals(Constants.WRONG_INPUT_DATA)) {
+					fingerPrintResponseDTO.setMatchType(Constants.NO_HIT);
+				} else {
+					throw crearExcepcion(Constants.ERROR_CON_RENAPER, exception.getMessage());
+				}
 			} else {
-				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
-			}	
+				throw crearExcepcion(Constants.ERROR_CON_RENAPER, Constants.SERVER_FAIL_MESSAGE);
+			}
 		}
-			try {	
+		try {
 			AttemptstResponseDTO attemptstResponseDTO;
 			AttemptstRequestDTO attemptstRequestDTO = fingerPrintCircuitUnifiedRequestDTO.getAttemptsRequestDTO();
-			attemptstRequestDTO.setRenaper(FormatUtils.completaCerosIzq(2, fingerPrintResponseDTO.getCode().length(),
-					fingerPrintResponseDTO.getCode()));
+			if (fingerPrintResponseDTO.getMatchType().equals(Constants.HIT))
+				attemptstRequestDTO.setRenaper(Constants.SUCCESS_FINGERPRINT_MATCH);
+			else if (fingerPrintResponseDTO.getMatchType().equals(Constants.NO_HIT))
+				attemptstRequestDTO.setRenaper(Constants.WRONG_FINGERPRINT_MATCH);
+
 			attemptstResponseDTO = (AttemptstResponseDTO) ejecutar(crearServiceAccessManagerContext(),
 					Constants.RENAPER_FINGER_TRX_ESB_SERVICE, attemptstRequestDTO, AttemptstRequestDTO.class,
 					AttemptstResponseDTO.class, true, false, null);
@@ -241,9 +253,9 @@ public class RenaperService extends AbstractSamService {
 
 		} catch (TransactionException | ServiceException exception) {
 			if (exception instanceof ServiceException) {
-				throw crearExcepcion(((ServiceException) exception).getCodigo(), exception.getMessage());
+				throw crearExcepcion(Constants.ERROR_CON_PCHU, exception.getMessage());
 			} else {
-				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
+				throw crearExcepcion(Constants.ERROR_CON_PCHU, Constants.SERVER_FAIL_MESSAGE);
 			}
 		}
 
@@ -259,7 +271,8 @@ public class RenaperService extends AbstractSamService {
 					personAltaDatos, PersonAltaDatos.class, EsbResponse.class, true, false, null);
 			if (!esbResponse.getCodigoRetorno().equals(Constants.SUCCESS_UPDATE)) {
 				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(),
-						Constants.UPDATE_FAIL_MESSAGE + " - codigo retornado: "+esbResponse.getCodigoRetorno()+" ref:" + esbResponse.getCodigoError());
+						Constants.UPDATE_FAIL_MESSAGE + " - codigo retornado: " + esbResponse.getCodigoRetorno()
+								+ " ref:" + esbResponse.getCodigoError());
 			} else {
 				altaDatosResponseDTO.setAltaDatosResult(Constants.SUCCESS_UPDATE);
 				altaDatosResponseDTO.setNumeroCliente(esbResponse.getNumeroCliente());

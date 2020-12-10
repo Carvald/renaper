@@ -23,6 +23,7 @@ public class Information {
 	private String nombreInformado;
 	private String apellidoInformado;
 	private String fechaNacimientoInformado;
+	private String opcion;
 	
 		
 	public String getNombreInformado() {
@@ -160,5 +161,15 @@ public class Information {
 	public void setValid(String valid) {
 		this.valid = valid;
 	}
+
+	public String getOpcion() {
+		return opcion;
+	}
+
+	public void setOpcion(String opcion) {
+		this.opcion = opcion;
+	}
+	
+	
 
 }

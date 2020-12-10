@@ -61,7 +61,9 @@ public class OrquestadorYQEFController {
 		record.setOpcion("G");
 		record.setTrx_base("WPUB");
 		
-		orquestadorYQEFService.orquestarYQEF(record);
+		
+		orquestadorYQEFService.generarFormulario(record);
+		//orquestadorYQEFService.orquestarYQEF(record);
 		
 		
 		

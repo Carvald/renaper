@@ -73,7 +73,7 @@ public class BarcodeReadController {
 			if (information.getRenaper()) {
 				renaperResponse = renaperService.getRenaperDatosPersona(barcodeResponseDTO);
 				PersonAltaDatos personAltaDatos = new PersonAltaDatos().buildFromRenaper(renaperResponse.getPerson(),
-						barcodeResponseDTO);
+						barcodeResponseDTO,information.getOpcion());
 			if (information.getHost() )
 				numeroCliente = renaperService.actualizarDatosPersona(personAltaDatos);
 			

@@ -41,13 +41,27 @@ public class Constants {
 	
 	public static final String PCHU_OPCION_VUELTA="VUELTA";
 	
-	public static final String SUCCESS_FINGERPRINT_MATCH="0";
+	public static final String SUCCESS_FINGERPRINT_MATCH="00";
+	
+	public static final String WRONG_FINGERPRINT_MATCH="10";
 	
 	public static final String SERVICIOS_XEROX="TM_SERVICIO_INICIAL.SERVICIOS_XEROX";
 	
 	public static final String FFDD_WFD_CONNECT="TM_SERVICIO_INICIAL.FFDD_WFD_CONNECT";
 	
 	public static final String ERROR_RENAPER="99";
+	
+	public static final String WRONG_FINGERPRINT_HEIGHT="502";
+	
+	public static final String WRONG_INPUT_DATA="999999";
+	
+	public static final String NO_HIT="NOHIT";
+	
+	public static final String HIT="HIT";
+	
+	public static final String ERROR_CON_RENAPER="06";
+	
+	public static final String ERROR_CON_PCHU="03";
 	
 	
 	

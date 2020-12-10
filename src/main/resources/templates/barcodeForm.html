@@ -43,7 +43,7 @@
              					<label class="font-weight-bold">Indica los servicios que desas ejecutar</label>
              					<input  class="form-control" type="checkbox"  th:checked="'checked'" disabled="true"/>Barcode Read
               					 <input  class="form-control" type="checkbox" th:field="*{renaper}"/>RENAPER
-             					 <input  class="form-control" type="checkbox" th:field="*{host}"/>Actualizar Cliente
+             					 <input  class="form-control" type="checkbox" th:field="*{host}" onclick="myFunction()"/>Actualizar Cliente
              					 <input  class="form-control" type="checkbox" th:field="*{thuban}" />Thuban
            					 </div>
 						</div>
@@ -77,6 +77,40 @@
 					<hr>
 					<div class="form-group">
 					</div>
+					<div id="myDIV" style="display: none">
+								<table class="table table-striped">
+									<tr>
+										<th scope="row"></th>
+										<td></td>
+										<td>
+											<div class="form-group">
+												<label class="font-weight-bold"
+													title="Longitud máxima 2 dígitos" for="opcion">
+													Opción </label>
+												<div data-tip="Opción PCAR">
+													<input type="text"
+														th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+														class="form-control" id="order" th:field="*{opcion}"
+														maxlength="2" min="0"  />
+												</div>
+
+											</div>
+										</td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
+					
+					
+					
+					
 				</form>
 			</div>
 		</div>

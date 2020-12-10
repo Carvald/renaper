@@ -135,7 +135,7 @@
 										<td>
 											<div class="form-group">
 												<label class="font-weight-bold"
-													title="Longitud máxima 8 dígitos" for="apellidoInformado">
+													title="" for="apellidoInformado">
 													Apellido Informado </label>
 												<div data-tip="Apellido informado">
 													<input type="text"
@@ -159,7 +159,20 @@
 												</div>
 											</div>
 										</td>
-										<td></td>
+										<td>
+											<div class="form-group">
+												<label class="font-weight-bold"
+													title="Longitud máxima 2 dígitos" for="opcion">
+													Opción </label>
+												<div data-tip="Opción PCAR">
+													<input type="text"
+														th:oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+														class="form-control" id="order" th:field="*{opcion}"
+														maxlength="2" min="0" />
+												</div>
+
+											</div>
+										</td>
 										<td></td>
 										<td></td>
 										<td></td>

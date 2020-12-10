@@ -295,7 +295,7 @@ public class RenaperController {
 			fingerPrintValidationResponse.setStatusText(HTTPResponseCodesEnum.STATUS_200.getStatusText());
 
 		} catch (ServiceException e) {
-			fingerPrintValidationResponse.setRetorno(e.getCodigo()+"-"+e.getMessage());
+			fingerPrintValidationResponse.setRetorno(e.getCodigo());
 			fingerPrintValidationResponse.setStatusCode(e.getCodigo());
 			fingerPrintValidationResponse.setStatusText(e.getMessage());
 		}
