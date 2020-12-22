@@ -59,7 +59,7 @@ public class InputDataController {
 				BarcodeResponseDTO barcodeResponseDTO = new BarcodeResponseDTO();
 				barcodeResponseDTO.buildFrommInputInfo(information);
 				PersonAltaDatos personAltaDatos = new PersonAltaDatos().buildFromRenaper(renaperResponse.getPerson(),
-						barcodeResponseDTO,information.getOpcion());
+						barcodeResponseDTO,information.getOpcion()==null||information.getOpcion().equals("")?"01":information.getOpcion());
 				renaperService.actualizarDatosPersona(personAltaDatos);
 			}
 			information.setPerson(renaperResponse.getPerson());

@@ -3,20 +3,16 @@ package ar.com.bbva.arq.renaper.services;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.print.attribute.HashAttributeSet;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ar.com.bbva.arq.renaper.model.AttemptstRequestDTO;
-import ar.com.bbva.arq.renaper.model.AttemptstResponseDTO;
-import ar.com.bbva.arq.renaper.model.FingerPrintCircuitResponseDTO;
-import ar.com.bbva.arq.renaper.model.FingerPrintCircuitUnifiedRequestDTO;
-import ar.com.bbva.arq.renaper.model.FingerPrintRequestDTO;
-import ar.com.bbva.arq.renaper.model.FingerPrintResponseDTO;
+
+import ar.com.bbva.arq.renaper.model.FormularioOrqResponseDTO;
 import ar.com.bbva.arq.renaper.model.GenerarFormularioRequestDTO;
 import ar.com.bbva.arq.renaper.model.OrquestadorYQEFRequestDTO;
 import ar.com.bbva.arq.renaper.model.Record;
+import ar.com.bbva.arq.renaper.model.YQEFResponseDTO;
 import ar.com.bbva.arq.renaper.utils.Constants;
-import ar.com.bbva.arq.renaper.utils.FormatUtils;
 import ar.com.bbva.arq.renaper.utils.HTTPResponseCodesEnum;
 import ar.com.bbva.soa.conectores.BbvaSoaMensaje;
 import ar.com.itrsa.sam.IContext;
@@ -25,72 +21,74 @@ import ar.com.itrsa.sam.TransactionException;
 @Service
 public class OrquestadorYQEFService extends AbstractSamService {
 
+	@Autowired
+	MailService mailService;
+
+	@Value("${buzon.falla.orquestador}")
+	private String buzon;
+
 	@Override
 	protected boolean noEnmascararEnErrorGenerico(BbvaSoaMensaje mensaje) {
 		return true;
 	}
 
-	public FingerPrintCircuitResponseDTO orquestarYQEF(
-			Record record) {
+	public YQEFResponseDTO orquestarYQEF(Record record) {
 		OrquestadorYQEFRequestDTO orquestadorYQEFRequestDTO = new OrquestadorYQEFRequestDTO();
 		orquestadorYQEFRequestDTO.setRecord(record);
-		FingerPrintCircuitResponseDTO fingerPrintCircuitResponseDTO = new FingerPrintCircuitResponseDTO();
+		YQEFResponseDTO yqefResponseDTO = new YQEFResponseDTO();
 		try {
-			
-			Map additionalParameters = new HashMap<String,Record>();
-			
-			additionalParameters.put("BBVAPAQ-MODULO","DIGITALIZACION");
-			additionalParameters.put("BBVAPAQ-APLICACION","FORMULARIOS");
-			additionalParameters.put("BBVAPAQ-USUARIO","UDESEWEB");
-			FingerPrintResponseDTO fingerPrintResponseDTO = (FingerPrintResponseDTO) ejecutarYQEF(crearServiceAccessManagerContext(),
+
+			Map additionalParameters = new HashMap<String, Record>();
+			additionalParameters.put("BBVAPAQ-MODULO", "DIGITALIZACION");
+			additionalParameters.put("BBVAPAQ-APLICACION", "FORMULARIOS");
+			yqefResponseDTO = (YQEFResponseDTO) ejecutarYQEF(crearServiceAccessManagerContext(),
 					Constants.SERVICIOS_XEROX, orquestadorYQEFRequestDTO, OrquestadorYQEFRequestDTO.class,
-					FingerPrintResponseDTO.class, true, false,additionalParameters);
-	
-						
+					YQEFResponseDTO.class, true, false, additionalParameters);
+
 		} catch (TransactionException | ServiceException exception) {
+			mailService.sendSimpleMessage(buzon, "Falla con SERVICIOS_XEROX(Generación ID de Formulario)",
+					"Saludos, este es un mensaje automático generado por el orquestador de CLIENTES_API, ocurrió un fallo en la generación de id de formulario, los datos de entrada que fueron enviados y produjeron el fallo se muestran a continuación:\n\n\\n"
+							+ record.toString()+
+							"\n\nDetalle del error ocurrido: "+exception.getMessage());
 			if (exception instanceof ServiceException) {
 				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(), exception.getMessage());
 			} else {
 				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
-			}	
+			}
 		}
-		return fingerPrintCircuitResponseDTO;
+		return yqefResponseDTO;
 
 	}
-	
-	
-	
-	public FingerPrintCircuitResponseDTO generarFormulario(
-			Record record) {
+
+	public FormularioOrqResponseDTO generarFormulario(String idForm) {
 		GenerarFormularioRequestDTO generarFormularioRequestDTO = new GenerarFormularioRequestDTO();
-		generarFormularioRequestDTO.setIdForm("AH000000000000023209");
-		FingerPrintCircuitResponseDTO fingerPrintCircuitResponseDTO = new FingerPrintCircuitResponseDTO();
+		generarFormularioRequestDTO.setIdForm(idForm);
+		FormularioOrqResponseDTO formularioOrqResponseDTO = new FormularioOrqResponseDTO();
 		try {
-			
-			Map additionalParameters = new HashMap<String,Record>();
-			
-			additionalParameters.put("BBVAPAQ-MODULO","INSPIREHOST");
-			additionalParameters.put("BBVAPAQ-APLICACION","FNET");
-			
-			IContext serviceAccessManagerContext  = crearServiceAccessManagerContext();
+
+			Map additionalParameters = new HashMap<String, Record>();
+			additionalParameters.put("BBVAPAQ-MODULO", "INSPIREHOST");
+			additionalParameters.put("BBVAPAQ-APLICACION", "FNET");
+			IContext serviceAccessManagerContext = crearServiceAccessManagerContext();
 			serviceAccessManagerContext.setUserName("UDESEWEB");
-			
-			FingerPrintResponseDTO fingerPrintResponseDTO = (FingerPrintResponseDTO) ejecutar(serviceAccessManagerContext,
+			formularioOrqResponseDTO = (FormularioOrqResponseDTO) ejecutar(serviceAccessManagerContext,
 					Constants.FFDD_WFD_CONNECT, generarFormularioRequestDTO, GenerarFormularioRequestDTO.class,
-					FingerPrintResponseDTO.class, true, false,additionalParameters);
-	
-						
+					FormularioOrqResponseDTO.class, true, false, additionalParameters);
+			formularioOrqResponseDTO.setContentType(Constants.APPLICATION_PDF);
+			formularioOrqResponseDTO.setContentTransferEncoding(Constants.BASE_64);
 		} catch (TransactionException | ServiceException exception) {
+			mailService.sendSimpleMessage(buzon, "Falla con FFDD_WFD_CONNECT(Generación de Formulario)",
+					"Saludos, este es un mensaje automático generado por el orquestador de CLIENTES_API, ocurrió un fallo en la generación y colocación en THUBAN del formulario, el id de formulario que fue enviado como dato de  entrada  y produjero el fallo se muestra a continuación:\n\n\\n"
+							+ idForm+
+							"\n\nDetalle del error ocurrido: "+exception.getMessage());
+			
 			if (exception instanceof ServiceException) {
 				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_400.getStatusCode(), exception.getMessage());
 			} else {
 				throw crearExcepcion(HTTPResponseCodesEnum.STATUS_500.getStatusCode(), Constants.SERVER_FAIL_MESSAGE);
-			}	
+			}
 		}
-		return fingerPrintCircuitResponseDTO;
-
+		return formularioOrqResponseDTO;
 	}
-
-
 
 }

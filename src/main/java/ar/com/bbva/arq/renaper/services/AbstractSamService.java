@@ -187,7 +187,7 @@ public abstract class AbstractSamService {
 			getServiceAccessManager().execute(nombreServicio, serviceAccessManagerContext, parametersExecute2);
 
 			if (respuestaCaseInsensitive) {
-				parametersExecute = (Map) ConvertUtils.convertMapToMapCaseInsensitive(parametersExecute);
+				parametersExecute = (Map) ConvertUtils.convertMapToMapCaseInsensitive(parametersExecute2);
 			}
 
 			checkSoaStatus(parametersExecute);

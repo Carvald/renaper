@@ -63,6 +63,10 @@ public class Constants {
 	
 	public static final String ERROR_CON_PCHU="03";
 	
+	public static final String APPLICATION_PDF="Application/PDF";
+	
+	public static final String BASE_64="Base64";
+	
 	
 	
 	
