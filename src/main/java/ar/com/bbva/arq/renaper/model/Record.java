@@ -8,6 +8,7 @@ public class Record {
 	private String identificador;
 	private String aprovisionamiento;
 	private String numero_tramite;
+	private String numero_cliente;
 
 	public String getOpcion() {
 		return opcion;
@@ -63,9 +64,19 @@ public class Record {
 	}
 	
 	
+	
+	
+	public String getNumero_cliente() {
+		return numero_cliente;
+	}
+
+	public void setNumero_cliente(String numero_cliente) {
+		this.numero_cliente = numero_cliente;
+	}
+
 	@Override
 	public String toString() {
-		return "{\"opcion\":\"" + this.opcion + "\",\"trx_base\":\"" + this.trx_base +",\"cod_origen\":\"" + this.cod_origen +",\"identificador\":\"" + this.identificador +",\"aprovisionamiento\":\"" + this.aprovisionamiento +",\"numero_tramite\":\"" + this.numero_tramite +"}";
+		return "{\"opcion\":\"" + this.opcion + "\",\"trx_base\":\"" + this.trx_base +",\"cod_origen\":\"" + this.cod_origen +",\"identificador\":\"" + this.identificador +",\"aprovisionamiento\":\"" + this.aprovisionamiento +",\"numero_tramite\":\"" + this.numero_tramite +",\"numero_cliente\":\"" + this.numero_cliente +"}";
 	}
 
 }

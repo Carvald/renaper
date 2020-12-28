@@ -60,7 +60,7 @@ public class OrquestadorYQEFService extends AbstractSamService {
 
 	}
 
-	public FormularioOrqResponseDTO generarFormulario(String idForm) {
+	public FormularioOrqResponseDTO generarFormulario(String idForm,String numeroCliente) {
 		GenerarFormularioRequestDTO generarFormularioRequestDTO = new GenerarFormularioRequestDTO();
 		generarFormularioRequestDTO.setIdForm(idForm);
 		FormularioOrqResponseDTO formularioOrqResponseDTO = new FormularioOrqResponseDTO();
@@ -79,7 +79,8 @@ public class OrquestadorYQEFService extends AbstractSamService {
 		} catch (TransactionException | ServiceException exception) {
 			mailService.sendSimpleMessage(buzon, "Falla con FFDD_WFD_CONNECT(Generación de Formulario)",
 					"Saludos, este es un mensaje automático generado por el orquestador de CLIENTES_API, ocurrió un fallo en la generación y colocación en THUBAN del formulario, el id de formulario que fue enviado como dato de  entrada  y produjero el fallo se muestra a continuación:\n\n\\n"
-							+ idForm+
+							+ idForm+"\n"+
+							"Número cliente: "+numeroCliente+
 							"\n\nDetalle del error ocurrido: "+exception.getMessage());
 			
 			if (exception instanceof ServiceException) {
