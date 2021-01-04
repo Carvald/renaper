@@ -1,5 +1,6 @@
 package ar.com.bbva.arq.renaper.apicontroller;
 
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import ar.com.bbva.arq.renaper.model.FingerPrintResponseDTO;
 import ar.com.bbva.arq.renaper.model.FingerPrintValidationRequestDTO;
 import ar.com.bbva.arq.renaper.model.FingerPrintValidationResponse;
 import ar.com.bbva.arq.renaper.model.OrquestarDataDTO;
+import ar.com.bbva.arq.renaper.model.PersonAltaDatos;
 import ar.com.bbva.arq.renaper.model.PersonRequestDTO;
 import ar.com.bbva.arq.renaper.model.RenaperDataDTO;
 import ar.com.bbva.arq.renaper.model.RenaperResponse;
@@ -107,16 +109,26 @@ public class RenaperController {
 	public RenaperResponse<BarcodeResponseDTO> extraerDatosDni(
 			@RequestPart(value = "file", required = true) List<MultipartFile> files) {
 		RenaperResponse<BarcodeResponseDTO> response = new RenaperResponse<>();
+		RenaperDataDTO renaperResponse = null;
 		try {
 			if (files.isEmpty()) {
 				throw new BadRequestException(Constants.UPLOAD_INVALID);
 			}
 			byte[] documentacionClienteBytes = PDFUtils.concatenarAdjuntosComoPDF(files,
 					pdf417Configuration.getMegasdni(), pdf417Configuration.getMegasfile());
-			BarcodeResponseDTO personRequestDTO = pdf147Service.obtenerDatosDNI(documentacionClienteBytes);
-			response.setResult(personRequestDTO);
+			BarcodeResponseDTO barcodeResponseDTO = pdf147Service.obtenerDatosDNI(documentacionClienteBytes);
+				renaperResponse = renaperService.getRenaperDatosPersona(barcodeResponseDTO);
+				PersonAltaDatos personAltaDatos = new PersonAltaDatos().buildFromRenaper(renaperResponse.getPerson(),
+						barcodeResponseDTO,"02");
+			String 	numeroCliente = renaperService.actualizarDatosPersona(personAltaDatos);
+			barcodeResponseDTO.setNumeroCliente(numeroCliente);
+			barcodeResponseDTO.setResultadoActualizacion(Constants.SUCCESS_UPDATE);
+			String documentacionClienteStringBase64=Base64.getEncoder().encodeToString(documentacionClienteBytes);
+			barcodeResponseDTO.setIdThuban(thubanService.publicar(documentacionClienteStringBase64, numeroCliente,barcodeResponseDTO));
+			response.setResult(barcodeResponseDTO);
 			response.setStatusCode(HTTPResponseCodesEnum.STATUS_200.getStatusCode());
 			response.setStatusText(HTTPResponseCodesEnum.STATUS_200.getStatusText());
+			
 		} catch (ServiceException e) {
 			if (e.getCodigo().equals(HTTPResponseCodesEnum.STATUS_400.getStatusCode())) {
 				throw new BadRequestException(e.getMessage());

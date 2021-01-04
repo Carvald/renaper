@@ -17,6 +17,9 @@ public class BarcodeResponseDTO {
 	private String apellidoInformado;
 	private String fechaNacInformado;
 	private String image;
+	private String idThuban;
+	private String numeroCliente;
+	private String resultadoActualizacion;
 	
 
 	public String getImage() {
@@ -73,6 +76,31 @@ public class BarcodeResponseDTO {
 
 	public void setFechaNacInformado(String fechaNacInformado) {
 		this.fechaNacInformado = fechaNacInformado;
+	}
+
+	public String getNumeroCliente() {
+		return numeroCliente;
+	}
+
+	public void setNumeroCliente(String numeroCliente) {
+		this.numeroCliente = numeroCliente;
+	}
+
+	public String getIdThuban() {
+		return idThuban;
+	}
+
+	public void setIdThuban(String idThuban) {
+		this.idThuban = idThuban;
+	}
+	
+
+	public String getResultadoActualizacion() {
+		return resultadoActualizacion;
+	}
+
+	public void setResultadoActualizacion(String resultadoActualizacion) {
+		this.resultadoActualizacion = resultadoActualizacion;
 	}
 
 	public BarcodeResponseDTO buildSearch(String gender, String documentNumber, String order) {
